@@ -9,7 +9,15 @@ import com.blinkslabs.blinkist.android.challenge.presentation.di.ViewModelKey
 import com.blinkslabs.blinkist.android.challenge.presentation.di.ViewModelModule
 import dagger.Binds
 import dagger.Module
+import dagger.Subcomponent
 import dagger.multibindings.IntoMap
+
+@Subcomponent(modules = [(BooksActivityModule::class)])
+@ScreenScope
+interface BooksActivityComponent {
+
+  fun inject(activity: BooksActivity)
+}
 
 @Module(includes = [ViewModelModule::class])
 abstract class BooksActivityModule {
@@ -22,5 +30,4 @@ abstract class BooksActivityModule {
   @Binds
   @ScreenScope
   abstract fun providesMainUseCase(getBooks: GetBooksUseCase): GetBooks
-
 }
