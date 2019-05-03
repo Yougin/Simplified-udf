@@ -4,12 +4,12 @@
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
   android:orientation="horizontal"
-  android:padding="16dp">
+  android:padding="@dimen/padding_default">
 
   <ImageView
     android:id="@+id/coverImageView"
-    android:layout_width="64dp"
-    android:layout_height="64dp"
+    android:layout_width="@dimen/book_width"
+    android:layout_height="@dimen/book_height"
     android:scaleType="centerCrop" />
 
   <LinearLayout
