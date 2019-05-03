@@ -6,18 +6,18 @@ import org.junit.Before
 import org.junit.Test
 import org.threeten.bp.LocalDate
 
-class WeeklySorterTest {
+class SortByDateTest {
 
-  private lateinit var sorter: WeeklySorter
+  private lateinit var sortByDate: SortByDate
 
   @Before fun setUp() {
-    sorter = WeeklySorter()
+    sortByDate = SortByDate()
   }
 
   @Test fun `should sort books by year`() {
     val books = getBooks()
 
-    val sortedBooks = sorter.sort(books)
+    val sortedBooks = sortByDate(books)
 
     assertThat(sortedBooks).hasSize(4)
     assertThat(sortedBooks[Year(2014)]).hasSize(1)
@@ -29,7 +29,7 @@ class WeeklySorterTest {
   @Test fun `should sort books by week`(){
     val books = getBooks()
 
-    val sortedBooks = sorter.sort(books)
+    val sortedBooks = sortByDate(books)
 
     assertThat(sortedBooks[Year(2014)]?.get(Title("27"))).isEqualTo(listOf(book1))
     // TODO-eugene 52?
@@ -43,13 +43,6 @@ class WeeklySorterTest {
   }
 
   private fun getBooks() = listOf(book1, book2, book3, book4, book5, book6).shuffled()
-
-  /*
-  2014={27=[w = 27, y = 2014]},
-  2017={53=[w = 52, y = 2017]},
-  2018={27=[w = 27, y = 2018], 30=[w = 30, y = 2018]},
-  2019={27=[w = 27, y = 2019, w = 27, y = 2019]}
-  */
 
   private val book1 get() = Book("id2", "w = 27, y = 2014", "B", LocalDate.of(2014, 7, 2), "url")
   private val book2 get() = Book("id5", "w = 52, y = 2017", "D", LocalDate.of(2017, 12, 31), "url")
