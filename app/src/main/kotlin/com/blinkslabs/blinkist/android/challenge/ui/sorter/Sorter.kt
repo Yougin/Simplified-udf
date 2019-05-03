@@ -38,5 +38,7 @@ typealias AlphabeticGroup = Map<Title, Books>
 class GroupByAlphabet {
 
   operator fun invoke(books: Books): AlphabeticGroup =
-      books.groupBy { Title(it.name.first().toString().toUpperCase()) }
+      books
+          .filter { it.name.isNotBlank() }
+          .groupBy { Title(it.name.first().toString().toUpperCase()) }
 }
