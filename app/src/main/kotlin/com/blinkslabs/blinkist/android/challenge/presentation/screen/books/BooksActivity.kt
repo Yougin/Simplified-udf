@@ -2,8 +2,11 @@ package com.blinkslabs.blinkist.android.challenge.presentation.screen.books
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blinkslabs.blinkist.android.challenge.BlinkistChallengeApplication
+import com.blinkslabs.blinkist.android.challenge.BooksViewModel
 import com.blinkslabs.blinkist.android.challenge.R
 import com.blinkslabs.blinkist.android.challenge.domain.book.model.Books
 import com.blinkslabs.blinkist.android.challenge.util.showToast
@@ -16,13 +19,18 @@ class BooksActivity : AppCompatActivity(),
   @Inject
   lateinit var presenter: BooksPresenter
 
+  @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
+
+  private lateinit var viewModel: BooksViewModel
+
   private lateinit var recyclerAdapter: BookListRecyclerAdapter
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_books)
 
-    (application as BlinkistChallengeApplication).inject(this)
+    app().component.getBooksComponent().inject(this)
+    viewModel = ViewModelProviders.of(this, viewModelFactory).get(BooksViewModel::class.java)
 
     recyclerView.layoutManager = LinearLayoutManager(this)
     recyclerAdapter = BookListRecyclerAdapter()
@@ -33,6 +41,7 @@ class BooksActivity : AppCompatActivity(),
     presenter.onCreate(this)
     presenter.fetchBooks()
   }
+
 
   override fun showBooks(books: Books) {
     recyclerAdapter.setItems(books)
@@ -48,5 +57,7 @@ class BooksActivity : AppCompatActivity(),
     presenter.onDestroy()
     super.onDestroy()
   }
+
+  private fun app() = (application as BlinkistChallengeApplication)
 }
 
