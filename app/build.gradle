@@ -13,16 +13,37 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
         test.java.srcDirs += 'src/test/kotlin'
+
+        internal.java.srcDirs += 'src/internal/kotlin'
+        production.java.srcDirs += 'src/production/kotlin'
+
         androidTest.java.srcDirs += 'src/androidTest/kotlin'
+    }
+
+    flavorDimensions 'mobile'
+
+    productFlavors {
+        internal {
+            dimension = 'mobile'
+            applicationId = 'com.blinkslabs.blinkist.android.challenge.internal'
+        }
+
+        production {
+            dimension = 'mobile'
+            applicationId 'com.blinkslabs.blinkist.android.challenge'
+        }
+
     }
 }
 

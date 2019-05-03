@@ -5,8 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.blinkslabs.blinkist.android.challenge.BlinkistChallengeApplication
-import com.blinkslabs.blinkist.android.challenge.BooksViewModel
+import com.blinkslabs.blinkist.android.challenge.app.BlinkistChallengeApplication
 import com.blinkslabs.blinkist.android.challenge.R
 import com.blinkslabs.blinkist.android.challenge.domain.book.model.Books
 import com.blinkslabs.blinkist.android.challenge.util.showToast

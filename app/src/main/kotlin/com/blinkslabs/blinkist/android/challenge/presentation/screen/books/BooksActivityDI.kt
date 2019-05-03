@@ -1,7 +1,6 @@
 package com.blinkslabs.blinkist.android.challenge.presentation.screen.books
 
 import androidx.lifecycle.ViewModel
-import com.blinkslabs.blinkist.android.challenge.BooksViewModel
 import com.blinkslabs.blinkist.android.challenge.domain.book.usecase.GetBooks
 import com.blinkslabs.blinkist.android.challenge.domain.book.usecase.GetBooksUseCase
 import com.blinkslabs.blinkist.android.challenge.presentation.di.ScreenScope
