@@ -6,9 +6,11 @@ import io.reactivex.Single
 import javax.inject.Inject
 
 interface GetBooks {
+
   operator fun invoke(): Single<Books>
 }
 
 class GetBooksUseCase @Inject constructor(private val booksApi: BooksApi) : GetBooks {
+
   override operator fun invoke(): Single<Books> = booksApi.getAllBooks()
 }
