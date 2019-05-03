@@ -7,7 +7,7 @@ inline class Title(val title: String)
 
 class WeeklySorter {
 
-  fun sort(books: List<Book>): LinkedHashMap<Int, Map<Title, List<Book>>> {
+  fun sort(books: List<Book>): Map<Int, Map<Title, List<Book>>> {
     val sortedBooks = books.sortedBy { it.publishDate.year }
     val groupedByYear = sortedBooks.groupBy { it.publishDate.year }
 
