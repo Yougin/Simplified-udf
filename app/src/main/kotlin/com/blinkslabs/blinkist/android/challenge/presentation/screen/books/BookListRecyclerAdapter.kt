@@ -12,6 +12,7 @@ import com.blinkslabs.blinkist.android.challenge.domain.book.model.Books
 import com.squareup.picasso.Picasso
 import java.util.*
 
+@Deprecated(replaceWith = ReplaceWith("Use FlexibleAdapter.kt"), message = "")
 class BookListRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
   val items = ArrayList<Book>()
