@@ -3,7 +3,7 @@ package com.blinkslabs.blinkist.android.challenge.ui.sorter
 import com.blinkslabs.blinkist.android.challenge.data.model.Book
 import com.blinkslabs.blinkist.android.challenge.data.model.publishWeek
 import com.blinkslabs.blinkist.android.challenge.data.model.publishYear
-import java.util.LinkedHashMap
+import java.util.*
 
 inline class Title(val value: String)
 
@@ -31,4 +31,12 @@ class GroupByDate {
 
   private fun groupByWeek(books: Books): WeeklyGroup = books.groupBy { Title(it.publishWeek) }
 
+}
+
+typealias AlphabeticGroup = Map<Title, Books>
+
+class GroupByAlphabet {
+
+  operator fun invoke(books: Books): AlphabeticGroup =
+      books.groupBy { Title(it.name.first().toString().toUpperCase()) }
 }
