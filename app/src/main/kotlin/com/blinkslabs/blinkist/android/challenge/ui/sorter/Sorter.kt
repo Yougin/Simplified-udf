@@ -17,7 +17,7 @@ typealias YearlySection = Map<Year, WeeklySection>
 
 typealias OrderedMap = LinkedHashMap<Year, WeeklySection>
 
-class SortByDate {
+class GroupByDate {
 
   operator fun invoke(books: Books): YearlySection =
       with(OrderedMap()) {
