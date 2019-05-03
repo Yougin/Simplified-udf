@@ -1,7 +1,7 @@
 package com.blinkslabs.blinkist.android.challenge
 
 import android.app.Application
-import com.blinkslabs.blinkist.android.challenge.data.api.BooksApiModule
+import com.blinkslabs.blinkist.android.challenge.data.book.BooksApiModule
 import dagger.ObjectGraph
 
 

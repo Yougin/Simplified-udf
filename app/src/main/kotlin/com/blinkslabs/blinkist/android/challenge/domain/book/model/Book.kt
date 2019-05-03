@@ -1,4 +1,4 @@
-package com.blinkslabs.blinkist.android.challenge.domain.book
+package com.blinkslabs.blinkist.android.challenge.domain.book.model
 
 import org.threeten.bp.LocalDate
 import org.threeten.bp.temporal.WeekFields

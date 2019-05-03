@@ -1,7 +1,7 @@
 package com.blinkslabs.blinkist.android.challenge.presentation
 
 import com.blinkslabs.blinkist.android.challenge.domain.book.usecase.GetBooksUseCase
-import com.blinkslabs.blinkist.android.challenge.domain.book.Books
+import com.blinkslabs.blinkist.android.challenge.domain.book.model.Books
 import com.blinkslabs.blinkist.android.challenge.presentation.screen.books.BooksPresenter
 import com.blinkslabs.blinkist.android.challenge.presentation.screen.books.BooksView
 import com.blinkslabs.blinkist.android.challenge.util.BLSchedulers

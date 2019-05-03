@@ -1,7 +1,7 @@
-package com.blinkslabs.blinkist.android.challenge.data.api
+package com.blinkslabs.blinkist.android.challenge.data.book
 
-import com.blinkslabs.blinkist.android.challenge.domain.book.Book
-import com.blinkslabs.blinkist.android.challenge.domain.book.Books
+import com.blinkslabs.blinkist.android.challenge.domain.book.model.Book
+import com.blinkslabs.blinkist.android.challenge.domain.book.model.Books
 import com.blinkslabs.blinkist.android.challenge.util.BLSchedulers
 import io.reactivex.Single
 import org.threeten.bp.LocalDate

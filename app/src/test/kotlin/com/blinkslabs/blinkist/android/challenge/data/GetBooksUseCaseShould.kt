@@ -1,7 +1,7 @@
 package com.blinkslabs.blinkist.android.challenge.data
 
-import com.blinkslabs.blinkist.android.challenge.data.api.BooksApi
-import com.blinkslabs.blinkist.android.challenge.domain.book.Books
+import com.blinkslabs.blinkist.android.challenge.data.book.BooksApi
+import com.blinkslabs.blinkist.android.challenge.domain.book.model.Books
 import com.blinkslabs.blinkist.android.challenge.domain.book.usecase.GetBooksUseCase
 import com.blinkslabs.blinkist.android.challenge.util.BLSchedulers
 import com.nhaarman.mockitokotlin2.mock
