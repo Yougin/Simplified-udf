@@ -1,7 +1,9 @@
-package com.blinkslabs.blinkist.android.challenge.ui
+package com.blinkslabs.blinkist.android.challenge.presentation
 
-import com.blinkslabs.blinkist.android.challenge.data.BooksService
+import com.blinkslabs.blinkist.android.challenge.domain.book.usecase.GetBooksUseCase
 import com.blinkslabs.blinkist.android.challenge.domain.book.Books
+import com.blinkslabs.blinkist.android.challenge.presentation.screen.books.BooksPresenter
+import com.blinkslabs.blinkist.android.challenge.presentation.screen.books.BooksView
 import com.blinkslabs.blinkist.android.challenge.util.BLSchedulers
 import com.nhaarman.mockitokotlin2.eq
 import com.nhaarman.mockitokotlin2.mock
@@ -18,7 +20,7 @@ import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
 class BooksPresenterShould {
-    @Mock lateinit var booksService: BooksService
+    @Mock lateinit var getBooks: GetBooksUseCase
     @Mock lateinit var booksView: BooksView
 
     @InjectMocks lateinit var booksPresenter: BooksPresenter
@@ -37,7 +39,7 @@ class BooksPresenterShould {
     @Test fun callGetBooksOnServiceWhenFetchBooksIsCalled() {
         givenASuccessfulBooksServiceCall(mockBooks)
         booksPresenter.fetchBooks()
-        verify(booksService).getBooks()
+        verify(getBooks)()
     }
 
     @Test fun showBooksOnViewWhenFetchBooksIsSuccessful() {
@@ -53,10 +55,10 @@ class BooksPresenterShould {
     }
 
     private fun givenASuccessfulBooksServiceCall(result: Books) {
-        whenever(booksService.getBooks()).thenReturn(Single.just(result))
+        whenever(getBooks()).thenReturn(Single.just(result))
     }
 
     private fun givenAnUnsuccessfulBooksServiceCall(exception: Throwable) {
-        whenever(booksService.getBooks()).thenReturn(Single.error(exception))
+        whenever(getBooks()).thenReturn(Single.error(exception))
     }
 }

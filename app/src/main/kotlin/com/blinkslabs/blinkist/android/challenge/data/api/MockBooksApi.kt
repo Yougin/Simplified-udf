@@ -6,9 +6,10 @@ import com.blinkslabs.blinkist.android.challenge.util.BLSchedulers
 import io.reactivex.Single
 import org.threeten.bp.LocalDate
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
 
-class MockBooksApi : BooksApi {
+class MockBooksApi @Inject constructor(): BooksApi {
 
     override fun getAllBooks(): Single<Books> = Single.just(
             listOf(

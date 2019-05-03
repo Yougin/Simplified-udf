@@ -1,4 +1,4 @@
-package com.blinkslabs.blinkist.android.challenge.ui
+package com.blinkslabs.blinkist.android.challenge.presentation.screen.books
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -10,7 +10,8 @@ import com.blinkslabs.blinkist.android.challenge.util.showToast
 import kotlinx.android.synthetic.main.activity_books.*
 import javax.inject.Inject
 
-class BooksActivity : AppCompatActivity(), BooksView {
+class BooksActivity : AppCompatActivity(),
+                      BooksView {
 
     @Inject
     lateinit var presenter: BooksPresenter

@@ -1,4 +1,4 @@
-package com.blinkslabs.blinkist.android.challenge.ui.sorter
+package com.blinkslabs.blinkist.android.challenge.presentation.screen.books.grouper
 
 import com.blinkslabs.blinkist.android.challenge.domain.book.Books
 import com.blinkslabs.blinkist.android.challenge.domain.book.Title
