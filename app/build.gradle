@@ -33,6 +33,7 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$app_compat_version"
     implementation "androidx.recyclerview:recyclerview:$recyclerview_version"
     implementation "com.android.support.constraint:constraint-layout:${constraintLayout}"
+    implementation "android.arch.lifecycle:extensions:$lifecycle_extentions"
 
     implementation "com.google.dagger:dagger:$dagger_version"
     kapt "com.google.dagger:dagger-android-processor:$dagger_version"

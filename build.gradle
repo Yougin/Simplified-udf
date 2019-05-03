@@ -6,6 +6,7 @@ buildscript {
   ext.app_compat_version = '1.0.2'
   ext.recyclerview_version = '1.0.0'
   ext.constraintLayout = '1.1.0'
+  ext.lifecycle_extentions = '1.1.1'
 
   ext.dagger_version = '2.16'
   ext.rxjava_version = '2.2.7'
