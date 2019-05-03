@@ -5,13 +5,13 @@ import com.blinkslabs.blinkist.android.challenge.data.model.Book
 
 class WeeklySorter {
 
-  fun sort(books: List<Book>): LinkedHashMap<Int, Map<Int, List<Book>>> {
+  fun sort(books: List<Book>): LinkedHashMap<Int, Map<String, List<Book>>> {
     val sortedBooks = books.sortedBy { it.publishDate.year }
     val groupedByYear = sortedBooks.groupBy { it.publishDate.year }
 
-    val result: LinkedHashMap<Int, Map<Int, List<Book>>> = LinkedHashMap()
+    val result: LinkedHashMap<Int, Map<String, List<Book>>> = LinkedHashMap()
     for ((year, bookz) in groupedByYear) {
-      result[year] = bookz.groupBy { getWeekNumber(it.publishDate) }
+      result[year] = bookz.groupBy { getWeekNumber(it.publishDate).toString() }
     }
 
     return result
