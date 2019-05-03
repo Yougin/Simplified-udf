@@ -1,31 +1,21 @@
 package com.blinkslabs.blinkist.android.challenge.ui.sorter
 
-import com.blinkslabs.blinkist.android.challenge.data.model.Book
+import com.blinkslabs.blinkist.android.challenge.data.model.Books
 import com.blinkslabs.blinkist.android.challenge.data.model.publishWeek
 import com.blinkslabs.blinkist.android.challenge.data.model.publishYear
 import java.util.*
 
-inline class Title(val value: String)
+interface BooksGrouper {
 
-inline class Year(val value: Int)
-
-typealias Books = List<Book>
-
-typealias WeeklyGroup = Map<Title, Books>
-
-typealias YearlyGroup = Map<Year, WeeklyGroup>
+  operator fun invoke(books: Books): GroupedBooks
+}
 
 sealed class GroupedBooks {
   data class ByDate(val group: YearlyGroup) : GroupedBooks()
   data class ByAlphabet(val group: AlphabeticGroup) : GroupedBooks()
 }
 
-interface BooksSorter {
-
-  operator fun invoke(books: Books): GroupedBooks
-}
-
-class GroupByDate : BooksSorter {
+class GroupByDate : BooksGrouper {
 
   override operator fun invoke(books: Books): GroupedBooks.ByDate =
       with(LinkedHashMap<Year, WeeklyGroup>()) {
@@ -43,9 +33,7 @@ class GroupByDate : BooksSorter {
 
 }
 
-typealias AlphabeticGroup = Map<Title, Books>
-
-class GroupByAlphabet : BooksSorter {
+class GroupByAlphabet : BooksGrouper {
 
   override operator fun invoke(books: Books): GroupedBooks.ByAlphabet =
       books

@@ -3,6 +3,7 @@ package com.blinkslabs.blinkist.android.challenge.data.model
 import org.threeten.bp.LocalDate
 import org.threeten.bp.temporal.WeekFields
 
+typealias Books = List<Book>
 
 data class Book(
     val id: String,
