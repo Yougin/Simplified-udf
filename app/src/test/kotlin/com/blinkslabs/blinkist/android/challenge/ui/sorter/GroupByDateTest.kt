@@ -1,6 +1,5 @@
 package com.blinkslabs.blinkist.android.challenge.ui.sorter
 
-import androidx.core.view.ViewCompat
 import com.blinkslabs.blinkist.android.challenge.data.model.Book
 import com.google.common.truth.Truth.assertThat
 import org.junit.Before
@@ -24,10 +23,15 @@ class GroupByDateTest {
   @Test fun `should books grouped by year contain correct amount of books grouped by week`() {
     val books = groupByDate(fakeBooks)
 
-    assertThat(books[Year(2014)]).hasSize(1)
-    assertThat(books[Year(2017)]).hasSize(1)
-    assertThat(books[Year(2018)]).hasSize(2)
-    assertThat(books[Year(2019)]).hasSize(1)
+    assertThat(books[Year(2014)]).isEqualTo(mapOf(Title("27") to listOf(book1)))
+    assertThat(books[Year(2017)]).isEqualTo(mapOf(Title("52") to listOf(book2)))
+    assertThat(books[Year(2018)]).isEqualTo(mapOf(
+        Title("30") to listOf(book3),
+        Title("27") to listOf(book4))
+    )
+    assertThat(books[Year(2019)]?.get(Title("27"))).hasSize(2)
+    assertThat(books[Year(2019)]?.get(Title("27"))).contains(book5)
+    assertThat(books[Year(2019)]?.get(Title("27"))).contains(book6)
   }
 
   @Test fun `should books grouped by week contain only books published this week`() {
