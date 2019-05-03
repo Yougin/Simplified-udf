@@ -2,6 +2,7 @@ package com.blinkslabs.blinkist.android.challenge.ui
 
 import com.blinkslabs.blinkist.android.challenge.data.BooksService
 import com.blinkslabs.blinkist.android.challenge.data.model.Book
+import com.blinkslabs.blinkist.android.challenge.data.model.Books
 import com.blinkslabs.blinkist.android.challenge.util.BLSchedulers
 import com.nhaarman.mockitokotlin2.eq
 import com.nhaarman.mockitokotlin2.mock
@@ -23,7 +24,7 @@ class BooksPresenterShould {
 
     @InjectMocks lateinit var booksPresenter: BooksPresenter
 
-    private val mockBooks: List<Book> = listOf(mock(), mock(), mock())
+    private val mockBooks: Books = listOf(mock(), mock(), mock())
 
     @Before fun setUp() {
         BLSchedulers.enableTesting()
@@ -52,7 +53,7 @@ class BooksPresenterShould {
         verify(booksView).showErrorLoadingData()
     }
 
-    private fun givenASuccessfulBooksServiceCall(result: List<Book>) {
+    private fun givenASuccessfulBooksServiceCall(result: Books) {
         whenever(booksService.getBooks()).thenReturn(Single.just(result))
     }
 

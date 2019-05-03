@@ -1,6 +1,7 @@
 package com.blinkslabs.blinkist.android.challenge.data.api
 
 import com.blinkslabs.blinkist.android.challenge.data.model.Book
+import com.blinkslabs.blinkist.android.challenge.data.model.Books
 import com.blinkslabs.blinkist.android.challenge.util.BLSchedulers
 import io.reactivex.Single
 import org.threeten.bp.LocalDate
@@ -9,7 +10,7 @@ import java.util.concurrent.TimeUnit
 
 class MockBooksApi : BooksApi {
 
-    override fun getAllBooks(): Single<List<Book>> = Single.just(
+    override fun getAllBooks(): Single<Books> = Single.just(
             listOf(
                     Book("d241b2b", "Eat, Move, Sleep", "Tom Rath", LocalDate.of(2018, 7, 3), "https://images.blinkist.com/images/books/5694b3802f6827000700002a/3_4/640.jpg"),
                     Book("eea5ee1", "The Secret Life of Sleep", "Kat Duff", LocalDate.of(2018, 7, 2), "https://images.blinkist.com/images/books/56c1de12587c820007000063/3_4/640.jpg"),

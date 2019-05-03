@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.blinkslabs.blinkist.android.challenge.R
 import com.blinkslabs.blinkist.android.challenge.data.model.Book
+import com.blinkslabs.blinkist.android.challenge.data.model.Books
 import com.squareup.picasso.Picasso
 import java.util.*
 
@@ -36,7 +37,7 @@ class BookListRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
         return items.size
     }
 
-    fun setItems(items: List<Book>) {
+    fun setItems(items: Books) {
         this.items.clear()
         this.items.addAll(items)
     }

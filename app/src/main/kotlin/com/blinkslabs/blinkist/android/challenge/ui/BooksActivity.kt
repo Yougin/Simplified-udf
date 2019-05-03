@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blinkslabs.blinkist.android.challenge.BlinkistChallengeApplication
 import com.blinkslabs.blinkist.android.challenge.R
-import com.blinkslabs.blinkist.android.challenge.data.model.Book
+import com.blinkslabs.blinkist.android.challenge.data.model.Books
 import com.blinkslabs.blinkist.android.challenge.util.showToast
 import kotlinx.android.synthetic.main.activity_books.*
 import javax.inject.Inject
@@ -33,7 +33,7 @@ class BooksActivity : AppCompatActivity(), BooksView {
         presenter.fetchBooks()
     }
 
-    override fun showBooks(books: List<Book>) {
+    override fun showBooks(books: Books) {
         recyclerAdapter.setItems(books)
         recyclerAdapter.notifyDataSetChanged()
         swipeRefreshView.isRefreshing = false
