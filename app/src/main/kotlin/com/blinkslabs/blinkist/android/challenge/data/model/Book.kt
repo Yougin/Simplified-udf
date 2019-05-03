@@ -1,6 +1,7 @@
 package com.blinkslabs.blinkist.android.challenge.data.model
 
 import org.threeten.bp.LocalDate
+import org.threeten.bp.temporal.WeekFields
 
 
 data class Book(
@@ -9,9 +10,10 @@ data class Book(
     val author: String,
     val publishDate: LocalDate,
     val coverImageUrl: String
-) {
+)
 
-  val publishYear get() = publishDate.year
+val Book.publishWeek get() = publishDate.publishWeek
 
-  override fun toString(): String = name
-}
+val LocalDate.publishWeek get() = get(WeekFields.ISO.weekOfYear()).toString()
+
+val Book.publishYear get() = publishDate.year

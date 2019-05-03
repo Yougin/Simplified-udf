@@ -1,7 +1,8 @@
 package com.blinkslabs.blinkist.android.challenge.ui.sorter
 
 import com.blinkslabs.blinkist.android.challenge.data.model.Book
-import org.threeten.bp.temporal.WeekFields
+import com.blinkslabs.blinkist.android.challenge.data.model.publishWeek
+import com.blinkslabs.blinkist.android.challenge.data.model.publishYear
 
 inline class Title(val value: String)
 
@@ -29,11 +30,6 @@ class GroupByDate {
         this
       }
 
-  private fun groupByWeek(books: Books): WeeklySection =
-      books.groupBy { book ->
-        val weekOfYear = WeekFields.ISO.weekOfYear()
-        val weekNumber = book.publishDate.get(weekOfYear)
-        Title(weekNumber.toString())
-      }
+  private fun groupByWeek(books: Books): WeeklySection = books.groupBy { Title(it.publishWeek) }
 
 }
