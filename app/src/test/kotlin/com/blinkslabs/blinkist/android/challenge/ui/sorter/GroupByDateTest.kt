@@ -32,8 +32,8 @@ class GroupByDateTest {
   @Test fun `should books grouped by week contain only books published this week`() {
     val groupedBooks = groupByDate(books)
 
-    assertThat(groupedBooks[Year(2014)]?.get(Title("27"))).isEqualTo(listOf(book1)) // TODO-eugene 52?
-    assertThat(groupedBooks[Year(2017)]?.get(Title("53"))).isEqualTo(listOf(book2))
+    assertThat(groupedBooks[Year(2014)]?.get(Title("27"))).isEqualTo(listOf(book1))
+    assertThat(groupedBooks[Year(2017)]?.get(Title("52"))).isEqualTo(listOf(book2))
     assertThat(groupedBooks[Year(2018)]?.get(Title("30"))).isEqualTo(listOf(book3))
     assertThat(groupedBooks[Year(2018)]?.get(Title("27"))).isEqualTo(listOf(book4))
 
