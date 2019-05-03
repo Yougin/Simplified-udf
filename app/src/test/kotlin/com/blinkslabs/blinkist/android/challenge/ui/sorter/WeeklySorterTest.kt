@@ -34,15 +34,15 @@ class WeeklySorterTest {
     val sortedBooks = sorter.sort(books)
 
     println(sortedBooks)
-    assertThat(sortedBooks[2014]?.get("27")).isEqualTo(listOf(book1))
+    assertThat(sortedBooks[2014]?.get(Title("27"))).isEqualTo(listOf(book1))
     // TODO-eugene 52?
-    assertThat(sortedBooks[2017]?.get("53")).isEqualTo(listOf(book2))
-    assertThat(sortedBooks[2018]?.get("30")).isEqualTo(listOf(book3))
-    assertThat(sortedBooks[2018]?.get("27")).isEqualTo(listOf(book4))
+    assertThat(sortedBooks[2017]?.get(Title("53"))).isEqualTo(listOf(book2))
+    assertThat(sortedBooks[2018]?.get(Title("30"))).isEqualTo(listOf(book3))
+    assertThat(sortedBooks[2018]?.get(Title("27"))).isEqualTo(listOf(book4))
 
-    assertThat(sortedBooks[2019]?.get("27")).hasSize(2)
-    assertThat(sortedBooks[2019]?.get("27")).contains(book5)
-    assertThat(sortedBooks[2019]?.get("27")).contains(book6)
+    assertThat(sortedBooks[2019]?.get(Title("27"))).hasSize(2)
+    assertThat(sortedBooks[2019]?.get(Title("27"))).contains(book5)
+    assertThat(sortedBooks[2019]?.get(Title("27"))).contains(book6)
   }
 
   private fun getBooks() = listOf(book1, book2, book3, book4, book5, book6).shuffled()
