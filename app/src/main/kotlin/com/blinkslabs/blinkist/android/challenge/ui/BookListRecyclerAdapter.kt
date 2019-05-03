@@ -7,8 +7,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.blinkslabs.blinkist.android.challenge.R
-import com.blinkslabs.blinkist.android.challenge.data.model.Book
-import com.blinkslabs.blinkist.android.challenge.data.model.Books
+import com.blinkslabs.blinkist.android.challenge.domain.book.Book
+import com.blinkslabs.blinkist.android.challenge.domain.book.Books
 import com.squareup.picasso.Picasso
 import java.util.*
 

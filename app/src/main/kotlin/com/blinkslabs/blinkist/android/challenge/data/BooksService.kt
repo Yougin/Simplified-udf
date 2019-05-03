@@ -1,7 +1,7 @@
 package com.blinkslabs.blinkist.android.challenge.data
 
 import com.blinkslabs.blinkist.android.challenge.data.api.BooksApi
-import com.blinkslabs.blinkist.android.challenge.data.model.Books
+import com.blinkslabs.blinkist.android.challenge.domain.book.Books
 import io.reactivex.Single
 import javax.inject.Inject
 

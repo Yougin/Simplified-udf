@@ -1,8 +1,9 @@
 package com.blinkslabs.blinkist.android.challenge.ui.sorter
 
-import com.blinkslabs.blinkist.android.challenge.data.model.Books
-import com.blinkslabs.blinkist.android.challenge.data.model.publishWeek
-import com.blinkslabs.blinkist.android.challenge.data.model.publishYear
+import com.blinkslabs.blinkist.android.challenge.domain.book.Books
+import com.blinkslabs.blinkist.android.challenge.domain.book.Title
+import com.blinkslabs.blinkist.android.challenge.domain.book.publishWeek
+import com.blinkslabs.blinkist.android.challenge.domain.book.publishYear
 import java.util.LinkedHashMap
 
 typealias WeeklyGroup = Map<Title, Books>

@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blinkslabs.blinkist.android.challenge.BlinkistChallengeApplication
 import com.blinkslabs.blinkist.android.challenge.R
-import com.blinkslabs.blinkist.android.challenge.data.model.Books
+import com.blinkslabs.blinkist.android.challenge.domain.book.Books
 import com.blinkslabs.blinkist.android.challenge.util.showToast
 import kotlinx.android.synthetic.main.activity_books.*
 import javax.inject.Inject

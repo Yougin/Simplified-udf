@@ -1,6 +1,6 @@
 package com.blinkslabs.blinkist.android.challenge.ui
 
-import com.blinkslabs.blinkist.android.challenge.data.model.Books
+import com.blinkslabs.blinkist.android.challenge.domain.book.Books
 
 
 interface BooksView {

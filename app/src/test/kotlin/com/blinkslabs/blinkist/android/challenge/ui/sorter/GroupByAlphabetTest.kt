@@ -1,6 +1,7 @@
 package com.blinkslabs.blinkist.android.challenge.ui.sorter
 
-import com.blinkslabs.blinkist.android.challenge.data.model.Book
+import com.blinkslabs.blinkist.android.challenge.domain.book.Book
+import com.blinkslabs.blinkist.android.challenge.domain.book.Title
 import com.google.common.truth.Truth.assertThat
 import org.junit.Before
 import org.junit.Test

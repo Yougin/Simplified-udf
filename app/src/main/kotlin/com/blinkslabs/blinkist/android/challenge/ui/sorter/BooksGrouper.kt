@@ -1,6 +1,7 @@
 package com.blinkslabs.blinkist.android.challenge.ui.sorter
 
-import com.blinkslabs.blinkist.android.challenge.data.model.Books
+import com.blinkslabs.blinkist.android.challenge.domain.book.Books
+import com.blinkslabs.blinkist.android.challenge.domain.book.Title
 
 typealias YearlyGroup = Map<Year, WeeklyGroup>
 
