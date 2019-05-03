@@ -1,26 +1,14 @@
-package com.blinkslabs.blinkist.android.challenge.presentation.screen.books.adapter
+package com.blinkslabs.blinkist.android.challenge.presentation.common.adapter
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
-interface FlexibleAdapter {
-
-  var items: List<Any>
-
-  fun asRecyclerAdapter(): RecyclerView.Adapter<RecyclerView.ViewHolder>
-
-  fun getItemCount(): Int
-
-  fun notifyDataSetChanged()
-
-  fun getDelegateForItem(atPosition: Int): ItemDelegate<*>
-}
-
 open class FlexibleAdapterImpl(
     vararg delegates: ItemDelegate<*>
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), FlexibleAdapter {
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
+    FlexibleAdapter {
 
   override var items = listOf<Any>()
     set(value) {
@@ -58,19 +46,6 @@ open class FlexibleAdapterImpl(
   }
 
   override fun getDelegateForItem(atPosition: Int) = delegationMap[getItemViewType(atPosition)]
-}
-
-class MissingDelegateException(message: String) : Exception(message)
-
-interface ItemDelegate<D> {
-
-  val associatedDataType: Class<D>
-
-  fun create(layoutInflater: LayoutInflater, parent: ViewGroup?): RecyclerView.ViewHolder
-
-  fun bind(view: View, data: D)
-
-  class Holder(view: View) : RecyclerView.ViewHolder(view)
 }
 
 private class DelegationMap(vararg delegates: ItemDelegate<*>) {
