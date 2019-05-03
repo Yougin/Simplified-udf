@@ -10,12 +10,13 @@ inline class Title(val title: String)
 class WeeklySorter {
 
   fun sort(books: List<Book>): Map<Int, Map<Title, List<Book>>> {
-    val sortedBooks = books.sortedBy { it.publishDate.year }
-    val groupedByYear = sortedBooks.groupBy { it.publishDate.year }
+    val booksByYear: Map<Int, List<Book>> = books
+        .sortedBy { it.publishDate.year }
+        .groupBy { it.publishDate.year }
 
     val result: LinkedHashMap<Int, Map<Title, List<Book>>> = LinkedHashMap()
-    for ((year, bookz) in groupedByYear) {
-      result[year] = bookz.groupBy {
+    booksByYear.forEach { (k, v) ->
+      result[k] = v.groupBy {
         val weekNumber = getWeekNumber(it.publishDate).toString()
         Title(weekNumber)
       }
