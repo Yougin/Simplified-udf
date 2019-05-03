@@ -24,8 +24,6 @@ class WeeklySorterTest {
     assertThat(sortedBooks[2017]).hasSize(1)
     assertThat(sortedBooks[2018]).hasSize(2)
     assertThat(sortedBooks[2019]).hasSize(1)
-
-    println(sortedBooks)
   }
 
   @Test fun `should sort books by week`(){
@@ -33,7 +31,6 @@ class WeeklySorterTest {
 
     val sortedBooks = sorter.sort(books)
 
-    println(sortedBooks)
     assertThat(sortedBooks[2014]?.get(Title("27"))).isEqualTo(listOf(book1))
     // TODO-eugene 52?
     assertThat(sortedBooks[2017]?.get(Title("53"))).isEqualTo(listOf(book2))
