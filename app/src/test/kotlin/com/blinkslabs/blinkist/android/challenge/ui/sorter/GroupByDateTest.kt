@@ -15,11 +15,11 @@ class GroupByDateTest {
   }
 
   @Test fun `should group books by year`() {
-    assertThat(groupByDate(fakeBooks)).hasSize(4)
+    assertThat(groupByDate(fakeBooks).group).hasSize(4)
   }
 
   @Test fun `should books grouped by year contain correct amount of books grouped by week`() {
-    val books = groupByDate(fakeBooks)
+    val books = groupByDate(fakeBooks).group
 
     assertThat(books[Year(2014)]).isEqualTo(mapOf(Title("27") to listOf(book1)))
 
@@ -35,7 +35,7 @@ class GroupByDateTest {
   }
 
   @Test fun `should books grouped by week contain only books published this week`() {
-    val books = groupByDate(fakeBooks)
+    val books = groupByDate(fakeBooks).group
 
     assertThat(books[Year(2014)]?.get(Title("27"))).isEqualTo(listOf(book1))
 

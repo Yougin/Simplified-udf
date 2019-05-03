@@ -15,9 +15,19 @@ typealias WeeklyGroup = Map<Title, Books>
 
 typealias YearlyGroup = Map<Year, WeeklyGroup>
 
-class GroupByDate {
+sealed class GroupedBooks {
+  data class ByDate(val group: YearlyGroup) : GroupedBooks()
+  data class ByAlphabet(val group: AlphabeticGroup) : GroupedBooks()
+}
 
-  operator fun invoke(books: Books): YearlyGroup =
+interface BooksSorter {
+
+  operator fun invoke(books: Books): GroupedBooks
+}
+
+class GroupByDate : BooksSorter {
+
+  override operator fun invoke(books: Books): GroupedBooks.ByDate =
       with(LinkedHashMap<Year, WeeklyGroup>()) {
         books
             .sortedBy { book -> book.publishYear }
@@ -26,7 +36,7 @@ class GroupByDate {
               val forThisYear = Year(year)
               this[forThisYear] = groupByWeek(booksPublishedThisYear)
             }
-        this
+            .let { GroupedBooks.ByDate(this) }
       }
 
   private fun groupByWeek(books: Books): WeeklyGroup = books.groupBy { Title(it.publishWeek) }
@@ -35,10 +45,11 @@ class GroupByDate {
 
 typealias AlphabeticGroup = Map<Title, Books>
 
-class GroupByAlphabet {
+class GroupByAlphabet : BooksSorter {
 
-  operator fun invoke(books: Books): AlphabeticGroup =
+  override operator fun invoke(books: Books): GroupedBooks.ByAlphabet =
       books
           .filter { it.name.isNotBlank() }
           .groupBy { Title(it.name.first().toString().toUpperCase()) }
+          .let { GroupedBooks.ByAlphabet(it) }
 }

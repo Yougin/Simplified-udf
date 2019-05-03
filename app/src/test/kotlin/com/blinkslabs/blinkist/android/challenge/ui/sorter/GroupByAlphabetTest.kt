@@ -15,11 +15,11 @@ class GroupByAlphabetTest {
   }
 
   @Test fun `should books grouped alphabetically contain right amount of groups based on data`() {
-    assertThat(groupByAlphabet(fakeBooks)).hasSize(4)
+    assertThat(groupByAlphabet(fakeBooks).group).hasSize(4)
   }
 
   @Test fun `should all the books grouped alphabetically be present in results`() {
-    val books = groupByAlphabet(fakeBooks)
+    val books = groupByAlphabet(fakeBooks).group
 
     assertThat(books[Title("A")]).containsAllIn(listOf(book1, book3))
     assertThat(books[Title("B")]).containsAllIn(listOf(book2))
@@ -30,7 +30,7 @@ class GroupByAlphabetTest {
   @Test fun `should skip a book with no name`(){
     val noNameBook = Book("id2", "  ", "", LocalDate.of(2014, 7, 2), "")
 
-    assertThat(groupByAlphabet(listOf(noNameBook))).isEmpty()
+    assertThat(groupByAlphabet(listOf(noNameBook)).group).isEmpty()
   }
 
   private val fakeBooks get() = listOf(book1, book2, book3, book4, book5, book6).shuffled()
