@@ -15,7 +15,10 @@ class WeeklySorter {
 
     val result: LinkedHashMap<Int, Map<Title, List<Book>>> = LinkedHashMap()
     for ((year, bookz) in groupedByYear) {
-      result[year] = bookz.groupBy { Title(getWeekNumber(it.publishDate).toString()) }
+      result[year] = bookz.groupBy {
+        val weekNumber = getWeekNumber(it.publishDate).toString()
+        Title(weekNumber)
+      }
     }
 
     return result
