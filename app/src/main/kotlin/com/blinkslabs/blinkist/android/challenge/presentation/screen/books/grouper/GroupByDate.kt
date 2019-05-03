@@ -4,7 +4,7 @@ import com.blinkslabs.blinkist.android.challenge.domain.book.model.Books
 import com.blinkslabs.blinkist.android.challenge.domain.book.model.Title
 import com.blinkslabs.blinkist.android.challenge.domain.book.model.publishWeek
 import com.blinkslabs.blinkist.android.challenge.domain.book.model.publishYear
-import java.util.LinkedHashMap
+import java.util.*
 
 typealias WeeklyGroup = Map<Title, Books>
 

@@ -14,38 +14,38 @@ import java.util.*
 
 class BookListRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    val items = ArrayList<Book>()
+  val items = ArrayList<Book>()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val v = LayoutInflater.from(parent.context)
-                .inflate(R.layout.book_list_item, parent, false)
-        return BookViewHolder(v)
-    }
+  override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    val v = LayoutInflater.from(parent.context)
+        .inflate(R.layout.book_list_item, parent, false)
+    return BookViewHolder(v)
+  }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val bookHolder = holder as BookViewHolder
-        val book = items[position]
+  override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    val bookHolder = holder as BookViewHolder
+    val book = items[position]
 
-        bookHolder.titleTextView.text = book.name
-        bookHolder.authorTextView.text = book.author
-        Picasso.get()
-                .load(book.coverImageUrl)
-                .into(bookHolder.coverImageView)
-    }
+    bookHolder.titleTextView.text = book.name
+    bookHolder.authorTextView.text = book.author
+    Picasso.get()
+        .load(book.coverImageUrl)
+        .into(bookHolder.coverImageView)
+  }
 
-    override fun getItemCount(): Int {
-        return items.size
-    }
+  override fun getItemCount(): Int {
+    return items.size
+  }
 
-    fun setItems(items: Books) {
-        this.items.clear()
-        this.items.addAll(items)
-    }
+  fun setItems(items: Books) {
+    this.items.clear()
+    this.items.addAll(items)
+  }
 
-    private inner class BookViewHolder(v: View) : RecyclerView.ViewHolder(v) {
+  private inner class BookViewHolder(v: View) : RecyclerView.ViewHolder(v) {
 
-        var authorTextView: TextView = v.findViewById(R.id.authorTextView)
-        var titleTextView: TextView = v.findViewById(R.id.titleTextView)
-        var coverImageView: ImageView = v.findViewById(R.id.coverImageView)
-    }
+    var authorTextView: TextView = v.findViewById(R.id.authorTextView)
+    var titleTextView: TextView = v.findViewById(R.id.titleTextView)
+    var coverImageView: ImageView = v.findViewById(R.id.coverImageView)
+  }
 }

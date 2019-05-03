@@ -13,40 +13,40 @@ import javax.inject.Inject
 class BooksActivity : AppCompatActivity(),
                       BooksView {
 
-    @Inject
-    lateinit var presenter: BooksPresenter
+  @Inject
+  lateinit var presenter: BooksPresenter
 
-    private lateinit var recyclerAdapter: BookListRecyclerAdapter
+  private lateinit var recyclerAdapter: BookListRecyclerAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_books)
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setContentView(R.layout.activity_books)
 
-        (application as BlinkistChallengeApplication).inject(this)
+    (application as BlinkistChallengeApplication).inject(this)
 
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerAdapter = BookListRecyclerAdapter()
-        recyclerView.adapter = recyclerAdapter
+    recyclerView.layoutManager = LinearLayoutManager(this)
+    recyclerAdapter = BookListRecyclerAdapter()
+    recyclerView.adapter = recyclerAdapter
 
-        swipeRefreshView.setOnRefreshListener { presenter.fetchBooks() }
+    swipeRefreshView.setOnRefreshListener { presenter.fetchBooks() }
 
-        presenter.onCreate(this)
-        presenter.fetchBooks()
-    }
+    presenter.onCreate(this)
+    presenter.fetchBooks()
+  }
 
-    override fun showBooks(books: Books) {
-        recyclerAdapter.setItems(books)
-        recyclerAdapter.notifyDataSetChanged()
-        swipeRefreshView.isRefreshing = false
-    }
+  override fun showBooks(books: Books) {
+    recyclerAdapter.setItems(books)
+    recyclerAdapter.notifyDataSetChanged()
+    swipeRefreshView.isRefreshing = false
+  }
 
-    override fun showErrorLoadingData() {
-        showToast(R.string.error_generic)
-    }
+  override fun showErrorLoadingData() {
+    showToast(R.string.error_generic)
+  }
 
-    override fun onDestroy() {
-        presenter.onDestroy()
-        super.onDestroy()
-    }
+  override fun onDestroy() {
+    presenter.onDestroy()
+    super.onDestroy()
+  }
 }
 
