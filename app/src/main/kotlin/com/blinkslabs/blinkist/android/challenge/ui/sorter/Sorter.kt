@@ -5,22 +5,36 @@ import org.threeten.bp.DayOfWeek
 import org.threeten.bp.LocalDate
 import org.threeten.bp.temporal.WeekFields
 
-inline class Title(val title: String)
+inline class Title(val value: String)
+
+inline class Year(val value: Int)
+
+typealias Books = List<Book>
+
+typealias WeeklySection = Map<Title, Books>
+
+typealias YearlySection = Map<Year, WeeklySection>
+
+typealias OrderedMap = LinkedHashMap<Year, WeeklySection>
 
 class WeeklySorter {
 
-  fun sort(books: List<Book>): Map<Int, Map<Title, List<Book>>> =
-      with(LinkedHashMap<Int, Map<Title, List<Book>>>()) {
+  fun sort(books: Books): YearlySection =
+      with(OrderedMap()) {
         books
             .sortedBy { book -> book.publishYear }
             .groupBy { book -> book.publishYear }
-            .forEach { (year, booksThisYear) ->
-              this[year] = booksThisYear.groupBy {
-                val weekNumber = getWeekNumber(it.publishDate).toString()
-                Title(weekNumber)
-              }
+            .forEach { (year, booksPublishedThisYear) ->
+              val forThisYear = Year(year)
+              this[forThisYear] = groupByWeek(booksPublishedThisYear)
             }
         this
+      }
+
+  private fun groupByWeek(books: Books) =
+      books.groupBy {
+        val weekNumber = getWeekNumber(it.publishDate).toString()
+        Title(weekNumber)
       }
 
   private fun getWeekNumber(publishDate: LocalDate): Int {

@@ -20,10 +20,10 @@ class WeeklySorterTest {
     val sortedBooks = sorter.sort(books)
 
     assertThat(sortedBooks).hasSize(4)
-    assertThat(sortedBooks[2014]).hasSize(1)
-    assertThat(sortedBooks[2017]).hasSize(1)
-    assertThat(sortedBooks[2018]).hasSize(2)
-    assertThat(sortedBooks[2019]).hasSize(1)
+    assertThat(sortedBooks[Year(2014)]).hasSize(1)
+    assertThat(sortedBooks[Year(2017)]).hasSize(1)
+    assertThat(sortedBooks[Year(2018)]).hasSize(2)
+    assertThat(sortedBooks[Year(2019)]).hasSize(1)
   }
 
   @Test fun `should sort books by week`(){
@@ -31,15 +31,15 @@ class WeeklySorterTest {
 
     val sortedBooks = sorter.sort(books)
 
-    assertThat(sortedBooks[2014]?.get(Title("27"))).isEqualTo(listOf(book1))
+    assertThat(sortedBooks[Year(2014)]?.get(Title("27"))).isEqualTo(listOf(book1))
     // TODO-eugene 52?
-    assertThat(sortedBooks[2017]?.get(Title("53"))).isEqualTo(listOf(book2))
-    assertThat(sortedBooks[2018]?.get(Title("30"))).isEqualTo(listOf(book3))
-    assertThat(sortedBooks[2018]?.get(Title("27"))).isEqualTo(listOf(book4))
+    assertThat(sortedBooks[Year(2017)]?.get(Title("53"))).isEqualTo(listOf(book2))
+    assertThat(sortedBooks[Year(2018)]?.get(Title("30"))).isEqualTo(listOf(book3))
+    assertThat(sortedBooks[Year(2018)]?.get(Title("27"))).isEqualTo(listOf(book4))
 
-    assertThat(sortedBooks[2019]?.get(Title("27"))).hasSize(2)
-    assertThat(sortedBooks[2019]?.get(Title("27"))).contains(book5)
-    assertThat(sortedBooks[2019]?.get(Title("27"))).contains(book6)
+    assertThat(sortedBooks[Year(2019)]?.get(Title("27"))).hasSize(2)
+    assertThat(sortedBooks[Year(2019)]?.get(Title("27"))).contains(book5)
+    assertThat(sortedBooks[Year(2019)]?.get(Title("27"))).contains(book6)
   }
 
   private fun getBooks() = listOf(book1, book2, book3, book4, book5, book6).shuffled()
