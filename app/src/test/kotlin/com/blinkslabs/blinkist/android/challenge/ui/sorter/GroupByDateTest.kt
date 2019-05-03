@@ -22,7 +22,9 @@ class GroupByDateTest {
     val books = groupByDate(fakeBooks)
 
     assertThat(books[Year(2014)]).isEqualTo(mapOf(Title("27") to listOf(book1)))
+
     assertThat(books[Year(2017)]).isEqualTo(mapOf(Title("52") to listOf(book2)))
+
     assertThat(books[Year(2018)]).isEqualTo(mapOf(
         Title("30") to listOf(book3),
         Title("27") to listOf(book4))
@@ -36,7 +38,9 @@ class GroupByDateTest {
     val books = groupByDate(fakeBooks)
 
     assertThat(books[Year(2014)]?.get(Title("27"))).isEqualTo(listOf(book1))
+
     assertThat(books[Year(2017)]?.get(Title("52"))).isEqualTo(listOf(book2))
+
     assertThat(books[Year(2018)]?.get(Title("30"))).isEqualTo(listOf(book3))
     assertThat(books[Year(2018)]?.get(Title("27"))).isEqualTo(listOf(book4))
 
