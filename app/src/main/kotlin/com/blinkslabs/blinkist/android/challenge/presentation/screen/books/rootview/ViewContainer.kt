@@ -6,10 +6,10 @@ import android.view.ViewGroup
 /** Provides a view container for the main Activity's view. */
 interface ViewContainer {
 
-  /** The root [android.view.ViewGroup] into which the activity should place its contents.  */
+  /** The root [android.view.ViewGroup] where the activity place its content.  */
   fun forActivity(activity: Activity): ViewGroup
 
-  /** An [ViewContainer] which returns the normal activity content view.  */
+  /** An [ViewContainer] returns a normal activity content view.  */
   object Default : ViewContainer {
 
     override fun forActivity(activity: Activity): ViewGroup =
