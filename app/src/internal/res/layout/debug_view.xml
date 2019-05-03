@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.blinkslabs.blinkist.android.challenge.app.DebugView xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="#88000000"
+  android:orientation="vertical"
+  tools:ignore="Overdraw"
+  tools:layout_editor_absoluteX="0dp"
+  tools:layout_editor_absoluteY="81dp">
+
+</com.blinkslabs.blinkist.android.challenge.app.DebugView>
