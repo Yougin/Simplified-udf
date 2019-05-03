@@ -13,8 +13,7 @@ import com.blinkslabs.blinkist.android.challenge.util.showToast
 import kotlinx.android.synthetic.main.activity_books.*
 import javax.inject.Inject
 
-class BooksActivity : AppCompatActivity(),
-                      BooksView {
+class BooksActivity : AppCompatActivity(), BooksView {
 
   @Inject
   lateinit var presenter: BooksPresenter
@@ -32,14 +31,21 @@ class BooksActivity : AppCompatActivity(),
     app().component.getBooksComponent().inject(this)
     viewModel = ViewModelProviders.of(this, viewModelFactory).get(BooksViewModel::class.java)
 
-    recyclerView.layoutManager = LinearLayoutManager(this)
-    recyclerAdapter = BookListRecyclerAdapter()
-    recyclerView.adapter = recyclerAdapter
-
-    swipeRefreshView.setOnRefreshListener { presenter.fetchBooks() }
+    setupRecyclerView()
+    setupSwipeToRefresh()
 
     presenter.onCreate(this)
     presenter.fetchBooks()
+  }
+
+  private fun setupRecyclerView() {
+    recyclerView.layoutManager = LinearLayoutManager(this)
+    recyclerAdapter = BookListRecyclerAdapter()
+    recyclerView.adapter = recyclerAdapter
+  }
+
+  private fun setupSwipeToRefresh() {
+    swipeRefreshView.setOnRefreshListener { presenter.fetchBooks() }
   }
 
 
