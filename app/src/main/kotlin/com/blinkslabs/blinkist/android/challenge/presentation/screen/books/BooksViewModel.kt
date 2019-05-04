@@ -32,6 +32,7 @@ class BooksViewModel @Inject constructor(
   private fun subscribeForUpcomingEvents() {
     disposables += intentsEmitter
         .takeOnlyOnce(BooksIntent.InitialIntent::class.java)
+        .doOnNext { Timber.d("----- Intent: ${it.javaClass.simpleName}") }
         .subscribe {
           when (it) {
             is BooksIntent.InitialIntent, BooksIntent.ForceUpdateIntent -> fetchBooks()
