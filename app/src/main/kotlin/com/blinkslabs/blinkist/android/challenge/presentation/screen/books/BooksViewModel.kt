@@ -44,13 +44,22 @@ class BooksViewModel @Inject constructor(
   }
 
   private fun fetchData() {
-    disposables += getBooks()
-        .withLatestFrom(isGroupByWeeklyFeatureOn(), BiFunction { a: Books, b: Boolean -> Pair(a, b) })
+    val getBooks = getBooks()
+        .doOnNext { Timber.d("----- Get Books emits $it") }
+
+    val isFeatureOn = isGroupByWeeklyFeatureOn()
+        .doOnNext { Timber.d("----- Feature Switch emits $it") }
+
+    val dataSources =
+        Observable.combineLatest(getBooks, isFeatureOn,
+                                 BiFunction { a: Books, b: Boolean -> Pair(a, b) })
+
+    // TODO-eugene I don't need to declare main thread in here, do it in the View
+    disposables += dataSources
         .map<BooksViewState> { BooksViewState.DataFetched(it.first, it.second) }
         .startWith(BooksViewState.InFlight)
         .onErrorReturn { BooksViewState.Error(it) }
         .subscribeOn(BLSchedulers.io())
-        .observeOn(BLSchedulers.main())
         .doOnNext { Timber.d("----- Result: ${it.javaClass.simpleName}") }
         .subscribe({ _viewState.onNext(it) },
                    { Timber.e("Something went wrong fetching books") }
@@ -79,6 +88,7 @@ sealed class BooksIntent {
 
 
 interface IsGroupByWeeklyFeatureOn {
+
   operator fun invoke(): Observable<Boolean>
 }
 

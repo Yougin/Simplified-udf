@@ -29,22 +29,29 @@ class BooksViewModelShould {
   @Mock private lateinit var disposables: Disposables
   @InjectMocks lateinit var viewModel: BooksViewModel
 
-  private lateinit var emitter: PublishSubject<BooksIntent>
+  private lateinit var groupByWeeklyEmitter: PublishSubject<Boolean>
+  private lateinit var viewEmitter: PublishSubject<BooksIntent>
   private lateinit var observer: TestObserver<BooksViewState>
 
   @Before fun setUp() {
     BLSchedulers.enableTesting()
 
     observer = viewModel.viewState.test()
-    emitter = PublishSubject.create()
-    viewModel.intents(emitter)
+    with(PublishSubject.create<BooksIntent>()) {
+      viewEmitter = this
+      viewModel.intents(this)
+    }
+
+    with(PublishSubject.create<Boolean>()) {
+      groupByWeeklyEmitter = this
+      givenWeeklyGroupingFeature(this)
+    }
 
     givenASuccessfulBooksServiceCall(fakeBooks)
-    givenWeeklyGroupingFeature(isEnabled = true)
   }
 
   @Test fun `receive InFlight state upon subscription`() {
-    emitter.onNext(BooksIntent.InitialIntent)
+    viewEmits(BooksIntent.InitialIntent)
 
     val values = observer.values()
     observer.getAllEvents()
@@ -52,41 +59,68 @@ class BooksViewModelShould {
     assertThat(values[0]).isEqualTo(BooksViewState.InFlight)
   }
 
-  @Test fun `receive DataFetched state in response to its InitialIntent `() {
-    val isFeatureOn = false
-    givenWeeklyGroupingFeature(isEnabled = isFeatureOn)
-    emitter.onNext(BooksIntent.InitialIntent)
+  @Test fun `emit DataFetched state to View in response to InitialIntent from View`() {
+    viewEmits(BooksIntent.InitialIntent)
+    val expectedValue = false
+    groupByWeeklyEmitter.onNext(expectedValue)
 
     val values = observer.values()
     observer.getAllEvents()
 
     assertThat(values.size).isEqualTo(2)
-    assertThat(values[1]).isEqualTo(BooksViewState.DataFetched(fakeBooks, isFeatureOn))
+    assertThat(values[1]).isEqualTo(BooksViewState.DataFetched(fakeBooks, expectedValue))
   }
 
-  @Test fun `receive InitialIntent only once when configuration change occurs`() {
-    emitter.onNext(BooksIntent.InitialIntent)
+  @Test fun `observe changes from all sources and emit new state to View on each data change`() {
+    viewEmits(BooksIntent.InitialIntent)
+    groupByWeeklyFeatureSwitchEmits()
+
+    val values = observer.values()
+    observer.getAllEvents()
+
+    assertThat(values.size).isEqualTo(2)
+    assertThat(values[1]).isEqualTo(BooksViewState.DataFetched(fakeBooks, true))
+
+    groupByWeeklyFeatureSwitchEmits()
+    observer.getAllEvents()
+
+    assertThat(values.size).isEqualTo(3)
+
+    groupByWeeklyFeatureSwitchEmits()
+    observer.getAllEvents()
+
+    // TODO-eugene also emit from database
+    assertThat(values.size).isEqualTo(4)
+  }
+
+  @Test fun `not react to InitialIntent received after configuration change`() {
+    viewEmits(BooksIntent.InitialIntent)
+    groupByWeeklyFeatureSwitchEmits()
     observer.getAllEvents()
 
     observer.assertValueCount(2)
 
-    emitter.onNext(BooksIntent.InitialIntent)
+    viewEmits(BooksIntent.InitialIntent)
     observer.getAllEvents()
 
     observer.assertValueCount(2)
   }
 
-  @Test fun `receive Error state when hard stop occurs`() {
+  @Test fun `emit Error state to View when hard stop occurs`() {
     val throwable = RuntimeException("test")
     givenAnUnsuccessfulBooksServiceCall(throwable)
 
-    emitter.onNext(BooksIntent.InitialIntent)
+    viewEmits(BooksIntent.InitialIntent)
 
     val values = observer.values()
     observer.getAllEvents()
 
     assertThat(values.size).isEqualTo(2)
     assertThat(values[1]).isEqualTo(BooksViewState.Error(throwable))
+  }
+
+  private fun viewEmits(intent: BooksIntent) {
+    viewEmitter.onNext(intent)
   }
 
   private fun givenASuccessfulBooksServiceCall(result: Books) {
@@ -97,8 +131,12 @@ class BooksViewModelShould {
     whenever(getBooks()).thenReturn(Observable.error(exception))
   }
 
-  private fun givenWeeklyGroupingFeature(isEnabled: Boolean) {
-    whenever(isGroupByWeeklyFeatureOn()).thenReturn(Observable.just(isEnabled))
+  private fun givenWeeklyGroupingFeature(emitter: PublishSubject<Boolean>) {
+    whenever(isGroupByWeeklyFeatureOn()).thenReturn(emitter)
+  }
+
+  private fun groupByWeeklyFeatureSwitchEmits(value: Boolean = true) {
+    groupByWeeklyEmitter.onNext(value)
   }
 
 }
