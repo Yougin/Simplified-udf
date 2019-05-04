@@ -28,5 +28,12 @@ abstract class BooksActivityModule {
 
   @Binds
   @ScreenScope
-  abstract fun providesMainUseCase(getBooks: GetBooksUseCase): GetBooks
+  abstract fun providesMainUseCase(useCase: GetBooksUseCase): GetBooks
+
+
+  @Binds
+  @ScreenScope
+  abstract fun providesFeatureUseCase(
+      useCase: IsGroupByWeeklyFeatureOnUseCase
+  ): IsGroupByWeeklyFeatureOn
 }

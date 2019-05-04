@@ -10,7 +10,6 @@ import com.blinkslabs.blinkist.android.challenge.utils.getAllEvents
 import com.google.common.truth.Truth.assertThat
 import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.Observable
-import io.reactivex.Single
 import io.reactivex.observers.TestObserver
 import io.reactivex.subjects.PublishSubject
 import org.junit.Before
@@ -25,8 +24,9 @@ import org.threeten.bp.LocalDate
 @RunWith(MockitoJUnitRunner::class)
 class BooksViewModelShould {
 
-  @Mock lateinit var getBooks: GetBooks
-  @Mock lateinit var disposables: Disposables
+  @Mock private lateinit var getBooks: GetBooks
+  @Mock private lateinit var isGroupByWeeklyFeatureOn: IsGroupByWeeklyFeatureOn
+  @Mock private lateinit var disposables: Disposables
   @InjectMocks lateinit var viewModel: BooksViewModel
 
   private lateinit var emitter: PublishSubject<BooksIntent>
@@ -40,6 +40,7 @@ class BooksViewModelShould {
     viewModel.intents(emitter)
 
     givenASuccessfulBooksServiceCall(fakeBooks)
+    givenWeeklyGroupingFeature(isEnabled = true)
   }
 
   @Test fun `receive InFlight state upon subscription`() {
@@ -51,17 +52,19 @@ class BooksViewModelShould {
     assertThat(values[0]).isEqualTo(BooksViewState.InFlight)
   }
 
-  @Test fun `receive BooksFetched state in response to its InitialIntent `(){
+  @Test fun `receive DataFetched state in response to its InitialIntent `() {
+    val isFeatureOn = true
+    givenWeeklyGroupingFeature(isEnabled = isFeatureOn)
     emitter.onNext(BooksIntent.InitialIntent)
 
     val values = observer.values()
     observer.getAllEvents()
 
     assertThat(values.size).isEqualTo(2)
-    assertThat(values[1]).isEqualTo(BooksViewState.BooksFetched(fakeBooks))
+    assertThat(values[1]).isEqualTo(BooksViewState.DataFetched(fakeBooks, isFeatureOn))
   }
 
-  @Test fun `receive InitialIntent only once when configuration change occurs`(){
+  @Test fun `receive InitialIntent only once when configuration change occurs`() {
     emitter.onNext(BooksIntent.InitialIntent)
     observer.getAllEvents()
 
@@ -73,7 +76,7 @@ class BooksViewModelShould {
     observer.assertValueCount(2)
   }
 
-  @Test fun `receive Error state when hard stop occurs`(){
+  @Test fun `receive Error state when hard stop occurs`() {
     val throwable = RuntimeException("test")
     givenAnUnsuccessfulBooksServiceCall(throwable)
 
@@ -92,6 +95,10 @@ class BooksViewModelShould {
 
   private fun givenAnUnsuccessfulBooksServiceCall(exception: Throwable) {
     whenever(getBooks()).thenReturn(Observable.error(exception))
+  }
+
+  private fun givenWeeklyGroupingFeature(isEnabled: Boolean) {
+    whenever(isGroupByWeeklyFeatureOn()).thenReturn(Observable.just(isEnabled))
   }
 
 }
