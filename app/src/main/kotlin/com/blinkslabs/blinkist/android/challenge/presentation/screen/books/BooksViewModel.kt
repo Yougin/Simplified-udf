@@ -58,11 +58,11 @@ class BooksViewModel @Inject constructor(
         .startWith(BooksViewState.InFlight)
         .onErrorReturn { BooksViewState.Error(it) }
         .subscribeOn(BLSchedulers.io())
-        .doOnNext { Timber.d("----- Result: ${it.javaClass.simpleName}") }
         .distinctUntilChanged()
+        .doOnNext { Timber.d("----- Result: ${it.javaClass.simpleName}") }
         .subscribe(
             { _viewState.onNext(it) },
-            { Timber.e("Something went wrong fetching books") }
+            { Timber.e("Something went wrong fetching screen's data") }
         )
   }
 
@@ -70,17 +70,4 @@ class BooksViewModel @Inject constructor(
     super.onCleared()
     disposables.clear()
   }
-
-}
-
-
-sealed class BooksViewState {
-  object InFlight : BooksViewState()
-  data class DataFetched(val books: Books, val isFeatureOn: Boolean) : BooksViewState()
-  data class Error(val throwable: Throwable) : BooksViewState()
-}
-
-sealed class BooksIntent {
-  object InitialIntent : BooksIntent()
-  object ForceUpdateIntent : BooksIntent()
 }
