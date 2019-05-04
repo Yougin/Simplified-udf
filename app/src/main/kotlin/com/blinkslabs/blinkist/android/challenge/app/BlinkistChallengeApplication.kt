@@ -21,7 +21,7 @@ class BlinkistChallengeApplication : Application() {
 
   private fun buildObjectGraphAndInject() {
     component =
-        AppComponentProvider().get().dataModule(DataModule(this)).build().also { it.inject(this) }
+        getAppComponent().dataModule(DataModule(this)).build().also { it.inject(this) }
   }
 
   private fun setRxJavaErrorHandler() {
