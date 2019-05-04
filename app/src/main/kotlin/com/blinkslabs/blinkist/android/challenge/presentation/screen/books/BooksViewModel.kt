@@ -22,14 +22,14 @@ class BooksViewModel @Inject constructor(
   private val intentsEmitter = PublishSubject.create<BooksIntent>()
 
   fun intents(intents: Observable<BooksIntent>): Disposable {
-    subscribeToIntents()
+    subscribeForUpcomingEvents()
     return intents.subscribe(
         { intentsEmitter.onNext(it) },
         { Timber.e(it, "Something went wrong processing intents") }
     )
   }
 
-  private fun subscribeToIntents() {
+  private fun subscribeForUpcomingEvents() {
     disposables += intentsEmitter
         .takeOnlyOnce(BooksIntent.InitialIntent::class.java)
         .subscribe {
