@@ -16,6 +16,7 @@ import javax.inject.Inject
 
 class BooksActivity : AppCompatActivity(), BooksView {
 
+  // TODO-eugene delete me
   @Inject lateinit var presenter: BooksPresenter
 
   @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -27,7 +28,9 @@ class BooksActivity : AppCompatActivity(), BooksView {
     super.onCreate(savedInstanceState)
 
     app().component.getBooksComponent().inject(this)
-    LayoutInflater.from(this).inflate(R.layout.activity_books, viewContainer.forActivity(this), true)
+    LayoutInflater.from(this).inflate(R.layout.activity_books,
+                                      viewContainer.forActivity(this),
+                                      true)
     viewModel = ViewModelProviders.of(this, viewModelFactory).get(BooksViewModel::class.java)
 
     setupRecyclerView()
