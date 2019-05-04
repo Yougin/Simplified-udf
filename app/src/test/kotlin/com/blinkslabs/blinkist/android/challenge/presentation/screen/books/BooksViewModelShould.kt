@@ -81,7 +81,7 @@ class BooksViewModelShould {
     assertThat(values.size).isEqualTo(2)
     assertThat(values[1]).isEqualTo(BooksViewState.DataFetched(fakeBooks, true))
 
-    groupByWeeklyFeatureSwitchEmits()
+    groupByWeeklyFeatureSwitchEmits(false)
     observer.getAllEvents()
 
     assertThat(values.size).isEqualTo(3)
