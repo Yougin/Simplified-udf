@@ -45,7 +45,7 @@ class BooksViewModel @Inject constructor(
 
   private fun fetchData() {
     disposables += getBooks()
-        .zipWith(isGroupByWeeklyFeatureOn(), BiFunction { a: Books, b: Boolean -> Pair(a, b) })
+        .withLatestFrom(isGroupByWeeklyFeatureOn(), BiFunction { a: Books, b: Boolean -> Pair(a, b) })
         .map<BooksViewState> { BooksViewState.DataFetched(it.first, it.second) }
         .startWith(BooksViewState.InFlight)
         .onErrorReturn { BooksViewState.Error(it) }

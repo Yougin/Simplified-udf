@@ -53,7 +53,7 @@ class BooksViewModelShould {
   }
 
   @Test fun `receive DataFetched state in response to its InitialIntent `() {
-    val isFeatureOn = true
+    val isFeatureOn = false
     givenWeeklyGroupingFeature(isEnabled = isFeatureOn)
     emitter.onNext(BooksIntent.InitialIntent)
 
