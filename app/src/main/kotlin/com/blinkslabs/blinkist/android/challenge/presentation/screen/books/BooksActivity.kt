@@ -10,16 +10,30 @@ import com.blinkslabs.blinkist.android.challenge.R
 import com.blinkslabs.blinkist.android.challenge.app.BlinkistChallengeApplication
 import com.blinkslabs.blinkist.android.challenge.domain.book.model.Books
 import com.blinkslabs.blinkist.android.challenge.presentation.screen.books.rootview.ViewContainer
+import com.blinkslabs.blinkist.android.challenge.util.BLSchedulers
 import com.blinkslabs.blinkist.android.challenge.util.showToast
+import com.jakewharton.rxbinding3.swiperefreshlayout.refreshes
+import io.reactivex.Observable
+import io.reactivex.Observable.merge
 import kotlinx.android.synthetic.main.activity_books.*
+import timber.log.Timber
 import javax.inject.Inject
 
 class BooksActivity : AppCompatActivity() {
 
   @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
   @Inject lateinit var viewContainer: ViewContainer
+  @Inject lateinit var disposables: Disposables
+
   private lateinit var viewModel: BooksViewModel
+  // TODO-eugene remove
   private lateinit var recyclerAdapter: BookListRecyclerAdapter
+
+  private val intents: Observable<BooksIntent>
+    get() = merge(
+        Observable.just(BooksIntent.InitialIntent),
+        swipeRefreshView.refreshes().map { BooksIntent.ForceUpdateIntent }
+    )
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -31,7 +45,43 @@ class BooksActivity : AppCompatActivity() {
     viewModel = ViewModelProviders.of(this, viewModelFactory).get(BooksViewModel::class.java)
 
     setupRecyclerView()
-    setupSwipeToRefresh()
+  }
+
+  override fun onResume() {
+    super.onResume()
+
+    announceYourIntentions()
+    subscribeToViewStateChanges()
+  }
+
+  private fun announceYourIntentions() {
+    disposables += viewModel.intents(intents)
+  }
+
+  private fun subscribeToViewStateChanges() {
+    disposables += viewModel.viewState
+        .doOnNext { Timber.d("----- Received ViewState: ${it.javaClass.simpleName}") }
+        .observeOn(BLSchedulers.main())
+        .subscribe { renderState(it) }
+  }
+
+  private fun renderState(viewState: BooksViewState) {
+    when (viewState) {
+      is BooksViewState.InFlight -> {
+        swipeRefreshView.isRefreshing = true
+        Timber.e("----- Render InFlight: $viewState")
+      }
+      is BooksViewState.DataFetched -> {
+        swipeRefreshView.isRefreshing = false
+        Timber.e("----- Render DataFetched: $viewState")
+      }
+      is BooksViewState.Error -> Timber.e("----- Render Error $viewState")
+    }
+  }
+
+  override fun onStop() {
+    super.onStop()
+    disposables.clear()
   }
 
   private fun setupRecyclerView() {
@@ -40,15 +90,10 @@ class BooksActivity : AppCompatActivity() {
     recyclerView.adapter = recyclerAdapter
   }
 
-  private fun setupSwipeToRefresh() {
-    swipeRefreshView.setOnRefreshListener { }
-  }
-
 
   private fun showBooks(books: Books) {
     recyclerAdapter.setItems(books)
     recyclerAdapter.notifyDataSetChanged()
-    swipeRefreshView.isRefreshing = false
   }
 
   private fun showErrorLoadingData() {
@@ -57,4 +102,3 @@ class BooksActivity : AppCompatActivity() {
 
   private fun app() = (application as BlinkistChallengeApplication)
 }
-

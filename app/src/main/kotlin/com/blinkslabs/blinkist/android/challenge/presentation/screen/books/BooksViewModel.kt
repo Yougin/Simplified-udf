@@ -6,6 +6,7 @@ import com.blinkslabs.blinkist.android.challenge.domain.book.usecase.GetBooks
 import com.blinkslabs.blinkist.android.challenge.util.BLSchedulers
 import com.blinkslabs.blinkist.android.challenge.util.takeOnlyOnce
 import io.reactivex.Observable
+import io.reactivex.Observable.combineLatest
 import io.reactivex.disposables.Disposable
 import io.reactivex.functions.BiFunction
 import io.reactivex.subjects.BehaviorSubject
@@ -21,17 +22,26 @@ class BooksViewModel @Inject constructor(
 
   val viewState: Observable<BooksViewState> get() = _viewState
   private val _viewState = BehaviorSubject.create<BooksViewState>()
-  private val intentsEmitter = PublishSubject.create<BooksIntent>()
 
+  private val dataSources: Observable<BooksViewState>
+    get() = combineLatest(
+        getBooks(),
+        isGroupByWeeklyFeatureOn(),
+        BiFunction { books: Books, isFeatureEnabled: Boolean ->
+          BooksViewState.DataFetched(books, isFeatureEnabled)
+        }
+    )
+
+  private val intentsEmitter = PublishSubject.create<BooksIntent>()
   fun intents(intents: Observable<BooksIntent>): Disposable {
-    subscribeForUpcomingEvents()
+    subscribeForUpcomingIntents
     return intents.subscribe(
         { intentsEmitter.onNext(it) },
         { Timber.e(it, "Something went wrong processing intents") }
     )
   }
 
-  private fun subscribeForUpcomingEvents() {
+  private val subscribeForUpcomingIntents by lazy {
     disposables += intentsEmitter
         .takeOnlyOnce(BooksIntent.InitialIntent::class.java)
         .doOnNext { Timber.d("----- Intent: ${it.javaClass.simpleName}") }
@@ -43,20 +53,12 @@ class BooksViewModel @Inject constructor(
   }
 
   private fun fetchData() {
-    val getBooks = getBooks().doOnNext { Timber.d("Get Books emits $it") }
-    val isFeatureOn = isGroupByWeeklyFeatureOn().doOnNext { Timber.d("Feature Switch emits $it") }
-
-    val dataSources = Observable.combineLatest(
-        getBooks, isFeatureOn, BiFunction { a: Books, b: Boolean -> Pair(a, b) }
-    )
-
-    // TODO-eugene I don't need to declare main thread in here, do it in the View
     disposables += dataSources
-        .map<BooksViewState> { BooksViewState.DataFetched(it.first, it.second) }
         .startWith(BooksViewState.InFlight)
         .onErrorReturn { BooksViewState.Error(it) }
         .subscribeOn(BLSchedulers.io())
         .doOnNext { Timber.d("----- Result: ${it.javaClass.simpleName}") }
+        .distinctUntilChanged()
         .subscribe(
             { _viewState.onNext(it) },
             { Timber.e("Something went wrong fetching books") }
@@ -91,5 +93,6 @@ interface IsGroupByWeeklyFeatureOn {
 
 class IsGroupByWeeklyFeatureOnUseCase @Inject constructor() : IsGroupByWeeklyFeatureOn {
 
-  override fun invoke(): Observable<Boolean> = Observable.just(true)
+  override fun invoke(): Observable<Boolean> =
+      Observable.just(true).doOnNext { Timber.d("----- Emits $it") }
 }
