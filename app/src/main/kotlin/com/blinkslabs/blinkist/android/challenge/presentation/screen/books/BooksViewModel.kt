@@ -13,7 +13,6 @@ import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
 import javax.inject.Inject
 
-
 class BooksViewModel @Inject constructor(
     private val getBooks: GetBooks,
     private val isGroupByWeeklyFeatureOn: IsGroupByWeeklyFeatureOn,
@@ -44,15 +43,12 @@ class BooksViewModel @Inject constructor(
   }
 
   private fun fetchData() {
-    val getBooks = getBooks()
-        .doOnNext { Timber.d("----- Get Books emits $it") }
+    val getBooks = getBooks().doOnNext { Timber.d("Get Books emits $it") }
+    val isFeatureOn = isGroupByWeeklyFeatureOn().doOnNext { Timber.d("Feature Switch emits $it") }
 
-    val isFeatureOn = isGroupByWeeklyFeatureOn()
-        .doOnNext { Timber.d("----- Feature Switch emits $it") }
-
-    val dataSources =
-        Observable.combineLatest(getBooks, isFeatureOn,
-                                 BiFunction { a: Books, b: Boolean -> Pair(a, b) })
+    val dataSources = Observable.combineLatest(
+        getBooks, isFeatureOn, BiFunction { a: Books, b: Boolean -> Pair(a, b) }
+    )
 
     // TODO-eugene I don't need to declare main thread in here, do it in the View
     disposables += dataSources
@@ -61,8 +57,9 @@ class BooksViewModel @Inject constructor(
         .onErrorReturn { BooksViewState.Error(it) }
         .subscribeOn(BLSchedulers.io())
         .doOnNext { Timber.d("----- Result: ${it.javaClass.simpleName}") }
-        .subscribe({ _viewState.onNext(it) },
-                   { Timber.e("Something went wrong fetching books") }
+        .subscribe(
+            { _viewState.onNext(it) },
+            { Timber.e("Something went wrong fetching books") }
         )
   }
 
