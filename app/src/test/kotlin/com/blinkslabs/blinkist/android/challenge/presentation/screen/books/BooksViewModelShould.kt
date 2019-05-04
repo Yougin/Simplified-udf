@@ -100,10 +100,13 @@ class BooksViewModelShould {
 
     observer.assertValueCount(2)
 
+    observer.dispose()
+    observer = viewModel.viewState.test()
+
     viewEmits(BooksIntent.InitialIntent)
     observer.getAllEvents()
 
-    observer.assertValueCount(2)
+    observer.assertValueCount(1)
   }
 
   @Test fun `emit Error state to View when hard stop occurs`() {
