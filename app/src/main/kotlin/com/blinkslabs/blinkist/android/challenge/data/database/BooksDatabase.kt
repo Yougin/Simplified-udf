@@ -1,4 +1,4 @@
-package com.blinkslabs.blinkist.android.challenge.data.storage.database
+package com.blinkslabs.blinkist.android.challenge.data.database
 
 import android.content.Context
 import androidx.room.Database
