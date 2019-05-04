@@ -1,4 +1,4 @@
-package com.blinkslabs.blinkist.android.challenge.domain.featureswitch
+package com.blinkslabs.blinkist.android.challenge.domain.featurewitch
 
 import io.reactivex.Observable
 import timber.log.Timber
