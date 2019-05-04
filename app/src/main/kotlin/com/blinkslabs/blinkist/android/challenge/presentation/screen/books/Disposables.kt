@@ -13,13 +13,13 @@ interface Disposables {
 
 class CompositeDisposables @Inject constructor() : Disposables {
 
-  private val container = CompositeDisposable()
+  private val compositeDisposable = CompositeDisposable()
 
   override fun plusAssign(disposable: Disposable) {
-    container.add(disposable)
+    compositeDisposable.add(disposable)
   }
 
   override fun clear() {
-    container.clear()
+    compositeDisposable.clear()
   }
 }
