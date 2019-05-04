@@ -100,10 +100,15 @@ class BooksViewModelShould {
 
     observer.assertValueCount(2)
 
+    // Configuration change is about to happen
     observer.dispose()
-    observer = viewModel.viewState.test()
 
-    viewEmits(BooksIntent.InitialIntent)
+    observer = viewModel.viewState.test()
+    val newEmitter = PublishSubject.create<BooksIntent>()
+    // new View is in the game
+    viewModel.intents(newEmitter)
+
+    newEmitter.onNext(BooksIntent.InitialIntent)
     observer.getAllEvents()
 
     observer.assertValueCount(1)
