@@ -20,6 +20,7 @@ open class FlexibleAdapterImpl(
 
   override fun asRecyclerAdapter(): RecyclerView.Adapter<RecyclerView.ViewHolder> = this
 
+  // TODO-eugene check nullability
   override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
     holder.itemView?.let { delegationMap.bind(it, items[position]) }
   }
