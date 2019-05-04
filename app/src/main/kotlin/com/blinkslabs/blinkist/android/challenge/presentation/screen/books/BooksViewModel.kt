@@ -19,7 +19,6 @@ class BooksViewModel @Inject constructor(
 
   val viewState: Observable<BooksViewState> get() = _viewState
   private val _viewState = BehaviorSubject.create<BooksViewState>()
-
   private val intentsEmitter = PublishSubject.create<BooksIntent>()
 
   fun intents(intents: Observable<BooksIntent>): Disposable {
@@ -51,6 +50,11 @@ class BooksViewModel @Inject constructor(
         .subscribe({ _viewState.onNext(it) },
                    { Timber.e("Something went wrong fetching books") }
         )
+  }
+
+  override fun onCleared() {
+    super.onCleared()
+    disposables.clear()
   }
 
 }
