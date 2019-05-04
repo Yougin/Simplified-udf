@@ -58,6 +58,19 @@ class BooksViewModelShould {
     assertThat(values[1]).isEqualTo(BooksViewState.BooksFetched(fakeBooks))
   }
 
+  @Test fun `receive InitialIntent only once when configuration change occurs`(){
+    givenASuccessfulBooksServiceCall(fakeBooks)
+    emitter.onNext(BooksIntent.InitialIntent)
+    observer.getAllEvents()
+
+    observer.assertValueCount(2)
+
+    emitter.onNext(BooksIntent.InitialIntent)
+    observer.getAllEvents()
+
+    observer.assertValueCount(2)
+  }
+
   @Test fun `receive Error state when hard stop occurs`(){
     val throwable = RuntimeException("test")
     givenAnUnsuccessfulBooksServiceCall(throwable)
@@ -78,7 +91,6 @@ class BooksViewModelShould {
   private fun givenAnUnsuccessfulBooksServiceCall(exception: Throwable) {
     whenever(getBooks()).thenReturn(Single.error(exception))
   }
-
 
 }
 
