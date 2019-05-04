@@ -75,8 +75,6 @@ sealed class BooksViewState {
 sealed class BooksIntent {
   object InitialIntent : BooksIntent()
   object ForceUpdateIntent : BooksIntent()
-
-  data class GroupByWeeklyFeatureIs(val isEnabled: Boolean) : BooksIntent()
 }
 
 
