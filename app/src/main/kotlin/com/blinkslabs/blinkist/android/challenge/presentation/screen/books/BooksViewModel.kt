@@ -3,6 +3,7 @@ package com.blinkslabs.blinkist.android.challenge.presentation.screen.books
 import androidx.lifecycle.ViewModel
 import com.blinkslabs.blinkist.android.challenge.domain.book.model.Books
 import com.blinkslabs.blinkist.android.challenge.domain.book.usecase.GetBooks
+import com.blinkslabs.blinkist.android.challenge.domain.featureswitch.IsGroupByWeeklyFeatureOn
 import com.blinkslabs.blinkist.android.challenge.util.BLSchedulers
 import com.blinkslabs.blinkist.android.challenge.util.takeOnlyOnce
 import io.reactivex.Observable
@@ -73,7 +74,6 @@ class BooksViewModel @Inject constructor(
 }
 
 
-// TODO-eugene extract us from here
 sealed class BooksViewState {
   object InFlight : BooksViewState()
   data class DataFetched(val books: Books, val isFeatureOn: Boolean) : BooksViewState()
@@ -83,16 +83,4 @@ sealed class BooksViewState {
 sealed class BooksIntent {
   object InitialIntent : BooksIntent()
   object ForceUpdateIntent : BooksIntent()
-}
-
-
-interface IsGroupByWeeklyFeatureOn {
-
-  operator fun invoke(): Observable<Boolean>
-}
-
-class IsGroupByWeeklyFeatureOnUseCase @Inject constructor() : IsGroupByWeeklyFeatureOn {
-
-  override fun invoke(): Observable<Boolean> =
-      Observable.just(true).doOnNext { Timber.d("----- Emits $it") }
 }
