@@ -95,6 +95,7 @@ class BooksViewModelShould {
     assertThat(values.size).isEqualTo(4)
   }
 
+  // TODO-eugene should stay alive after conf change
   @Test fun `not react to InitialIntent received after configuration change`() {
     viewEmits(BooksIntent.InitialIntent)
     groupByWeeklyFeatureSwitchEmits()
@@ -106,8 +107,7 @@ class BooksViewModelShould {
     observer.dispose()
 
     observer = viewModel.viewState.test()
-    val newEmitter = PublishSubject.create<BooksIntent>()
-    // new View is in the game
+    val newEmitter = PublishSubject.create<BooksIntent>() // new View is in the game
     viewModel.intents(newEmitter)
 
     newEmitter.onNext(BooksIntent.InitialIntent)
