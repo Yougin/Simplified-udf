@@ -64,6 +64,9 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
     implementation "com.jakewharton.rxbinding3:rxbinding-swiperefreshlayout:$rxbinding_version"
 
+    implementation "android.arch.persistence.room:runtime:$room_version"
+    annotationProcessor "android.arch.persistence.room:compiler:$room_version"
+
     implementation "com.squareup.picasso:picasso:$picasso_version"
 
     implementation "com.jakewharton.threetenabp:threetenabp:$threeten_version"
