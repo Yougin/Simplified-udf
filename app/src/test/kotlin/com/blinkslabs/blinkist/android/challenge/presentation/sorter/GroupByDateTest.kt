@@ -1,8 +1,8 @@
 package com.blinkslabs.blinkist.android.challenge.presentation.sorter
 
 import com.blinkslabs.blinkist.android.challenge.domain.book.model.Book
-import com.blinkslabs.blinkist.android.challenge.domain.book.model.Title
 import com.blinkslabs.blinkist.android.challenge.presentation.screen.books.grouper.GroupByDate
+import com.blinkslabs.blinkist.android.challenge.presentation.screen.books.grouper.Title
 import com.blinkslabs.blinkist.android.challenge.presentation.screen.books.grouper.Year
 import com.google.common.truth.Truth.assertThat
 import org.junit.Before

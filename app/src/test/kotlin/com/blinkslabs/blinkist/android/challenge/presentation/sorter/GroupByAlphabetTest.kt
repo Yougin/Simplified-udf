@@ -1,8 +1,8 @@
 package com.blinkslabs.blinkist.android.challenge.presentation.sorter
 
 import com.blinkslabs.blinkist.android.challenge.domain.book.model.Book
-import com.blinkslabs.blinkist.android.challenge.domain.book.model.Title
 import com.blinkslabs.blinkist.android.challenge.presentation.screen.books.grouper.GroupByAlphabet
+import com.blinkslabs.blinkist.android.challenge.presentation.screen.books.grouper.Title
 import com.google.common.truth.Truth.assertThat
 import org.junit.Before
 import org.junit.Test
@@ -29,7 +29,7 @@ class GroupByAlphabetTest {
     assertThat(books[Title("Z")]).containsAllIn(listOf(book5, book6))
   }
 
-  @Test fun `should skip a book with no name`(){
+  @Test fun `should skip a book with no name`() {
     val noNameBook = Book("id2", "  ", "", LocalDate.of(2014, 7, 2), "")
 
     assertThat(groupByAlphabet(listOf(noNameBook)).group).isEmpty()
