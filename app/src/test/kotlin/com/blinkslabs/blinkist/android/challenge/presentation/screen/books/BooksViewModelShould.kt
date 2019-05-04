@@ -90,6 +90,7 @@ class BooksViewModelShould {
     observer.getAllEvents()
 
     // TODO-eugene also emit from database
+    // TODO-eugene test distintcUntilChanged
     assertThat(values.size).isEqualTo(4)
   }
 
