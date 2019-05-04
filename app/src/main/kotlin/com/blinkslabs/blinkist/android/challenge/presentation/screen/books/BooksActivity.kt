@@ -14,10 +14,7 @@ import com.blinkslabs.blinkist.android.challenge.util.showToast
 import kotlinx.android.synthetic.main.activity_books.*
 import javax.inject.Inject
 
-class BooksActivity : AppCompatActivity(), BooksView {
-
-  // TODO-eugene delete me
-  @Inject lateinit var presenter: BooksPresenter
+class BooksActivity : AppCompatActivity() {
 
   @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
   @Inject lateinit var viewContainer: ViewContainer
@@ -35,9 +32,6 @@ class BooksActivity : AppCompatActivity(), BooksView {
 
     setupRecyclerView()
     setupSwipeToRefresh()
-
-    presenter.onCreate(this)
-    presenter.fetchBooks()
   }
 
   private fun setupRecyclerView() {
@@ -47,23 +41,18 @@ class BooksActivity : AppCompatActivity(), BooksView {
   }
 
   private fun setupSwipeToRefresh() {
-    swipeRefreshView.setOnRefreshListener { presenter.fetchBooks() }
+    swipeRefreshView.setOnRefreshListener { }
   }
 
 
-  override fun showBooks(books: Books) {
+  private fun showBooks(books: Books) {
     recyclerAdapter.setItems(books)
     recyclerAdapter.notifyDataSetChanged()
     swipeRefreshView.isRefreshing = false
   }
 
-  override fun showErrorLoadingData() {
+  private fun showErrorLoadingData() {
     showToast(R.string.error_generic)
-  }
-
-  override fun onDestroy() {
-    presenter.onDestroy()
-    super.onDestroy()
   }
 
   private fun app() = (application as BlinkistChallengeApplication)
