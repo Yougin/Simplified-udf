@@ -37,10 +37,11 @@ class BooksViewModelShould {
     observer = viewModel.viewState.test()
     emitter = PublishSubject.create()
     viewModel.intents(emitter)
+
+    givenASuccessfulBooksServiceCall(fakeBooks)
   }
 
   @Test fun `receive InFlight state upon subscription`() {
-    givenASuccessfulBooksServiceCall(fakeBooks)
     emitter.onNext(BooksIntent.InitialIntent)
 
     val values = observer.values()
@@ -50,7 +51,6 @@ class BooksViewModelShould {
   }
 
   @Test fun `receive BooksFetched state in response to its InitialIntent `(){
-    givenASuccessfulBooksServiceCall(fakeBooks)
     emitter.onNext(BooksIntent.InitialIntent)
 
     val values = observer.values()
@@ -61,7 +61,6 @@ class BooksViewModelShould {
   }
 
   @Test fun `receive InitialIntent only once when configuration change occurs`(){
-    givenASuccessfulBooksServiceCall(fakeBooks)
     emitter.onNext(BooksIntent.InitialIntent)
     observer.getAllEvents()
 
