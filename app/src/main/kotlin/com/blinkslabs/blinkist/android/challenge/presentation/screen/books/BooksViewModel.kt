@@ -40,7 +40,7 @@ class BooksViewModel @Inject constructor(
   }
 
   private fun fetchBooks() {
-    disposables += getBooks().toObservable()
+    disposables += getBooks()
         .map<BooksViewState> { BooksViewState.BooksFetched(it) }
         .startWith(BooksViewState.InFlight)
         .onErrorReturn { BooksViewState.Error(it) }

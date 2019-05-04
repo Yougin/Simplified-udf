@@ -9,6 +9,7 @@ import com.blinkslabs.blinkist.android.challenge.util.BLSchedulers
 import com.blinkslabs.blinkist.android.challenge.utils.getAllEvents
 import com.google.common.truth.Truth.assertThat
 import com.nhaarman.mockitokotlin2.whenever
+import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.observers.TestObserver
 import io.reactivex.subjects.PublishSubject
@@ -86,11 +87,11 @@ class BooksViewModelShould {
   }
 
   private fun givenASuccessfulBooksServiceCall(result: Books) {
-    whenever(getBooks()).thenReturn(Single.just(result))
+    whenever(getBooks()).thenReturn(Observable.just(result))
   }
 
   private fun givenAnUnsuccessfulBooksServiceCall(exception: Throwable) {
-    whenever(getBooks()).thenReturn(Single.error(exception))
+    whenever(getBooks()).thenReturn(Observable.error(exception))
   }
 
 }

@@ -9,6 +9,7 @@ import com.nhaarman.mockitokotlin2.eq
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
+import io.reactivex.Observable
 import io.reactivex.Single
 import org.junit.After
 import org.junit.Before
@@ -55,10 +56,10 @@ class BooksPresenterShould {
     }
 
     private fun givenASuccessfulBooksServiceCall(result: Books) {
-        whenever(getBooks()).thenReturn(Single.just(result))
+        whenever(getBooks()).thenReturn(Observable.just(result))
     }
 
     private fun givenAnUnsuccessfulBooksServiceCall(exception: Throwable) {
-        whenever(getBooks()).thenReturn(Single.error(exception))
+        whenever(getBooks()).thenReturn(Observable.error(exception))
     }
 }
