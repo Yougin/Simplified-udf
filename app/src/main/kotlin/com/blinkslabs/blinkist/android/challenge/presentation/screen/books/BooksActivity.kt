@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blinkslabs.blinkist.android.challenge.R
 import com.blinkslabs.blinkist.android.challenge.app.BlinkistChallengeApplication
-import com.blinkslabs.blinkist.android.challenge.data.book.datasource.local.BookDao
 import com.blinkslabs.blinkist.android.challenge.domain.book.model.Books
 import com.blinkslabs.blinkist.android.challenge.presentation.screen.books.rootview.ViewContainer
 import com.blinkslabs.blinkist.android.challenge.util.BLSchedulers
@@ -25,8 +24,6 @@ class BooksActivity : AppCompatActivity() {
   @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
   @Inject lateinit var viewContainer: ViewContainer
   @Inject lateinit var disposables: Disposables
-
-  @Inject lateinit var bookDao: BookDao
 
   private lateinit var viewModel: BooksViewModel
   // TODO-eugene remove
