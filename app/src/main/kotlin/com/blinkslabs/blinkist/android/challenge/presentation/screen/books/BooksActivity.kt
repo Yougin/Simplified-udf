@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.blinkslabs.blinkist.android.challenge.R
 import com.blinkslabs.blinkist.android.challenge.app.BlinkistChallengeApplication
 import com.blinkslabs.blinkist.android.challenge.data.book.datasource.local.BookDao
-import com.blinkslabs.blinkist.android.challenge.data.book.entity.BookEntity
 import com.blinkslabs.blinkist.android.challenge.domain.book.model.Books
 import com.blinkslabs.blinkist.android.challenge.presentation.screen.books.rootview.ViewContainer
 import com.blinkslabs.blinkist.android.challenge.util.BLSchedulers

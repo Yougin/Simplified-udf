@@ -8,11 +8,12 @@ import javax.inject.Inject
 
 interface GetBooks {
 
+  /** Emits updates of Books. It will fetch from Remote if no Books persisted */
   operator fun invoke(): Observable<Books>
 }
 
 class GetBooksUseCase @Inject constructor(private val booksApi: BooksApi) : GetBooks {
 
   override operator fun invoke(): Observable<Books> =
-      booksApi.getAllBooks().toObservable().doOnNext { Timber.d("----- Emits $it") }
+      booksApi.fetchAllBooks().toObservable().doOnNext { Timber.d("----- Emits $it") }
 }

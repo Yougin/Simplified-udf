@@ -14,6 +14,6 @@ interface BookDao {
   fun insertBook(book: BookEntity): Long
 
   @Query("SELECT * FROM BookEntity")
-  fun fetchAllBooks(): Observable<List<BookEntity>>
+  fun getAllBooks(): Observable<List<BookEntity>>
 
 }

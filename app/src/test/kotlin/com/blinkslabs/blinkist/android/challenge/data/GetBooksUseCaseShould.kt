@@ -35,7 +35,7 @@ class GetBooksUseCaseShould {
   @Test fun callBooksApiWhenGetBooksIsCalled() {
     givenASuccessfulBooksApiCall(mockBooks)
     getBooks()
-    verify(booksApi).getAllBooks()
+    verify(booksApi).fetchAllBooks()
   }
 
   @Test fun returnBooksApiOutputWhenGetBooksIsSuccessful() {
@@ -53,10 +53,10 @@ class GetBooksUseCaseShould {
   }
 
   private fun givenASuccessfulBooksApiCall(result: Books) {
-    whenever(booksApi.getAllBooks()).thenReturn(Single.just(result))
+    whenever(booksApi.fetchAllBooks()).thenReturn(Single.just(result))
   }
 
   private fun givenAnUnsuccessfulBooksApiCall(exception: Throwable) {
-    whenever(booksApi.getAllBooks()).thenReturn(Single.error(exception))
+    whenever(booksApi.fetchAllBooks()).thenReturn(Single.error(exception))
   }
 }

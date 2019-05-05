@@ -6,5 +6,5 @@ import io.reactivex.Single
 
 interface BooksApi {
 
-  fun getAllBooks(): Single<Books>
+  fun fetchAllBooks(): Single<Books>
 }

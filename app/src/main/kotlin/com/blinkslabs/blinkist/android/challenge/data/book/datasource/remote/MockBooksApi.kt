@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 class MockBooksApi @Inject constructor() : BooksApi {
 
-  override fun getAllBooks(): Single<Books> = Single.just(
+  override fun fetchAllBooks(): Single<Books> = Single.just(
       listOf(
           Book("d241b2b", "Eat, Move, Sleep", "Tom Rath", LocalDate.of(2018, 7, 3), "https://images.blinkist.com/images/books/5694b3802f6827000700002a/3_4/640.jpg"),
           Book("eea5ee1", "The Secret Life of Sleep", "Kat Duff", LocalDate.of(2018, 7, 2), "https://images.blinkist.com/images/books/56c1de12587c820007000063/3_4/640.jpg"),
