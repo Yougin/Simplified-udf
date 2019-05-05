@@ -34,7 +34,7 @@ class BooksViewModelShould {
   @Mock private lateinit var disposables: Disposables
   @InjectMocks lateinit var viewModel: BooksViewModel
 
-  private lateinit var groupByWeeklyFeatureEmitter: PublishSubject<GroupByWeeklyFeature>
+  private lateinit var weeklyFeatureEmitter: PublishSubject<GroupByWeeklyFeature>
   private lateinit var viewEmitter: PublishSubject<BooksIntent>
   private lateinit var observer: TestObserver<BooksViewState>
 
@@ -48,7 +48,7 @@ class BooksViewModelShould {
     }
 
     with(PublishSubject.create<GroupByWeeklyFeature>()) {
-      groupByWeeklyFeatureEmitter = this
+      weeklyFeatureEmitter = this
       whenever(isGroupByWeeklyFeatureOn()).thenReturn(this)
     }
 
@@ -67,7 +67,7 @@ class BooksViewModelShould {
   @Test fun `emit DataFetched state to View in response to InitialIntent from View`() {
     viewEmits(BooksIntent.InitialIntent)
     val expectedValue = GroupByWeeklyFeature.On
-    givenGroupByWeeklyFeatureSwitchEmits(expectedValue)
+    weeklyFeatureSwitchEmits(expectedValue)
 
     val values = observer.values()
     observer.getAllEvents()
@@ -78,7 +78,7 @@ class BooksViewModelShould {
 
   @Test fun `observe changes from all sources and emit new state to View on each data change`() {
     viewEmits(BooksIntent.InitialIntent)
-    givenGroupByWeeklyFeatureSwitchEmits()
+    weeklyFeatureSwitchEmits()
 
     val values = observer.values()
     observer.getAllEvents()
@@ -86,22 +86,21 @@ class BooksViewModelShould {
     assertThat(values.size).isEqualTo(2)
     assertThat(values[1]).isEqualTo(BooksViewState.DataFetched(fakeBooks, GroupByWeeklyFeature.On))
 
-    givenGroupByWeeklyFeatureSwitchEmits(GroupByWeeklyFeature.Off)
+    weeklyFeatureSwitchEmits(GroupByWeeklyFeature.Off)
     observer.getAllEvents()
 
     assertThat(values.size).isEqualTo(3)
 
-    givenGroupByWeeklyFeatureSwitchEmits()
+    weeklyFeatureSwitchEmits()
     observer.getAllEvents()
 
-    // TODO-eugene also emit from database
     assertThat(values.size).isEqualTo(4)
   }
 
   // TODO-eugene should stay alive after conf change
   @Test fun `not react to InitialIntent received after configuration change`() {
     viewEmits(BooksIntent.InitialIntent)
-    givenGroupByWeeklyFeatureSwitchEmits()
+    weeklyFeatureSwitchEmits()
     observer.getAllEvents()
 
     observer.assertValueCount(2)
@@ -133,7 +132,7 @@ class BooksViewModelShould {
   }
 
   @Test fun `interact with updateBooksByForce use case on ForceUpdate intent`() {
-    givenGroupByWeeklyFeatureSwitchEmits()
+    weeklyFeatureSwitchEmits()
     whenever(updateBooksByForce()).thenReturn(Completable.complete())
     viewEmits(BooksIntent.InitialIntent)
     viewEmits(BooksIntent.ForceUpdateIntent)
@@ -149,10 +148,8 @@ class BooksViewModelShould {
     viewEmitter.onNext(intent)
   }
 
-  private fun givenGroupByWeeklyFeatureSwitchEmits(
-      value: GroupByWeeklyFeature = GroupByWeeklyFeature.On
-  ) {
-    groupByWeeklyFeatureEmitter.onNext(value)
+  private fun weeklyFeatureSwitchEmits(value: GroupByWeeklyFeature = GroupByWeeklyFeature.On) {
+    weeklyFeatureEmitter.onNext(value)
   }
 
 }
