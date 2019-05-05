@@ -11,11 +11,10 @@ import io.reactivex.subjects.PublishSubject
 class FakeDao : BookDao {
 
   private val emitter = PublishSubject.create<List<BookEntity>>()
+
   override fun insertBook(book: BookEntity): Long = 0L
 
-  override fun insertAll(books: List<BookEntity>) {
-    emitter.onNext(books)
-  }
+  override fun insertAll(books: List<BookEntity>) = emitter.onNext(books)
 
   override fun getAllBooks(): Observable<List<BookEntity>> = emitter
 
