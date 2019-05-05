@@ -13,6 +13,9 @@ interface BookDao {
   @Insert(onConflict = OnConflictStrategy.REPLACE)
   fun insertBook(book: BookEntity): Long
 
+  @Insert(onConflict = OnConflictStrategy.REPLACE)
+  fun insertAll(books: List<BookEntity>)
+
   @Query("SELECT * FROM BookEntity")
   fun getAllBooks(): Observable<List<BookEntity>>
 

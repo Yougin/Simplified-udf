@@ -26,9 +26,15 @@ class BookRepositoryImpl @Inject constructor(
       bookDao.getAllBooks().map { Option(it.toBooks()) }
 
   override fun fetchBooks(): Completable {
-    return Completable.complete()
+    return booksApi
+        .fetchAllBooks()
+        .toObservable()
+        .flatMapIterable { it }
+        .map { it.toEntity() }
+        .toList()
+        .doOnSuccess { entities -> bookDao.insertAll(entities) }
+        .toCompletable()
   }
-
 }
 
 fun BookEntity.toBook(): Book {
@@ -36,3 +42,7 @@ fun BookEntity.toBook(): Book {
 }
 
 fun List<BookEntity>.toBooks(): Books = this.map { it.toBook() }
+
+fun Book.toEntity(): BookEntity {
+  return BookEntity(this.id, this.name, this.author, this.publishDate, this.coverImageUrl)
+}

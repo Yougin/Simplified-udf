@@ -1,14 +1,17 @@
 package com.blinkslabs.blinkist.android.challenge.data.book.datasource
 
 import arrow.core.Option
+import arrow.core.Some
 import com.blinkslabs.blinkist.android.challenge.data.book.datasource.local.BookDao
 import com.blinkslabs.blinkist.android.challenge.data.book.datasource.remote.BooksApi
 import com.blinkslabs.blinkist.android.challenge.data.book.entity.BookEntity
+import com.blinkslabs.blinkist.android.challenge.data.fake.FakeDao
 import com.blinkslabs.blinkist.android.challenge.domain.book.model.Book
 import com.blinkslabs.blinkist.android.challenge.domain.book.model.Books
 import com.blinkslabs.blinkist.android.challenge.util.BLSchedulers
 import com.google.common.truth.Truth.assertThat
 import com.nhaarman.mockitokotlin2.whenever
+import io.reactivex.Single
 import io.reactivex.observers.TestObserver
 import io.reactivex.subjects.PublishSubject
 import org.junit.Before
@@ -47,10 +50,20 @@ class BookRepositoryImpShould {
     observer = repository.getAllBooks().test()
   }
 
-  @Test fun `get persisted books when there are some`() {
+  @Test fun `emit persisted books upon subscription when there are some`() {
     bookDaoEmitter.onNext(fakeEntities)
 
     assertThat(observer.values()[0]).isEqualTo(Option(fakeBooks))
+  }
+
+  @Test fun `emit books fetched from api upon subscription`() {
+    val repository = BookRepositoryImpl(FakeDao(), booksApi)
+    whenever(booksApi.fetchAllBooks()).thenReturn(Single.just(fakeBooks))
+
+    val observer = repository.getAllBooks().test()
+    repository.fetchBooks().test()
+
+    assertThat(observer.values()[0]).isEqualTo(Some(fakeBooks))
   }
 
 }
