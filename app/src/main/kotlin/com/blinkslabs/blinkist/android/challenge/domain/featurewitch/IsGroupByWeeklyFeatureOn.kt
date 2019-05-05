@@ -1,15 +1,9 @@
 package com.blinkslabs.blinkist.android.challenge.domain.featurewitch
 
+import com.blinkslabs.blinkist.android.challenge.data.featureswitch.FeatureRepository
 import io.reactivex.Observable
-import io.reactivex.Observable.just
 import timber.log.Timber
 import javax.inject.Inject
-
-sealed class GroupByWeeklyFeature {
-
-  object On : GroupByWeeklyFeature()
-  object Off : GroupByWeeklyFeature()
-}
 
 interface IsGroupByWeeklyFeatureOn {
 
@@ -19,5 +13,11 @@ interface IsGroupByWeeklyFeatureOn {
 class IsGroupByWeeklyFeatureOnUseCase @Inject constructor() : IsGroupByWeeklyFeatureOn {
 
   override fun invoke(): Observable<GroupByWeeklyFeature> =
-      just<GroupByWeeklyFeature>(GroupByWeeklyFeature.Off).doOnNext { Timber.d("----- Emits $it") }
+      FeatureRepository.weeklyFeature.doOnNext { Timber.d("----- Emits $it") }
+}
+
+sealed class GroupByWeeklyFeature {
+
+  object On : GroupByWeeklyFeature()
+  object Off : GroupByWeeklyFeature()
 }
