@@ -34,17 +34,23 @@ class BooksViewModelShould {
   @Mock private lateinit var disposables: Disposables
   @InjectMocks lateinit var viewModel: BooksViewModel
 
+  private lateinit var getBooksEmitter: PublishSubject<Books>
   private lateinit var weeklyFeatureEmitter: PublishSubject<GroupByWeeklyFeature>
   private lateinit var viewEmitter: PublishSubject<BooksIntent>
+
   private lateinit var observer: TestObserver<BooksViewState>
 
   @Before fun setUp() {
     BLSchedulers.enableTesting()
 
-    observer = viewModel.viewState.test()
     with(PublishSubject.create<BooksIntent>()) {
       viewEmitter = this
       viewModel.intents(this)
+    }
+
+    with(PublishSubject.create<Books>()) {
+      getBooksEmitter = this
+      whenever(getBooks()).thenReturn(this)
     }
 
     with(PublishSubject.create<GroupByWeeklyFeature>()) {
@@ -52,7 +58,10 @@ class BooksViewModelShould {
       whenever(isGroupByWeeklyFeatureOn()).thenReturn(this)
     }
 
-    whenever(getBooks()).thenReturn(Observable.just(fakeBooks))
+    observer = viewModel.viewState.test()
+
+    viewEmits(BooksIntent.InitialIntent)
+    getBooksEmits()
   }
 
   @Test fun `receive InFlight state upon subscription`() {
@@ -84,7 +93,6 @@ class BooksViewModelShould {
     observer.getAllEvents()
 
     assertThat(values.size).isEqualTo(2)
-    assertThat(values[1]).isEqualTo(BooksViewState.DataFetched(fakeBooks, GroupByWeeklyFeature.On))
 
     weeklyFeatureSwitchEmits(GroupByWeeklyFeature.Off)
     observer.getAllEvents()
@@ -99,7 +107,6 @@ class BooksViewModelShould {
 
   // TODO-eugene should stay alive after conf change
   @Test fun `not react to InitialIntent received after configuration change`() {
-    viewEmits(BooksIntent.InitialIntent)
     weeklyFeatureSwitchEmits()
     observer.getAllEvents()
 
@@ -119,16 +126,14 @@ class BooksViewModelShould {
   }
 
   @Test fun `emit Error state to View when hard stop occurs`() {
-    val throwable = RuntimeException("test")
-    givenAnUnsuccessfulBooksServiceCall(throwable)
-
     viewEmits(BooksIntent.InitialIntent)
+    getBooksEmits(withError = true)
 
     val values = observer.values()
     observer.getAllEvents()
 
     assertThat(values.size).isEqualTo(2)
-    assertThat(values[1]).isEqualTo(BooksViewState.Error(throwable))
+    assertThat(values[1]).isEqualTo(BooksViewState.Error(TestException))
   }
 
   @Test fun `interact with updateBooksByForce use case on ForceUpdate intent`() {
@@ -144,16 +149,22 @@ class BooksViewModelShould {
     whenever(getBooks()).thenReturn(Observable.error(exception))
   }
 
-  private fun viewEmits(intent: BooksIntent) {
-    viewEmitter.onNext(intent)
+  private fun getBooksEmits(books: Books = fakeBooks, withError: Boolean = false) {
+    if (withError) getBooksEmitter.onError(TestException)
+    else getBooksEmitter.onNext(books)
   }
 
   private fun weeklyFeatureSwitchEmits(value: GroupByWeeklyFeature = GroupByWeeklyFeature.On) {
     weeklyFeatureEmitter.onNext(value)
   }
 
+  private fun viewEmits(intent: BooksIntent) {
+    viewEmitter.onNext(intent)
+  }
+
 }
 
+private object TestException : RuntimeException()
 
 val fakeBooks: Books
   get() = listOf(Book("d241b2b", "Eat, Move, Sleep", "Tom Rath", LocalDate.of(2018, 7, 3), "https://images.blinkist.com/images/books/5694b3802f6827000700002a/3_4/640.jpg"),
