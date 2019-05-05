@@ -1,9 +1,12 @@
 package com.blinkslabs.blinkist.android.challenge.domain.book.usecase
 
 import arrow.core.Option
+import arrow.core.getOrElse
 import com.blinkslabs.blinkist.android.challenge.data.book.datasource.BookRepository
 import com.blinkslabs.blinkist.android.challenge.domain.book.model.Books
-import io.reactivex.*
+import io.reactivex.Completable
+import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.Single.just
 import javax.inject.Inject
 
@@ -20,20 +23,17 @@ class GetBooksUseCase @Inject constructor(
   override operator fun invoke(): Observable<Books> =
       bookRepository
           .getAllBooks()
-          .flatMapSingle(::fetchIfEmptyOrEmitIfSome)
-          .compose(UnwrapOptionTransformer())
+          .flatMapSingle { fetchIfEmpty(it) }
+          .filter { it.nonEmpty() }
+          .map {
+            it.getOrElse {
+              throw IllegalStateException("None can't be unwrapped, check for emptiness first")
+            }
+          }
 
-  private fun fetchIfEmptyOrEmitIfSome(books: Option<Books>): Single<Option<Books>> =
-      fetchWhenNone(books).andThen(just(books))
-
-  private fun fetchWhenNone(books: Option<Books>): Completable =
+  private fun fetchIfEmpty(books: Option<Books>): Single<Option<Books>> =
       when {
         books.isEmpty() -> bookRepository.fetchBooks()
         else -> Completable.complete()
-      }
-}
-
-class UnwrapOptionTransformer<T> : ObservableTransformer<Option<T>, T> {
-  override fun apply(upstream: Observable<Option<T>>): ObservableSource<T> =
-      upstream.filter { it.isEmpty().not() }.map { it.orNull() }
+      }.andThen(just(books))
 }
