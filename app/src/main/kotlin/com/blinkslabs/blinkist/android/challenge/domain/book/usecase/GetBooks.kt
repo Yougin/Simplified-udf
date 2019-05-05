@@ -10,7 +10,8 @@ import io.reactivex.Single
 import io.reactivex.Single.just
 import javax.inject.Inject
 
-/** Emits updates of Books. It will fetch from Remote if no Books persisted */
+/** Emits every change of Books persisted in the database.
+ * It will fetch from Remote if no Books persisted */
 interface GetBooks {
 
   operator fun invoke(): Observable<Books>
