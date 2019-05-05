@@ -56,6 +56,12 @@ class BookRepositoryImpShould {
     assertThat(observer.values()[0]).isEqualTo(Option(fakeBooks))
   }
 
+  @Test fun `emit None if no persisted books`() {
+    bookDaoEmitter.onNext(emptyList())
+
+    assertThat(observer.values()[0]).isEqualTo(Option.empty<Books>())
+  }
+
   @Test fun `emit books fetched from api upon subscription`() {
     val repository = BookRepositoryImpl(FakeDao(), booksApi)
     whenever(booksApi.fetchAllBooks()).thenReturn(Single.just(fakeBooks))

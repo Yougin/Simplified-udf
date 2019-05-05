@@ -21,17 +21,19 @@ class BookRepositoryImpl @Inject constructor(
 ) : BookRepository {
 
   override fun getAllBooks(): Observable<Option<Books>> =
-      bookDao.getAllBooks().map { Option(it.toBooks()) }
+      bookDao.getAllBooks()
+          .map {
+            if (it.isEmpty()) Option.empty()
+            else Option(it.toBooks())
+          }
 
   // TODO: do mapping on computation thread
-  override fun fetchBooks(): Completable {
-    return booksApi
-        .fetchAllBooks()
-        .toObservable()
-        .flatMapIterable { it }
-        .map { it.toEntity() }
-        .toList()
-        .doOnSuccess { entities -> bookDao.insertAll(entities) }
-        .toCompletable()
-  }
+  override fun fetchBooks(): Completable =
+      booksApi.fetchAllBooks()
+          .toObservable()
+          .flatMapIterable { it }
+          .map { it.toEntity() }
+          .toList()
+          .doOnSuccess { entities -> bookDao.insertAll(entities) }
+          .toCompletable()
 }
