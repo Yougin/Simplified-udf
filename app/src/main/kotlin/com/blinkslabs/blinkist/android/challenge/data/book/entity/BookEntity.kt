@@ -1,11 +1,13 @@
 package com.blinkslabs.blinkist.android.challenge.data.book.entity
 
-import androidx.room.*
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import java.io.Serializable
 
 
 @Entity
-class BookEntity(
+data class BookEntity(
     @PrimaryKey(autoGenerate = false) var id: String,
     @ColumnInfo(name = "name") var name: String,
     @ColumnInfo(name = "author") var author: String,
