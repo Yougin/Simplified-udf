@@ -5,6 +5,7 @@ package com.blinkslabs.blinkist.android.challenge.presentation.screen.books
 import com.blinkslabs.blinkist.android.challenge.domain.book.model.Book
 import com.blinkslabs.blinkist.android.challenge.domain.book.model.Books
 import com.blinkslabs.blinkist.android.challenge.domain.book.usecase.GetBooks
+import com.blinkslabs.blinkist.android.challenge.domain.featurewitch.GroupByWeeklyFeature
 import com.blinkslabs.blinkist.android.challenge.domain.featurewitch.IsGroupByWeeklyFeatureOn
 import com.blinkslabs.blinkist.android.challenge.util.BLSchedulers
 import com.blinkslabs.blinkist.android.challenge.utils.getAllEvents
@@ -33,7 +34,7 @@ class BooksViewModelShould {
   @Mock private lateinit var disposables: Disposables
   @InjectMocks lateinit var viewModel: BooksViewModel
 
-  private lateinit var groupByWeeklyFeatureEmitter: PublishSubject<Boolean>
+  private lateinit var groupByWeeklyFeatureEmitter: PublishSubject<GroupByWeeklyFeature>
   private lateinit var viewEmitter: PublishSubject<BooksIntent>
   private lateinit var observer: TestObserver<BooksViewState>
 
@@ -46,7 +47,7 @@ class BooksViewModelShould {
       viewModel.intents(this)
     }
 
-    with(PublishSubject.create<Boolean>()) {
+    with(PublishSubject.create<GroupByWeeklyFeature>()) {
       groupByWeeklyFeatureEmitter = this
       whenever(isGroupByWeeklyFeatureOn()).thenReturn(this)
     }
@@ -65,7 +66,7 @@ class BooksViewModelShould {
 
   @Test fun `emit DataFetched state to View in response to InitialIntent from View`() {
     viewEmits(BooksIntent.InitialIntent)
-    val expectedValue = false
+    val expectedValue = GroupByWeeklyFeature.On
     givenGroupByWeeklyFeatureSwitchEmits(expectedValue)
 
     val values = observer.values()
@@ -83,9 +84,9 @@ class BooksViewModelShould {
     observer.getAllEvents()
 
     assertThat(values.size).isEqualTo(2)
-    assertThat(values[1]).isEqualTo(BooksViewState.DataFetched(fakeBooks, true))
+    assertThat(values[1]).isEqualTo(BooksViewState.DataFetched(fakeBooks, GroupByWeeklyFeature.On))
 
-    givenGroupByWeeklyFeatureSwitchEmits(false)
+    givenGroupByWeeklyFeatureSwitchEmits(GroupByWeeklyFeature.Off)
     observer.getAllEvents()
 
     assertThat(values.size).isEqualTo(3)
@@ -148,7 +149,9 @@ class BooksViewModelShould {
     viewEmitter.onNext(intent)
   }
 
-  private fun givenGroupByWeeklyFeatureSwitchEmits(value: Boolean = true) {
+  private fun givenGroupByWeeklyFeatureSwitchEmits(
+      value: GroupByWeeklyFeature = GroupByWeeklyFeature.On
+  ) {
     groupByWeeklyFeatureEmitter.onNext(value)
   }
 

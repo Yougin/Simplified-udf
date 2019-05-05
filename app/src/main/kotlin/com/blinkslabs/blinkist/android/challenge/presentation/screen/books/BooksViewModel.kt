@@ -3,6 +3,7 @@ package com.blinkslabs.blinkist.android.challenge.presentation.screen.books
 import androidx.lifecycle.ViewModel
 import com.blinkslabs.blinkist.android.challenge.domain.book.model.Books
 import com.blinkslabs.blinkist.android.challenge.domain.book.usecase.GetBooks
+import com.blinkslabs.blinkist.android.challenge.domain.featurewitch.GroupByWeeklyFeature
 import com.blinkslabs.blinkist.android.challenge.domain.featurewitch.IsGroupByWeeklyFeatureOn
 import com.blinkslabs.blinkist.android.challenge.util.BLSchedulers
 import com.blinkslabs.blinkist.android.challenge.util.takeOnlyOnce
@@ -30,8 +31,8 @@ class BooksViewModel @Inject constructor(
     get() = combineLatest(
         getBooks(),
         isGroupByWeeklyFeatureOn(),
-        BiFunction { books: Books, isFeatureEnabled: Boolean ->
-          BooksViewState.DataFetched(books, isFeatureEnabled)
+        BiFunction { books: Books, weeklyFeature: GroupByWeeklyFeature ->
+          BooksViewState.DataFetched(books, weeklyFeature)
         }
     )
 
