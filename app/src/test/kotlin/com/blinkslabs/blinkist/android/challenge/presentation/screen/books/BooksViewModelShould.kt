@@ -33,7 +33,7 @@ class BooksViewModelShould {
   @Mock private lateinit var disposables: Disposables
   @InjectMocks lateinit var viewModel: BooksViewModel
 
-  private lateinit var groupByWeeklyEmitter: PublishSubject<Boolean>
+  private lateinit var groupByWeeklyFeatureEmitter: PublishSubject<Boolean>
   private lateinit var viewEmitter: PublishSubject<BooksIntent>
   private lateinit var observer: TestObserver<BooksViewState>
 
@@ -47,7 +47,7 @@ class BooksViewModelShould {
     }
 
     with(PublishSubject.create<Boolean>()) {
-      groupByWeeklyEmitter = this
+      groupByWeeklyFeatureEmitter = this
       whenever(isGroupByWeeklyFeatureOn()).thenReturn(this)
     }
 
@@ -149,7 +149,7 @@ class BooksViewModelShould {
   }
 
   private fun givenGroupByWeeklyFeatureSwitchEmits(value: Boolean = true) {
-    groupByWeeklyEmitter.onNext(value)
+    groupByWeeklyFeatureEmitter.onNext(value)
   }
 
 }
