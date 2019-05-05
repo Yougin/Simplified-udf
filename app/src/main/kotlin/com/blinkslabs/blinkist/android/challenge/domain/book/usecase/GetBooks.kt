@@ -6,9 +6,9 @@ import io.reactivex.Observable
 import timber.log.Timber
 import javax.inject.Inject
 
+/** Emits updates of Books. It will fetch from Remote if no Books persisted */
 interface GetBooks {
 
-  /** Emits updates of Books. It will fetch from Remote if no Books persisted */
   operator fun invoke(): Observable<Books>
 }
 
