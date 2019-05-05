@@ -45,7 +45,7 @@ class BooksViewModelShould {
 
     with(PublishSubject.create<Boolean>()) {
       groupByWeeklyEmitter = this
-      givenWeeklyGroupingFeature(this)
+      givenWeeklyGroupingFeatureEmits(this)
     }
 
     givenSuccessfulBooksServiceCall(fakeBooks)
@@ -141,7 +141,7 @@ class BooksViewModelShould {
     whenever(getBooks()).thenReturn(Observable.error(exception))
   }
 
-  private fun givenWeeklyGroupingFeature(emitter: PublishSubject<Boolean>) {
+  private fun givenWeeklyGroupingFeatureEmits(emitter: PublishSubject<Boolean>) {
     whenever(isGroupByWeeklyFeatureOn()).thenReturn(emitter)
   }
 
