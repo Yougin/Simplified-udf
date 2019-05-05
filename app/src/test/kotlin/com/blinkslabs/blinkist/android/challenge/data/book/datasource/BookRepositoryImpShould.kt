@@ -10,6 +10,7 @@ import com.blinkslabs.blinkist.android.challenge.domain.book.model.Book
 import com.blinkslabs.blinkist.android.challenge.domain.book.model.Books
 import com.blinkslabs.blinkist.android.challenge.util.BLSchedulers
 import com.google.common.truth.Truth.assertThat
+import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.Single
 import io.reactivex.observers.TestObserver
@@ -70,6 +71,13 @@ class BookRepositoryImpShould {
     repository.fetchBooks().test()
 
     assertThat(observer.values()[0]).isEqualTo(Some(fakeBooks))
+  }
+
+  @Test fun `delete all the books before fetching new ones`() {
+    val observer = repository.getAllBooks().test()
+    repository.fetchBooks().test()
+
+    verify(bookDao).deleteAllBooks()
   }
 
 }

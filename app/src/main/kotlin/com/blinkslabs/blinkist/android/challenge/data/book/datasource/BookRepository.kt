@@ -6,6 +6,7 @@ import com.blinkslabs.blinkist.android.challenge.data.book.datasource.remote.Boo
 import com.blinkslabs.blinkist.android.challenge.domain.book.model.Books
 import io.reactivex.Completable
 import io.reactivex.Observable
+import io.reactivex.Observable.just
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -31,12 +32,15 @@ class BookRepositoryImpl @Inject constructor(
 
   // TODO: do mapping on computation thread
   override fun fetchBooks(): Completable =
-      booksApi.fetchAllBooks()
-          .doOnSuccess { Timber.d("Fetching from the Network") }
-          .toObservable()
-          .flatMapIterable { it }
-          .map { it.toEntity() }
-          .toList()
-          .doOnSuccess { entities -> bookDao.insertAll(entities) }
-          .toCompletable()
+      just(bookDao.deleteAllBooks())
+          .flatMapCompletable {
+            booksApi.fetchAllBooks()
+                .doOnSuccess { Timber.d("Fetching from the Network") }
+                .toObservable()
+                .flatMapIterable { it }
+                .map { it.toEntity() }
+                .toList()
+                .doOnSuccess { entities -> bookDao.insertAll(entities) }
+                .toCompletable()
+          }
 }

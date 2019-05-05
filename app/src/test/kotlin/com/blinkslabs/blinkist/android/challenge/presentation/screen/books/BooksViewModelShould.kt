@@ -9,7 +9,9 @@ import com.blinkslabs.blinkist.android.challenge.domain.featurewitch.IsGroupByWe
 import com.blinkslabs.blinkist.android.challenge.util.BLSchedulers
 import com.blinkslabs.blinkist.android.challenge.utils.getAllEvents
 import com.google.common.truth.Truth.assertThat
+import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
+import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.observers.TestObserver
 import io.reactivex.subjects.PublishSubject
@@ -27,6 +29,7 @@ class BooksViewModelShould {
 
   @Mock private lateinit var getBooks: GetBooks
   @Mock private lateinit var isGroupByWeeklyFeatureOn: IsGroupByWeeklyFeatureOn
+  @Mock private lateinit var updateBooksByForce: UpdateBooksByForce
   @Mock private lateinit var disposables: Disposables
   @InjectMocks lateinit var viewModel: BooksViewModel
 
@@ -63,7 +66,7 @@ class BooksViewModelShould {
   @Test fun `emit DataFetched state to View in response to InitialIntent from View`() {
     viewEmits(BooksIntent.InitialIntent)
     val expectedValue = false
-    groupByWeeklyFeatureSwitchEmits(expectedValue)
+    givenGroupByWeeklyFeatureSwitchEmits(expectedValue)
 
     val values = observer.values()
     observer.getAllEvents()
@@ -74,7 +77,7 @@ class BooksViewModelShould {
 
   @Test fun `observe changes from all sources and emit new state to View on each data change`() {
     viewEmits(BooksIntent.InitialIntent)
-    groupByWeeklyFeatureSwitchEmits()
+    givenGroupByWeeklyFeatureSwitchEmits()
 
     val values = observer.values()
     observer.getAllEvents()
@@ -82,23 +85,22 @@ class BooksViewModelShould {
     assertThat(values.size).isEqualTo(2)
     assertThat(values[1]).isEqualTo(BooksViewState.DataFetched(fakeBooks, true))
 
-    groupByWeeklyFeatureSwitchEmits(false)
+    givenGroupByWeeklyFeatureSwitchEmits(false)
     observer.getAllEvents()
 
     assertThat(values.size).isEqualTo(3)
 
-    groupByWeeklyFeatureSwitchEmits()
+    givenGroupByWeeklyFeatureSwitchEmits()
     observer.getAllEvents()
 
     // TODO-eugene also emit from database
-    // TODO-eugene test distintcUntilChanged
     assertThat(values.size).isEqualTo(4)
   }
 
   // TODO-eugene should stay alive after conf change
   @Test fun `not react to InitialIntent received after configuration change`() {
     viewEmits(BooksIntent.InitialIntent)
-    groupByWeeklyFeatureSwitchEmits()
+    givenGroupByWeeklyFeatureSwitchEmits()
     observer.getAllEvents()
 
     observer.assertValueCount(2)
@@ -129,6 +131,15 @@ class BooksViewModelShould {
     assertThat(values[1]).isEqualTo(BooksViewState.Error(throwable))
   }
 
+  @Test fun `interact with updateBooksByForce use case on ForceUpdate intent`() {
+    givenGroupByWeeklyFeatureSwitchEmits()
+    whenever(updateBooksByForce()).thenReturn(Completable.complete())
+    viewEmits(BooksIntent.InitialIntent)
+    viewEmits(BooksIntent.ForceUpdateIntent)
+
+    verify(updateBooksByForce).invoke()
+  }
+
   private fun givenAnUnsuccessfulBooksServiceCall(exception: Throwable) {
     whenever(getBooks()).thenReturn(Observable.error(exception))
   }
@@ -137,7 +148,7 @@ class BooksViewModelShould {
     viewEmitter.onNext(intent)
   }
 
-  private fun groupByWeeklyFeatureSwitchEmits(value: Boolean = true) {
+  private fun givenGroupByWeeklyFeatureSwitchEmits(value: Boolean = true) {
     groupByWeeklyEmitter.onNext(value)
   }
 

@@ -18,7 +18,8 @@ import javax.inject.Inject
 class BooksViewModel @Inject constructor(
     private val getBooks: GetBooks,
     private val isGroupByWeeklyFeatureOn: IsGroupByWeeklyFeatureOn,
-    private val disposables: Disposables
+    private val disposables: Disposables,
+    private val updateBooksByForce: UpdateBooksByForce
 ) : ViewModel() {
 
   /** Subscribe for viewState changes */
@@ -49,7 +50,8 @@ class BooksViewModel @Inject constructor(
         .doOnNext { Timber.d("----- Intent: ${it.javaClass.simpleName}") }
         .subscribe {
           when (it) {
-            is BooksIntent.InitialIntent, BooksIntent.ForceUpdateIntent -> fetchData()
+            is BooksIntent.InitialIntent -> fetchData()
+            is BooksIntent.ForceUpdateIntent -> forceUpdate()
           }
         }
   }
@@ -59,12 +61,19 @@ class BooksViewModel @Inject constructor(
         .startWith(BooksViewState.InFlight)
         .onErrorReturn { BooksViewState.Error(it) }
         .subscribeOn(BLSchedulers.io())
-        .distinctUntilChanged()
         .doOnNext { Timber.d("----- Result: ${it.javaClass.simpleName}") }
         .subscribe(
             { _viewState.onNext(it) },
             { Timber.e("Something went wrong fetching screen's data") }
         )
+  }
+
+  private fun forceUpdate() {
+    disposables += updateBooksByForce()
+        .subscribeOn(BLSchedulers.io())
+        .subscribe(
+            { /** Please note there's no viewState change in here*/ },
+            { Timber.e("Something went wrong while executing force update") })
   }
 
   override fun onCleared() {

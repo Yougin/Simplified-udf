@@ -16,4 +16,6 @@ class FakeDao : BookDao {
 
   override fun getAllBooks(): Observable<List<BookEntity>> = emitter
 
+  override fun deleteAllBooks() {}
+
 }

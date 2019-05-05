@@ -19,4 +19,7 @@ interface BookDao {
   @Query("SELECT * FROM BookEntity")
   fun getAllBooks(): Observable<List<BookEntity>>
 
+  @Query("DELETE FROM BookEntity")
+  fun deleteAllBooks()
+
 }

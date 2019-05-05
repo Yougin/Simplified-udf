@@ -37,4 +37,9 @@ abstract class BooksActivityModule {
   abstract fun providesFeatureUseCase(
       useCase: IsGroupByWeeklyFeatureOnUseCase
   ): IsGroupByWeeklyFeatureOn
+
+  @Binds
+  @ScreenScope
+  abstract fun providesBooksForceUpdate(useCase: UpdateBooksByBruteForce): UpdateBooksByForce
+
 }
