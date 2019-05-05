@@ -9,7 +9,7 @@ import timber.log.Timber
 
 class BlinkistChallengeApplication : Application() {
 
-  open lateinit var component: AppComponent
+  lateinit var component: AppComponent
 
   override fun onCreate() {
     super.onCreate()
