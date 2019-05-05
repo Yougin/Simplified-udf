@@ -30,7 +30,7 @@ abstract class BooksActivityModule {
 
   @Binds
   @ScreenScope
-  abstract fun providesMainUseCase(useCase: GetBooksUseCase): GetBooks
+  abstract fun providesGetBooksUseCase(useCase: GetBooksUseCase): GetBooks
 
   @Binds
   @ScreenScope
