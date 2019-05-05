@@ -60,7 +60,6 @@ class BooksActivity : AppCompatActivity() {
 
   private fun subscribeToViewStateChanges() {
     disposables += viewModel.viewState
-        .doOnNext { Timber.d("----- Received ViewState: ${it.javaClass.simpleName}") }
         .observeOn(BLSchedulers.main())
         .subscribe { renderState(it) }
   }
@@ -69,13 +68,17 @@ class BooksActivity : AppCompatActivity() {
     when (viewState) {
       is BooksViewState.InFlight -> {
         swipeRefreshView.isRefreshing = true
-        Timber.e("----- Render InFlight: $viewState")
+        Timber.d("----- Render InFlight: $viewState")
       }
       is BooksViewState.DataFetched -> {
         swipeRefreshView.isRefreshing = false
-        Timber.e("----- Render DataFetched: $viewState")
+        Timber.d("----- Render DataFetched: $viewState")
       }
-      is BooksViewState.Error -> Timber.e("----- Render Error $viewState")
+      is BooksViewState.Error -> {
+        swipeRefreshView.isRefreshing = false
+        showErrorLoadingData()
+        Timber.e("----- Render Error $viewState")
+      }
     }
   }
 
