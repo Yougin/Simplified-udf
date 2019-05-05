@@ -68,6 +68,8 @@ dependencies {
     kapt "android.arch.persistence.room:compiler:$room_version"
     implementation "android.arch.persistence.room:rxjava2:$room_version"
 
+    implementation "io.arrow-kt:arrow-core:$arrow_version"
+
     implementation "com.squareup.picasso:picasso:$picasso_version"
 
     implementation "com.jakewharton.threetenabp:threetenabp:$threeten_version"

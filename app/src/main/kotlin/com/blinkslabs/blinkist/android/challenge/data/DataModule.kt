@@ -2,6 +2,8 @@ package com.blinkslabs.blinkist.android.challenge.data
 
 import android.content.Context
 import androidx.room.Room
+import com.blinkslabs.blinkist.android.challenge.data.book.datasource.BookRepository
+import com.blinkslabs.blinkist.android.challenge.data.book.datasource.BookRepositoryImpl
 import com.blinkslabs.blinkist.android.challenge.data.book.datasource.local.BookDao
 import com.blinkslabs.blinkist.android.challenge.data.book.datasource.remote.BooksApi
 import com.blinkslabs.blinkist.android.challenge.data.book.datasource.remote.MockBooksApi
@@ -25,5 +27,9 @@ class DataModule(private val context: Context) {
   @Provides
   @Singleton
   fun providesBooksDao(booksDatabase: BooksDatabase): BookDao = booksDatabase.bookDao()
+
+  @Provides
+  @Singleton
+  fun providesBookRepository(repository: BookRepositoryImpl): BookRepository = repository
 
 }

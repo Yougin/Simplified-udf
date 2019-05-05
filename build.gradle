@@ -13,6 +13,7 @@ buildscript {
   ext.rxandroid_version = '2.1.1'
   ext.rxbinding_version = '3.0.0-alpha2'
   ext.room_version = '1.1.1'
+  ext.arrow_version = '0.8.2'
   ext.picasso_version = '2.71828'
   ext.threeten_version = '1.1.1'
   ext.timber_version = '4.7.1'
