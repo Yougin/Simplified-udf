@@ -45,10 +45,10 @@ class BooksViewModelShould {
 
     with(PublishSubject.create<Boolean>()) {
       groupByWeeklyEmitter = this
-      givenWeeklyGroupingFeatureEmits(this)
+      whenever(isGroupByWeeklyFeatureOn()).thenReturn(this)
     }
 
-    givenSuccessfulBooksServiceCall(fakeBooks)
+    whenever(getBooks()).thenReturn(Observable.just(fakeBooks))
   }
 
   @Test fun `receive InFlight state upon subscription`() {
@@ -129,20 +129,12 @@ class BooksViewModelShould {
     assertThat(values[1]).isEqualTo(BooksViewState.Error(throwable))
   }
 
-  private fun viewEmits(intent: BooksIntent) {
-    viewEmitter.onNext(intent)
-  }
-
-  private fun givenSuccessfulBooksServiceCall(result: Books) {
-    whenever(getBooks()).thenReturn(Observable.just(result))
-  }
-
   private fun givenAnUnsuccessfulBooksServiceCall(exception: Throwable) {
     whenever(getBooks()).thenReturn(Observable.error(exception))
   }
 
-  private fun givenWeeklyGroupingFeatureEmits(emitter: PublishSubject<Boolean>) {
-    whenever(isGroupByWeeklyFeatureOn()).thenReturn(emitter)
+  private fun viewEmits(intent: BooksIntent) {
+    viewEmitter.onNext(intent)
   }
 
   private fun groupByWeeklyFeatureSwitchEmits(value: Boolean = true) {
