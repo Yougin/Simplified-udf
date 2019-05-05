@@ -22,7 +22,7 @@ class DebugView @JvmOverloads constructor(
     ((context.applicationContext as BlinkistChallengeApplication)
         .component as DebugAppComponent).injectDebugView(this)
 
-    feature_switch.checkedChanges().subscribe {
+    feature_switch.checkedChanges().skipInitialValue().subscribe {
       val isFeatureOn = if (it) GroupByWeeklyFeature.On else GroupByWeeklyFeature.Off
       FeatureRepository.weeklyFeature.onNext(isFeatureOn)
     }

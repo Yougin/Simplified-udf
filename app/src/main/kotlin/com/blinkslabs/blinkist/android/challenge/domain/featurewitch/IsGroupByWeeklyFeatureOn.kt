@@ -13,11 +13,12 @@ interface IsGroupByWeeklyFeatureOn {
 class IsGroupByWeeklyFeatureOnUseCase @Inject constructor() : IsGroupByWeeklyFeatureOn {
 
   override fun invoke(): Observable<GroupByWeeklyFeature> =
-      FeatureRepository.weeklyFeature.doOnNext { Timber.d("----- Emits $it") }
+      FeatureRepository.weeklyFeature
+          .startWith(GroupByWeeklyFeature.On)
+          .doOnNext { Timber.d("----- Emits $it") }
 }
 
 sealed class GroupByWeeklyFeature {
-
   object On : GroupByWeeklyFeature()
   object Off : GroupByWeeklyFeature()
 }
