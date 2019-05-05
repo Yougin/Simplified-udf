@@ -6,6 +6,7 @@ import com.blinkslabs.blinkist.android.challenge.data.book.datasource.remote.Boo
 import com.blinkslabs.blinkist.android.challenge.domain.book.model.Books
 import io.reactivex.Completable
 import io.reactivex.Observable
+import timber.log.Timber
 import javax.inject.Inject
 
 interface BookRepository {
@@ -22,6 +23,7 @@ class BookRepositoryImpl @Inject constructor(
 
   override fun getAllBooks(): Observable<Option<Books>> =
       bookDao.getAllBooks()
+          .doOnEach { Timber.d("Fetching from the database") }
           .map {
             if (it.isEmpty()) Option.empty()
             else Option(it.toBooks())
@@ -30,6 +32,7 @@ class BookRepositoryImpl @Inject constructor(
   // TODO: do mapping on computation thread
   override fun fetchBooks(): Completable =
       booksApi.fetchAllBooks()
+          .doOnSuccess { Timber.d("Fetching from the Network") }
           .toObservable()
           .flatMapIterable { it }
           .map { it.toEntity() }
