@@ -1,4 +1,4 @@
-package com.blinkslabs.blinkist.android.challenge.presentation.screen.books
+package com.blinkslabs.blinkist.android.challenge.domain.book.usecase
 
 import com.blinkslabs.blinkist.android.challenge.data.book.datasource.BookRepository
 import io.reactivex.Completable
