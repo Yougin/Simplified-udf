@@ -3,7 +3,7 @@ package com.blinkslabs.blinkist.android.challenge.presentation.screen.books
 import androidx.lifecycle.ViewModel
 import com.blinkslabs.blinkist.android.challenge.domain.book.model.Books
 import com.blinkslabs.blinkist.android.challenge.domain.book.usecase.GetBooks
-import com.blinkslabs.blinkist.android.challenge.domain.book.usecase.UpdateBooksByForce
+import com.blinkslabs.blinkist.android.challenge.domain.book.usecase.RefreshBooksByForce
 import com.blinkslabs.blinkist.android.challenge.domain.featurewitch.GroupByWeeklyFeature
 import com.blinkslabs.blinkist.android.challenge.domain.featurewitch.IsGroupByWeeklyFeatureOn
 import com.blinkslabs.blinkist.android.challenge.util.BLSchedulers
@@ -20,8 +20,8 @@ import javax.inject.Inject
 class BooksViewModel @Inject constructor(
     private val getBooks: GetBooks,
     private val isGroupByWeeklyFeatureOn: IsGroupByWeeklyFeatureOn,
-    private val disposables: Disposables,
-    private val updateBooksByForce: UpdateBooksByForce
+    private val refreshBooksByForce: RefreshBooksByForce,
+    private val disposables: Disposables
 ) : ViewModel() {
 
   /** Subscribe for viewState changes */
@@ -71,7 +71,7 @@ class BooksViewModel @Inject constructor(
   }
 
   private fun forceUpdate() {
-    disposables += updateBooksByForce()
+    disposables += refreshBooksByForce()
         .subscribeOn(BLSchedulers.io())
         .subscribe(
             { /** Please note there's no viewState change in here*/ },

@@ -6,14 +6,14 @@ import javax.inject.Inject
 
 /** Sends a command to fetch Books from the web, make sure to subscribe for Books
  * updates using GetBooks.kt */
-interface UpdateBooksByForce {
+interface RefreshBooksByForce {
 
   operator fun invoke(): Completable
 }
 
-class UpdateBooksByBruteForce @Inject constructor(
+class RefreshBooksByBruteForce @Inject constructor(
     private val booksRepository: BookRepository
-) : UpdateBooksByForce {
+) : RefreshBooksByForce {
 
   override fun invoke(): Completable = Completable.fromCallable { booksRepository.fetchBooks() }
 }

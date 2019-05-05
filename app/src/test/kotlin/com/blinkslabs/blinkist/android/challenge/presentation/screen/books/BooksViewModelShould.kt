@@ -5,7 +5,7 @@ package com.blinkslabs.blinkist.android.challenge.presentation.screen.books
 import com.blinkslabs.blinkist.android.challenge.domain.book.model.Book
 import com.blinkslabs.blinkist.android.challenge.domain.book.model.Books
 import com.blinkslabs.blinkist.android.challenge.domain.book.usecase.GetBooks
-import com.blinkslabs.blinkist.android.challenge.domain.book.usecase.UpdateBooksByForce
+import com.blinkslabs.blinkist.android.challenge.domain.book.usecase.RefreshBooksByForce
 import com.blinkslabs.blinkist.android.challenge.domain.featurewitch.GroupByWeeklyFeature
 import com.blinkslabs.blinkist.android.challenge.domain.featurewitch.IsGroupByWeeklyFeatureOn
 import com.blinkslabs.blinkist.android.challenge.util.BLSchedulers
@@ -29,7 +29,7 @@ class BooksViewModelShould {
 
   @Mock private lateinit var getBooks: GetBooks
   @Mock private lateinit var isGroupByWeeklyFeatureOn: IsGroupByWeeklyFeatureOn
-  @Mock private lateinit var updateBooksByForce: UpdateBooksByForce
+  @Mock private lateinit var refreshBooksByForce: RefreshBooksByForce
   @Mock private lateinit var disposables: Disposables
 
   @InjectMocks lateinit var viewModel: BooksViewModel
@@ -124,11 +124,11 @@ class BooksViewModelShould {
 
   @Test fun `interact with updateBooksByForce use case on ForceUpdate intent`() {
     weeklyFeatureSwitchEmits()
-    whenever(updateBooksByForce()).thenReturn(Completable.complete())
+    whenever(refreshBooksByForce()).thenReturn(Completable.complete())
     viewEmits(BooksIntent.InitialIntent)
     viewEmits(BooksIntent.ForceUpdateIntent)
 
-    verify(updateBooksByForce).invoke()
+    verify(refreshBooksByForce).invoke()
   }
 
   private fun initWeeklyFeatureEmitter() {
