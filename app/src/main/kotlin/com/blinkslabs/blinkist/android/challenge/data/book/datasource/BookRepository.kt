@@ -3,8 +3,6 @@ package com.blinkslabs.blinkist.android.challenge.data.book.datasource
 import arrow.core.Option
 import com.blinkslabs.blinkist.android.challenge.data.book.datasource.local.BookDao
 import com.blinkslabs.blinkist.android.challenge.data.book.datasource.remote.BooksApi
-import com.blinkslabs.blinkist.android.challenge.data.book.entity.BookEntity
-import com.blinkslabs.blinkist.android.challenge.domain.book.model.Book
 import com.blinkslabs.blinkist.android.challenge.domain.book.model.Books
 import io.reactivex.Completable
 import io.reactivex.Observable
@@ -25,6 +23,7 @@ class BookRepositoryImpl @Inject constructor(
   override fun getAllBooks(): Observable<Option<Books>> =
       bookDao.getAllBooks().map { Option(it.toBooks()) }
 
+  // TODO: do mapping on computation thread
   override fun fetchBooks(): Completable {
     return booksApi
         .fetchAllBooks()
@@ -35,14 +34,4 @@ class BookRepositoryImpl @Inject constructor(
         .doOnSuccess { entities -> bookDao.insertAll(entities) }
         .toCompletable()
   }
-}
-
-fun BookEntity.toBook(): Book {
-  return Book(this.id, this.name, this.author, this.publishDate, this.coverImageUrl)
-}
-
-fun List<BookEntity>.toBooks(): Books = this.map { it.toBook() }
-
-fun Book.toEntity(): BookEntity {
-  return BookEntity(this.id, this.name, this.author, this.publishDate, this.coverImageUrl)
 }
