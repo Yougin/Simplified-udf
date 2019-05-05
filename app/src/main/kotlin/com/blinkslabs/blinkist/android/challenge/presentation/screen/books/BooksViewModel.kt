@@ -21,6 +21,7 @@ class BooksViewModel @Inject constructor(
     private val disposables: Disposables
 ) : ViewModel() {
 
+  /** Subscribe for viewState changes */
   val viewState: Observable<BooksViewState> get() = _viewState
   private val _viewState = BehaviorSubject.create<BooksViewState>()
 
