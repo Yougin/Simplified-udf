@@ -1,9 +1,10 @@
 package com.blinkslabs.blinkist.android.challenge.domain.book.usecase
 
-import com.blinkslabs.blinkist.android.challenge.data.book.datasource.remote.BooksApi
+import arrow.core.Option
+import com.blinkslabs.blinkist.android.challenge.data.book.datasource.BookRepository
 import com.blinkslabs.blinkist.android.challenge.domain.book.model.Books
-import io.reactivex.Observable
-import timber.log.Timber
+import io.reactivex.*
+import io.reactivex.Single.just
 import javax.inject.Inject
 
 /** Emits updates of Books. It will fetch from Remote if no Books persisted */
@@ -12,8 +13,27 @@ interface GetBooks {
   operator fun invoke(): Observable<Books>
 }
 
-class GetBooksUseCase @Inject constructor(private val booksApi: BooksApi) : GetBooks {
+class GetBooksUseCase @Inject constructor(
+    private val bookRepository: BookRepository
+) : GetBooks {
 
   override operator fun invoke(): Observable<Books> =
-      booksApi.fetchAllBooks().toObservable().doOnNext { Timber.d("----- Emits $it") }
+      bookRepository
+          .getAllBooks()
+          .flatMapSingle(::fetchWhenNoneAndThenDrafts)
+          .compose(UnwrapOptionTransformer())
+
+  private fun fetchWhenNoneAndThenDrafts(books: Option<Books>): Single<Option<Books>> =
+      fetchWhenNone(books).andThen(just<Option<Books>>(books))
+
+  private fun fetchWhenNone(books: Option<Books>): Completable =
+      when {
+        books.isEmpty() -> bookRepository.fetchBooks()
+        else -> Completable.complete()
+      }
+}
+
+class UnwrapOptionTransformer<T> : ObservableTransformer<Option<T>, T> {
+  override fun apply(upstream: Observable<Option<T>>): ObservableSource<T> =
+      upstream.filter { it.isEmpty().not() }.map { it.orNull() }
 }

@@ -5,9 +5,7 @@ import com.blinkslabs.blinkist.android.challenge.data.book.entity.BookEntity
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 
-/**
- * By this Fake we can mimic what Room does (emits updates for the data you're observing)
- */
+/** This fake mimics real Room's behavior, i.e. it emits a value upon observable data change  */
 class FakeDao : BookDao {
 
   private val emitter = PublishSubject.create<List<BookEntity>>()
