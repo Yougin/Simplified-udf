@@ -53,7 +53,7 @@ class GetBooksUseCaseShould {
     assertThat(observer.values()[0]).isEqualTo(fakeBooks)
   }
 
-  @Test fun `emits every time force fetch is forced by the system`() {
+  @Test fun `emits every time force fetch is invoked by the system`() {
     val bookEmitter = PublishSubject.create<Option<Books>>()
     val fakeBookRepository = FakeBookRepository(bookEmitter, fakeBooks)
 

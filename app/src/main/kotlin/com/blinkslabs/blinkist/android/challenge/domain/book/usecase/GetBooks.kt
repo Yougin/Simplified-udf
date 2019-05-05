@@ -20,11 +20,11 @@ class GetBooksUseCase @Inject constructor(
   override operator fun invoke(): Observable<Books> =
       bookRepository
           .getAllBooks()
-          .flatMapSingle(::fetchWhenNoneAndThenDrafts)
+          .flatMapSingle(::fetchIfEmptyOrEmitIfSome)
           .compose(UnwrapOptionTransformer())
 
-  private fun fetchWhenNoneAndThenDrafts(books: Option<Books>): Single<Option<Books>> =
-      fetchWhenNone(books).andThen(just<Option<Books>>(books))
+  private fun fetchIfEmptyOrEmitIfSome(books: Option<Books>): Single<Option<Books>> =
+      fetchWhenNone(books).andThen(just(books))
 
   private fun fetchWhenNone(books: Option<Books>): Completable =
       when {
