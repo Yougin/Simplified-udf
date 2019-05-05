@@ -63,7 +63,7 @@ class BooksViewModelShould {
   @Test fun `emit DataFetched state to View in response to InitialIntent from View`() {
     viewEmits(BooksIntent.InitialIntent)
     val expectedValue = false
-    groupByWeeklyEmitter.onNext(expectedValue)
+    groupByWeeklyFeatureSwitchEmits(expectedValue)
 
     val values = observer.values()
     observer.getAllEvents()
