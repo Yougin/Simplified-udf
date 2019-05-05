@@ -13,7 +13,6 @@ import com.google.common.truth.Truth.assertThat
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.Completable
-import io.reactivex.Observable
 import io.reactivex.observers.TestObserver
 import io.reactivex.subjects.PublishSubject
 import org.junit.Before
@@ -24,7 +23,6 @@ import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
 import org.threeten.bp.LocalDate
 
-// TODO-eugene rename other tests to 'should'
 @RunWith(MockitoJUnitRunner::class)
 class BooksViewModelShould {
 
@@ -32,6 +30,7 @@ class BooksViewModelShould {
   @Mock private lateinit var isGroupByWeeklyFeatureOn: IsGroupByWeeklyFeatureOn
   @Mock private lateinit var updateBooksByForce: UpdateBooksByForce
   @Mock private lateinit var disposables: Disposables
+
   @InjectMocks lateinit var viewModel: BooksViewModel
 
   private lateinit var getBooksEmitter: PublishSubject<Books>
@@ -43,20 +42,9 @@ class BooksViewModelShould {
   @Before fun setUp() {
     BLSchedulers.enableTesting()
 
-    with(PublishSubject.create<BooksIntent>()) {
-      viewEmitter = this
-      viewModel.intents(this)
-    }
-
-    with(PublishSubject.create<Books>()) {
-      getBooksEmitter = this
-      whenever(getBooks()).thenReturn(this)
-    }
-
-    with(PublishSubject.create<GroupByWeeklyFeature>()) {
-      weeklyFeatureEmitter = this
-      whenever(isGroupByWeeklyFeatureOn()).thenReturn(this)
-    }
+    initViewEmitter()
+    initGetBooksEmitter()
+    initWeeklyFeatureEmitter()
 
     observer = viewModel.viewState.test()
 
@@ -86,23 +74,20 @@ class BooksViewModelShould {
   }
 
   @Test fun `observe changes from all sources and emit new state to View on each data change`() {
-    viewEmits(BooksIntent.InitialIntent)
     weeklyFeatureSwitchEmits()
-
-    val values = observer.values()
     observer.getAllEvents()
 
-    assertThat(values.size).isEqualTo(2)
+    assertThat(observer.values().size).isEqualTo(2)
 
     weeklyFeatureSwitchEmits(GroupByWeeklyFeature.Off)
     observer.getAllEvents()
 
-    assertThat(values.size).isEqualTo(3)
+    assertThat(observer.values().size).isEqualTo(3)
 
-    weeklyFeatureSwitchEmits()
+    getBooksEmits()
     observer.getAllEvents()
 
-    assertThat(values.size).isEqualTo(4)
+    assertThat(observer.values().size).isEqualTo(4)
   }
 
   // TODO-eugene should stay alive after conf change
@@ -112,11 +97,11 @@ class BooksViewModelShould {
 
     observer.assertValueCount(2)
 
-    // Configuration change is about to happen
+    // Configuration change
     observer.dispose()
 
     observer = viewModel.viewState.test()
-    val newEmitter = PublishSubject.create<BooksIntent>() // new View is in the game
+    val newEmitter = PublishSubject.create<BooksIntent>() // new View instance
     viewModel.intents(newEmitter)
 
     newEmitter.onNext(BooksIntent.InitialIntent)
@@ -145,8 +130,25 @@ class BooksViewModelShould {
     verify(updateBooksByForce).invoke()
   }
 
-  private fun givenAnUnsuccessfulBooksServiceCall(exception: Throwable) {
-    whenever(getBooks()).thenReturn(Observable.error(exception))
+  private fun initWeeklyFeatureEmitter() {
+    with(PublishSubject.create<GroupByWeeklyFeature>()) {
+      weeklyFeatureEmitter = this
+      whenever(isGroupByWeeklyFeatureOn()).thenReturn(this)
+    }
+  }
+
+  private fun initGetBooksEmitter() {
+    with(PublishSubject.create<Books>()) {
+      getBooksEmitter = this
+      whenever(getBooks()).thenReturn(this)
+    }
+  }
+
+  private fun initViewEmitter() {
+    with(PublishSubject.create<BooksIntent>()) {
+      viewEmitter = this
+      viewModel.intents(this)
+    }
   }
 
   private fun getBooksEmits(books: Books = fakeBooks, withError: Boolean = false) {
