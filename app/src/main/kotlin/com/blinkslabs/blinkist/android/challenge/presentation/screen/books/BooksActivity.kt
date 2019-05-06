@@ -71,17 +71,20 @@ class BooksActivity : AppCompatActivity() {
     when (viewState) {
       is BooksViewState.InFlight -> {
         swipeRefreshView.isRefreshing = true
+
         Timber.d("----- Render InFlight: $viewState")
       }
       is BooksViewState.DataFetched -> {
         swipeRefreshView.isRefreshing = false
         adapter.setBooks(viewState.books, viewState.weeklyFeature)
+
         Timber.d("----- Render DataFetched: $viewState")
       }
       is BooksViewState.Error -> {
         swipeRefreshView.isRefreshing = false
         showErrorLoadingData()
-        Timber.e("----- Render Error $viewState")
+
+        Timber.d("----- Render Error $viewState")
       }
     }
   }
