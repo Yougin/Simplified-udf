@@ -11,6 +11,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:textColor="@color/secondaryTextColor"
+    android:text="Week %s"
     tools:text="Week 27" />
 
 </LinearLayout>
