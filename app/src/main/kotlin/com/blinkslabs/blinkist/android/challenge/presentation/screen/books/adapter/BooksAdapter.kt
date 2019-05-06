@@ -9,7 +9,8 @@ import com.blinkslabs.blinkist.android.challenge.domain.book.model.Books
 import com.blinkslabs.blinkist.android.challenge.domain.featurewitch.GroupByWeeklyFeature
 import com.blinkslabs.blinkist.android.challenge.presentation.common.adapter.FlexibleAdapterImpl
 import com.blinkslabs.blinkist.android.challenge.presentation.common.adapter.ItemDelegate
-import com.blinkslabs.blinkist.android.challenge.presentation.screen.books.grouper.*
+import com.blinkslabs.blinkist.android.challenge.presentation.screen.books.grouper.groupByAlphabet
+import com.blinkslabs.blinkist.android.challenge.presentation.screen.books.grouper.groupByDate
 import javax.inject.Inject
 
 interface BooksAdapter {
@@ -34,35 +35,6 @@ fun convertToAdapterData(
       GroupByWeeklyFeature.On -> convert(groupByDate(books))
       GroupByWeeklyFeature.Off -> convert(groupByAlphabet(books))
     }
-
-private fun convert(groupedBooks: GroupedBooks.ByDate): List<*> {
-  val groupOfBooks: YearlyGroup = groupedBooks.group
-
-  val list = mutableListOf<Any>()
-  groupOfBooks.forEach { (year, weeklyGroup) ->
-    list += YearTitle(year.value.toString())
-
-    weeklyGroup.forEach { (title, books) ->
-      list += WeekTitle(title.value)
-      list.add(books.map { book -> BookCard(book) })
-    }
-  }
-
-  return list
-}
-
-fun convert(groupedBooks: GroupedBooks.ByAlphabet): List<*> {
-  val groupOfBooks: AlphabeticGroup = groupedBooks.group
-
-  val list = mutableListOf<Any>()
-  groupOfBooks.forEach { (title, books) ->
-    list += AlphabetTitle(title.value)
-    list.add(books.map { book -> BookCard(book) })
-  }
-
-  return list
-}
-
 
 data class YearTitle(val text: String)
 class YearTitleItemDelegate : ItemDelegate<YearTitle> {

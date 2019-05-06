@@ -6,7 +6,7 @@ import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 import org.threeten.bp.LocalDate
 
-class ConvertToAdapterFunctionShould {
+class ConvertFunctionsShould {
 
   @Test fun `return list of adapter data grouped by year and week`() {
     val result = convertToAdapterData(fakeBooks, GroupByWeeklyFeature.On)
