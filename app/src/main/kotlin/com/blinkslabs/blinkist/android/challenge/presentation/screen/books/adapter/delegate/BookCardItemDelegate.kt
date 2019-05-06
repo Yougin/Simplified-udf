@@ -20,5 +20,6 @@ class BookCardItemDelegate : ItemDelegate<BookCard> {
 
   override fun bind(view: View, data: BookCard) {
     view.books_carousel.items = data.books
+    view.books_carousel.scheduleLayoutAnimation()
   }
 }

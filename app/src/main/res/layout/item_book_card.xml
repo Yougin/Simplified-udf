@@ -10,6 +10,7 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/padding_default"
     android:layout_marginTop="@dimen/padding_default"
+    android:layoutAnimation="@anim/layout_animation_fall_down"
     android:paddingEnd="@dimen/padding_default"
     android:paddingStart="@dimen/padding_default" />
 
