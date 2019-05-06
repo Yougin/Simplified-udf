@@ -54,7 +54,7 @@ private fun convert(groupedBooks: GroupedBooks.ByDate): List<*> {
 
     weeklyGroup.forEach { (title, books) ->
       list += WeekTitle(title.value)
-      books.forEach { list.add(BookCard(it)) }
+      books.forEach { book -> list.add(BookCard(book)) }
     }
   }
 
