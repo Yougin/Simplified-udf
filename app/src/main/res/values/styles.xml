@@ -8,10 +8,17 @@
     <item name="colorAccent">@color/colorAccent</item>
   </style>
 
-  <style name="Text_Medium_Bold">
+  <style name="Text_Medium_Bold_24">
     <item name="android:textSize">24sp</item>
     <item name="android:fontFamily">sans-serif-medium</item>
     <item name="android:textStyle">bold</item>
   </style>
+
+  <style name="Text_Medium_Bold_26">
+    <item name="android:textSize">24sp</item>
+    <item name="android:fontFamily">sans-serif-medium</item>
+    <item name="android:textStyle">bold</item>
+  </style>
+
 
 </resources>

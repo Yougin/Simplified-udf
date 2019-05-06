@@ -10,8 +10,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="24dp"
-    android:textAppearance="@style/Text_Medium_Bold"
-    android:textColor="@color/secondaryTextColor"
+    android:textAppearance="@style/Text_Medium_Bold_24"
+    android:textColor="@color/textColor"
     tools:text="Week 27" />
 
 </LinearLayout>

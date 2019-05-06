@@ -19,7 +19,7 @@
     android:layout_marginStart="16dp"
     android:layout_marginTop="64dp"
     android:text="Group By Weekly Feature is"
-    android:textColor="@color/secondaryTextColor"
+    android:textColor="@color/textColor"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"

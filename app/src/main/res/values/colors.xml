@@ -5,7 +5,8 @@
   <color name="colorAccent">#23BA74</color>
 
   <color name="backgroundColor">#03314B</color>
-  <color name="secondaryTextColor">@color/colorAccent</color>
+  <color name="textColor">@color/colorAccent</color>
+  <color name="yearTitleBackground">#1B23BA74</color>
   <color name="cardBackgroundColor">#F1F6F4</color>
   <color name="cardStrokeColor">#F0DCDFDE</color>
 

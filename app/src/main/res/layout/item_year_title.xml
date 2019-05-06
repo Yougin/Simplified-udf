@@ -9,8 +9,9 @@
     android:id="@+id/item_year_title_text_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="24dp"
-    android:textAppearance="@style/Text_Medium_Bold"
-    android:textColor="@color/secondaryTextColor"
+    android:paddingStart="24dp"
+    android:textAppearance="@style/Text_Medium_Bold_26"
+    android:background="@color/yearTitleBackground"
+    android:textColor="@color/textColor"
     tools:text="2019" />
 </LinearLayout>
