@@ -74,7 +74,7 @@ class BooksViewModel @Inject constructor(
     disposables += refreshBooksByForce()
         .subscribeOn(BLSchedulers.io())
         .subscribe(
-            { /** Please note there's no viewState change in here*/ },
+            { /** There's nothing to do in here, the state change happens only in one place */ },
             { Timber.e("Something went wrong while executing force update") })
   }
 
