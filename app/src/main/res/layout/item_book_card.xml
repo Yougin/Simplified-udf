@@ -4,7 +4,7 @@
   android:layout_height="match_parent"
   android:orientation="vertical">
 
-  <com.blinkslabs.blinkist.android.challenge.presentation.screen.books.adapter.delegate.BooksCarousel
+  <com.blinkslabs.blinkist.android.challenge.presentation.screen.books.adapter.view.BooksCarouselView
     android:id="@+id/goToRestaurantCarousel"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
