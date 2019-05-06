@@ -66,7 +66,6 @@ class GetBooksUseCaseShould {
     observer.getAllEvents()
 
     assertThat(observer.values().size).isEqualTo(3)
-
   }
 
 }
