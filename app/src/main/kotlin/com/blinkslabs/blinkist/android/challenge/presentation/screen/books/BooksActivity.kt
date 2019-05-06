@@ -77,6 +77,7 @@ class BooksActivity : AppCompatActivity() {
       is BooksViewState.DataFetched -> {
         swipeRefreshView.isRefreshing = false
         adapter.setBooks(viewState.books, viewState.weeklyFeature)
+        recyclerView.smoothScrollToPosition(0)
 
         Timber.d("----- Render DataFetched: $viewState")
       }
