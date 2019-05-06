@@ -1,28 +1,21 @@
 package com.blinkslabs.blinkist.android.challenge.presentation.sorter
 
 import com.blinkslabs.blinkist.android.challenge.domain.book.model.Book
-import com.blinkslabs.blinkist.android.challenge.presentation.screen.books.grouper.GroupByDate
 import com.blinkslabs.blinkist.android.challenge.presentation.screen.books.grouper.Title
 import com.blinkslabs.blinkist.android.challenge.presentation.screen.books.grouper.Year
+import com.blinkslabs.blinkist.android.challenge.presentation.screen.books.grouper.groupByDate
 import com.google.common.truth.Truth.assertThat
-import org.junit.Before
 import org.junit.Test
 import org.threeten.bp.LocalDate
 
-class GroupByDateTest {
+class GroupByDateShould {
 
-  private lateinit var groupByDate: GroupByDate
-
-  @Before fun setUp() {
-    groupByDate = GroupByDate()
+  @Test fun `return books grouped by year`() {
+    assertThat(groupByDate(fakeBooks).group).hasSize(4)
   }
 
-  @Test fun `should group books by year`() {
-    assertThat(groupByDate.groupByAlphabet(fakeBooks).group).hasSize(4)
-  }
-
-  @Test fun `should books grouped by year contain correct amount of books grouped by week`() {
-    val books = groupByDate.groupByAlphabet(fakeBooks).group
+  @Test fun `return books grouped by year contain correct amount of books grouped by week`() {
+    val books = groupByDate(fakeBooks).group
 
     assertThat(books[Year(2014)]).isEqualTo(mapOf(Title("27") to listOf(book1)))
 
@@ -37,8 +30,8 @@ class GroupByDateTest {
     assertThat(books[Year(2019)]?.get(Title("27"))).contains(book6)
   }
 
-  @Test fun `should books grouped by week contain only books published this week`() {
-    val books = groupByDate.groupByAlphabet(fakeBooks).group
+  @Test fun `return books grouped by week contain only books published this week`() {
+    val books = groupByDate(fakeBooks).group
 
     assertThat(books[Year(2014)]?.get(Title("27"))).isEqualTo(listOf(book1))
 
