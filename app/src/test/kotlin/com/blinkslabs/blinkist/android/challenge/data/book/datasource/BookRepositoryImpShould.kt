@@ -38,15 +38,8 @@ class BookRepositoryImpShould {
   @Before fun setUp() {
     BLSchedulers.enableTesting()
 
-    with(PublishSubject.create<List<BookEntity>>()) {
-      bookDaoEmitter = this
-      whenever(bookDao.getAllBooks()).thenReturn(this)
-    }
-
-    with(PublishSubject.create<Books>()) {
-      bookApiEmitter = this
-      whenever(booksApi.fetchAllBooks()).thenReturn(this.singleOrError())
-    }
+    initBookDaoEmitter()
+    initBookApiEmitter()
 
     observer = repository.getAllBooks().test()
   }
@@ -79,6 +72,19 @@ class BookRepositoryImpShould {
     verify(bookDao).deleteAllBooks()
   }
 
+  private fun initBookDaoEmitter() {
+    with(PublishSubject.create<List<BookEntity>>()) {
+      bookDaoEmitter = this
+      whenever(bookDao.getAllBooks()).thenReturn(this)
+    }
+  }
+
+  private fun initBookApiEmitter() {
+    with(PublishSubject.create<Books>()) {
+      bookApiEmitter = this
+      whenever(booksApi.fetchAllBooks()).thenReturn(this.singleOrError())
+    }
+  }
 }
 
 private val fakeEntities = listOf(
