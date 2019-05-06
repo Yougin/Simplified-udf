@@ -1,26 +1,20 @@
 package com.blinkslabs.blinkist.android.challenge.presentation.sorter
 
 import com.blinkslabs.blinkist.android.challenge.domain.book.model.Book
-import com.blinkslabs.blinkist.android.challenge.presentation.screen.books.grouper.GroupByAlphabet
 import com.blinkslabs.blinkist.android.challenge.presentation.screen.books.grouper.Title
+import com.blinkslabs.blinkist.android.challenge.presentation.screen.books.grouper.groupByAlphabet
 import com.google.common.truth.Truth.assertThat
-import org.junit.Before
 import org.junit.Test
 import org.threeten.bp.LocalDate
 
-class GroupByAlphabetTest {
+class GroupByAlphabetShould {
 
-  private lateinit var groupByAlphabet: GroupByAlphabet
-
-  @Before fun setUp() {
-    groupByAlphabet = GroupByAlphabet()
-  }
-
-  @Test fun `should books grouped alphabetically contain right amount of groups based on data`() {
+  @Test
+  fun `return books grouped alphabetically which contain right amount of groups based on data`() {
     assertThat(groupByAlphabet(fakeBooks).group).hasSize(4)
   }
 
-  @Test fun `should all the books grouped alphabetically be present in results`() {
+  @Test fun `return all the books grouped alphabetically`() {
     val books = groupByAlphabet(fakeBooks).group
 
     assertThat(books[Title("A")]).containsAllIn(listOf(book1, book3))
@@ -29,7 +23,7 @@ class GroupByAlphabetTest {
     assertThat(books[Title("Z")]).containsAllIn(listOf(book5, book6))
   }
 
-  @Test fun `should skip a book with no name`() {
+  @Test fun `skip a book with no name`() {
     val noNameBook = Book("id2", "  ", "", LocalDate.of(2014, 7, 2), "")
 
     assertThat(groupByAlphabet(listOf(noNameBook)).group).isEmpty()

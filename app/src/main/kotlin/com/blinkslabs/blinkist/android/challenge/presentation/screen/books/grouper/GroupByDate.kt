@@ -11,7 +11,7 @@ inline class Year(val value: Int)
 
 class GroupByDate : BooksGrouper {
 
-  override operator fun invoke(books: Books): GroupedBooks.ByDate =
+  override fun groupByAlphabet(books: Books): GroupedBooks.ByDate =
       with(LinkedHashMap<Year, WeeklyGroup>()) {
         books
             .sortedBy { book -> book.publishYear }

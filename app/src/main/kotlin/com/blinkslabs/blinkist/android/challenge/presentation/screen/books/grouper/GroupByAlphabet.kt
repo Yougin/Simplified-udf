@@ -2,11 +2,8 @@ package com.blinkslabs.blinkist.android.challenge.presentation.screen.books.grou
 
 import com.blinkslabs.blinkist.android.challenge.domain.book.model.Books
 
-class GroupByAlphabet : BooksGrouper {
-
-  override operator fun invoke(books: Books): GroupedBooks.ByAlphabet =
-      books
-          .filter { it.name.isNotBlank() }
-          .groupBy { Title(it.name.first().toString().toUpperCase()) }
-          .let { GroupedBooks.ByAlphabet(it) }
-}
+fun groupByAlphabet(books: Books): GroupedBooks.ByAlphabet =
+    books
+        .filter { it.name.isNotBlank() }
+        .groupBy { Title(it.name.first().toString().toUpperCase()) }
+        .let { GroupedBooks.ByAlphabet(it) }

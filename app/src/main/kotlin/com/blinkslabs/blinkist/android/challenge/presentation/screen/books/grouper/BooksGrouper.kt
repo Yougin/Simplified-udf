@@ -9,7 +9,7 @@ typealias AlphabeticGroup = Map<Title, Books>
 inline class Title(val value: String)
 
 interface BooksGrouper {
-  operator fun invoke(books: Books): GroupedBooks
+  fun groupByAlphabet(books: Books): GroupedBooks
 }
 
 sealed class GroupedBooks {
