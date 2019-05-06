@@ -10,14 +10,14 @@ import com.blinkslabs.blinkist.android.challenge.presentation.screen.books.group
 
 fun convertToAdapterData(
     books: Books, weeklyFeature: GroupByWeeklyFeature
-): List<*> =
+): List<Any> =
     when (weeklyFeature) {
       GroupByWeeklyFeature.On -> convert(groupByDate(books))
       GroupByWeeklyFeature.Off -> convert(groupByAlphabet(books))
     }
 
 
-fun convert(groupedBooks: GroupedBooks.ByDate): List<*> {
+fun convert(groupedBooks: GroupedBooks.ByDate): List<Any> {
   val groupOfBooks: YearlyGroup = groupedBooks.group
 
   val list = mutableListOf<Any>()
@@ -33,7 +33,7 @@ fun convert(groupedBooks: GroupedBooks.ByDate): List<*> {
   return list
 }
 
-fun convert(groupedBooks: GroupedBooks.ByAlphabet): List<*> {
+fun convert(groupedBooks: GroupedBooks.ByAlphabet): List<Any> {
   val groupOfBooks: AlphabeticGroup = groupedBooks.group
 
   val list = mutableListOf<Any>()
