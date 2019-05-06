@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <dimen name="padding_default">16dp</dimen>
-  <dimen name="book_width">128dp</dimen>
+  <dimen name="book_width">184dp</dimen>
   <dimen name="book_height">128dp</dimen>
 </resources>

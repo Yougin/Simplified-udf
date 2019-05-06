@@ -1,36 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/linearLayout"
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="wrap_content"
-  android:layout_height="wrap_content"
-  android:orientation="horizontal"
-  android:background="@drawable/book_item_shape"
+  android:layout_width="@dimen/book_width"
+  android:layout_height="256dp"
   android:layout_margin="8dp"
-  android:padding="@dimen/padding_default">
+  android:background="@drawable/book_item_shape">
 
   <ImageView
     android:id="@+id/cover_image_view"
     android:layout_width="@dimen/book_width"
     android:layout_height="@dimen/book_height"
-    android:scaleType="centerCrop" />
+    android:scaleType="centerCrop"
+    app:layout_constraintEnd_toStartOf="@+id/title_text_view"
+    app:layout_constraintHorizontal_bias="0.0"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
 
-  <LinearLayout
-    android:layout_width="match_parent"
+  <TextView
+    android:id="@+id/title_text_view"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:gravity="center_vertical"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="8dp"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/cover_image_view"
+    tools:text="A very good title" />
 
-    <TextView
-      android:id="@+id/title_text_view"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      tools:text="A very good title" />
+  <TextView
+    android:id="@+id/author_text_view"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="16dp"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/title_text_view"
+    tools:text="A very good Author" />
 
-    <TextView
-      android:id="@+id/author_text_view"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      tools:text="A very good Author" />
-  </LinearLayout>
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
