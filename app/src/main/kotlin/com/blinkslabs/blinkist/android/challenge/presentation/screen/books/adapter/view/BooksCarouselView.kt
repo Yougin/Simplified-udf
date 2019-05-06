@@ -18,6 +18,7 @@ class BooksCarouselView @JvmOverloads constructor(
     defStyle: Int = 0
 ) : RecyclerView(context, attributeSet, defStyle) {
 
+  // In real project this one would be injected
   private val carouselAdapter = CarouselAdapter(LayoutInflater.from(context))
 
   init {

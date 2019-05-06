@@ -17,6 +17,6 @@ class BookCardItemDelegate : ItemDelegate<BookCard> {
   override fun create(layoutInflater: LayoutInflater, parent: ViewGroup?): RecyclerView.ViewHolder =
       ItemDelegate.Holder(layoutInflater.inflate(R.layout.item_book_card, parent, false))
 
-  override fun bind(view: View, data: BookCard) {
+  override fun bind(view: View, data: BookCard) { //    view.books_carousel.items = data
   }
 }
