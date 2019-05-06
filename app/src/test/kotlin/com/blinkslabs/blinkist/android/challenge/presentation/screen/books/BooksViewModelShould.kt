@@ -9,6 +9,7 @@ import com.blinkslabs.blinkist.android.challenge.domain.book.usecase.RefreshBook
 import com.blinkslabs.blinkist.android.challenge.domain.featurewitch.GroupByWeeklyFeature
 import com.blinkslabs.blinkist.android.challenge.domain.featurewitch.IsGroupByWeeklyFeatureOn
 import com.blinkslabs.blinkist.android.challenge.util.BLSchedulers
+import com.blinkslabs.blinkist.android.challenge.util.Disposables
 import com.blinkslabs.blinkist.android.challenge.utils.getAllEvents
 import com.google.common.truth.Truth.assertThat
 import com.nhaarman.mockitokotlin2.verify

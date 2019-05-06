@@ -7,6 +7,7 @@ import com.blinkslabs.blinkist.android.challenge.domain.book.usecase.RefreshBook
 import com.blinkslabs.blinkist.android.challenge.domain.featurewitch.GroupByWeeklyFeature
 import com.blinkslabs.blinkist.android.challenge.domain.featurewitch.IsGroupByWeeklyFeatureOn
 import com.blinkslabs.blinkist.android.challenge.util.BLSchedulers
+import com.blinkslabs.blinkist.android.challenge.util.Disposables
 import com.blinkslabs.blinkist.android.challenge.util.takeOnlyOnce
 import io.reactivex.Observable
 import io.reactivex.Observable.combineLatest

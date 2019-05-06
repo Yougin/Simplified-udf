@@ -1,4 +1,4 @@
-package com.blinkslabs.blinkist.android.challenge.presentation.screen.books
+package com.blinkslabs.blinkist.android.challenge.util
 
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable

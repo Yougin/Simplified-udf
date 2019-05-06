@@ -13,6 +13,7 @@ import com.blinkslabs.blinkist.android.challenge.domain.featurewitch.GroupByWeek
 import com.blinkslabs.blinkist.android.challenge.presentation.screen.books.adapter.BooksAdapterImpl
 import com.blinkslabs.blinkist.android.challenge.presentation.screen.books.rootview.ViewContainer
 import com.blinkslabs.blinkist.android.challenge.util.BLSchedulers
+import com.blinkslabs.blinkist.android.challenge.util.Disposables
 import com.blinkslabs.blinkist.android.challenge.util.showToast
 import com.jakewharton.rxbinding3.swiperefreshlayout.refreshes
 import io.reactivex.Observable
