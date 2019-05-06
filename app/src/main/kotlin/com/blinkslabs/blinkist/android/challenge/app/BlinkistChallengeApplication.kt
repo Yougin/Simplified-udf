@@ -14,10 +14,9 @@ class BlinkistChallengeApplication : Application() {
   override fun onCreate() {
     super.onCreate()
 
-    // TODO-eugene uncomment
-    //    setRxJavaErrorHandler()
-    setupTimber()
     buildObjectGraphAndInject()
+    setupTimber()
+    setRxJavaErrorHandler()
   }
 
   private fun buildObjectGraphAndInject() {
