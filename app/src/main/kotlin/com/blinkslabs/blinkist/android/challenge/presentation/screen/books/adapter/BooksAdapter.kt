@@ -4,10 +4,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.blinkslabs.blinkist.android.challenge.domain.book.model.Books
 import com.blinkslabs.blinkist.android.challenge.domain.featurewitch.GroupByWeeklyFeature
 import com.blinkslabs.blinkist.android.challenge.presentation.common.adapter.FlexibleAdapterImpl
-import com.blinkslabs.blinkist.android.challenge.presentation.screen.books.adapter.delegate.AlphabetTitleItemDelegate
-import com.blinkslabs.blinkist.android.challenge.presentation.screen.books.adapter.delegate.BookCardItemDelegate
-import com.blinkslabs.blinkist.android.challenge.presentation.screen.books.adapter.delegate.WeekTitleItemDelegate
-import com.blinkslabs.blinkist.android.challenge.presentation.screen.books.adapter.delegate.YearTitleItemDelegate
+import com.blinkslabs.blinkist.android.challenge.presentation.screen.books.adapter.delegate.*
 import javax.inject.Inject
 
 interface BooksAdapter {
@@ -26,7 +23,8 @@ class BooksAdapterImpl @Inject constructor() : FlexibleAdapterImpl(
 ), BooksAdapter {
 
   override fun setBooks(books: Books, weeklyFeature: GroupByWeeklyFeature) {
-    convertToAdapterData(books, weeklyFeature)
+    items = convertToAdapterData(books, weeklyFeature).filterIsInstance(BookCard::class.java)
+    notifyDataSetChanged()
   }
 
   override fun asRecyclerViewAdapter(): RecyclerView.Adapter<RecyclerView.ViewHolder> = this

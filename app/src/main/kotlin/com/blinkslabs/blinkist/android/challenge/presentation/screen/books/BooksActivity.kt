@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.blinkslabs.blinkist.android.challenge.R
 import com.blinkslabs.blinkist.android.challenge.app.BlinkistChallengeApplication
 import com.blinkslabs.blinkist.android.challenge.domain.book.model.Books
+import com.blinkslabs.blinkist.android.challenge.domain.featurewitch.GroupByWeeklyFeature
+import com.blinkslabs.blinkist.android.challenge.presentation.screen.books.adapter.BooksAdapterImpl
 import com.blinkslabs.blinkist.android.challenge.presentation.screen.books.rootview.ViewContainer
 import com.blinkslabs.blinkist.android.challenge.util.BLSchedulers
 import com.blinkslabs.blinkist.android.challenge.util.showToast
@@ -26,8 +28,9 @@ class BooksActivity : AppCompatActivity() {
   @Inject lateinit var disposables: Disposables
 
   private lateinit var viewModel: BooksViewModel
-  // TODO-eugene remove
-  private lateinit var recyclerAdapter: BookListRecyclerAdapter
+
+  // TODO-eugene inject me
+  private var adapter = BooksAdapterImpl()
 
   private val intents: Observable<BooksIntent>
     get() = merge(
@@ -45,6 +48,11 @@ class BooksActivity : AppCompatActivity() {
     viewModel = ViewModelProviders.of(this, viewModelFactory).get(BooksViewModel::class.java)
 
     setupRecyclerView()
+  }
+
+  private fun setupRecyclerView() {
+    recyclerView.layoutManager = LinearLayoutManager(this)
+    recyclerView.adapter = adapter.asRecyclerAdapter()
   }
 
   override fun onResume() {
@@ -72,6 +80,7 @@ class BooksActivity : AppCompatActivity() {
       }
       is BooksViewState.DataFetched -> {
         swipeRefreshView.isRefreshing = false
+        showBooks(viewState.books, viewState.weeklyFeature)
         Timber.d("----- Render DataFetched: $viewState")
       }
       is BooksViewState.Error -> {
@@ -82,25 +91,21 @@ class BooksActivity : AppCompatActivity() {
     }
   }
 
-  override fun onStop() {
-    super.onStop()
-    disposables.clear()
-  }
-
-  private fun setupRecyclerView() {
-    recyclerView.layoutManager = LinearLayoutManager(this)
-    recyclerAdapter = BookListRecyclerAdapter()
-    recyclerView.adapter = recyclerAdapter
-  }
-
-
-  private fun showBooks(books: Books) {
-    recyclerAdapter.setItems(books)
-    recyclerAdapter.notifyDataSetChanged()
+  private fun showBooks(
+      books: Books,
+      weeklyFeature: GroupByWeeklyFeature
+  ) {
+    adapter.setBooks(books, weeklyFeature)
+    adapter.notifyDataSetChanged()
   }
 
   private fun showErrorLoadingData() {
     showToast(R.string.error_generic)
+  }
+
+  override fun onStop() {
+    super.onStop()
+    disposables.clear()
   }
 
   private fun app() = (application as BlinkistChallengeApplication)
