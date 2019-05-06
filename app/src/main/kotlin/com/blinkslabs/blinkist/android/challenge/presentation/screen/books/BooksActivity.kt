@@ -8,8 +8,6 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blinkslabs.blinkist.android.challenge.R
 import com.blinkslabs.blinkist.android.challenge.app.BlinkistChallengeApplication
-import com.blinkslabs.blinkist.android.challenge.domain.book.model.Books
-import com.blinkslabs.blinkist.android.challenge.domain.featurewitch.GroupByWeeklyFeature
 import com.blinkslabs.blinkist.android.challenge.presentation.screen.books.adapter.BooksAdapterImpl
 import com.blinkslabs.blinkist.android.challenge.presentation.screen.books.rootview.ViewContainer
 import com.blinkslabs.blinkist.android.challenge.util.BLSchedulers
@@ -44,9 +42,7 @@ class BooksActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
 
     app().component.getBooksComponent().inject(this)
-    LayoutInflater.from(this).inflate(R.layout.activity_books,
-                                      viewContainer.forActivity(this),
-                                      true)
+    inflater().inflate(R.layout.activity_books, viewContainer.forActivity(this), true)
     viewModel = ViewModelProviders.of(this, viewModelFactory).get(BooksViewModel::class.java)
 
     setupRecyclerView()
@@ -82,7 +78,7 @@ class BooksActivity : AppCompatActivity() {
       }
       is BooksViewState.DataFetched -> {
         swipeRefreshView.isRefreshing = false
-        showBooks(viewState.books, viewState.weeklyFeature)
+        adapter.setBooks(viewState.books, viewState.weeklyFeature)
         Timber.d("----- Render DataFetched: $viewState")
       }
       is BooksViewState.Error -> {
@@ -91,14 +87,6 @@ class BooksActivity : AppCompatActivity() {
         Timber.e("----- Render Error $viewState")
       }
     }
-  }
-
-  private fun showBooks(
-      books: Books,
-      weeklyFeature: GroupByWeeklyFeature
-  ) {
-    adapter.setBooks(books, weeklyFeature)
-    adapter.notifyDataSetChanged()
   }
 
   private fun showErrorLoadingData() {
@@ -111,4 +99,5 @@ class BooksActivity : AppCompatActivity() {
   }
 
   private fun app() = (application as BlinkistChallengeApplication)
+  private fun inflater() = LayoutInflater.from(this)
 }
