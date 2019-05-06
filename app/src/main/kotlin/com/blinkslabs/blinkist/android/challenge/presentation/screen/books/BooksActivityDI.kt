@@ -32,16 +32,16 @@ abstract class BooksActivityModule {
 
   @Binds
   @ScreenScope
-  abstract fun providesGetBooksUseCase(useCase: GetBooksUseCase): GetBooks
+  abstract fun bindGetBooksUseCase(useCase: GetBooksUseCase): GetBooks
 
   @Binds
   @ScreenScope
-  abstract fun providesFeatureUseCase(
+  abstract fun bindFeatureUseCase(
       useCase: IsGroupByWeeklyFeatureOnUseCase
   ): IsGroupByWeeklyFeatureOn
 
   @Binds
   @ScreenScope
-  abstract fun providesBooksForceUpdate(useCase: RefreshBooksByBruteForce): RefreshBooksByForce
+  abstract fun bindBooksForceUpdate(useCase: RefreshBooksByBruteForce): RefreshBooksByForce
 
 }
