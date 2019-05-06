@@ -23,6 +23,13 @@ class GroupByAlphabetShould {
     assertThat(books[Title("Z")]).containsAllIn(listOf(book5, book6))
   }
 
+  @Test fun `return all the books grouped alphabetically and sorted by date`() {
+    val books = groupByAlphabet(fakeBooks).group
+
+    assertThat(books[Title("A")]).isEqualTo(listOf(book1, book3))
+    assertThat(books[Title("Z")]).isEqualTo(listOf(book5, book6))
+  }
+
   @Test fun `skip a book with no name`() {
     val noNameBook = Book("id2", "  ", "", LocalDate.of(2014, 7, 2), "")
 

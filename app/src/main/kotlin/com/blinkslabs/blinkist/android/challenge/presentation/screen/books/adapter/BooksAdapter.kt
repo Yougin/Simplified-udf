@@ -57,7 +57,7 @@ fun convert(groupedBooks: GroupedBooks.ByAlphabet): List<*> {
   val list = mutableListOf<Any>()
   groupOfBooks.forEach { (title, books) ->
     list += AlphabetTitle(title.value)
-    books.map { book -> BookCard(book) }
+    list.add(books.map { book -> BookCard(book) })
   }
 
   return list

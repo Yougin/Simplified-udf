@@ -45,13 +45,20 @@ class GroupByDateShould {
     assertThat(books[Year(2019)]?.get(Title("27"))).contains(book6)
   }
 
-  private val fakeBooks get() = listOf(book1, book2, book3, book4, book5, book6).shuffled()
+  @Test fun `return books grouped by week be also be sorted by date`() {
+    val books = groupByDate(fakeBooks).group
 
-  private val book1 get() = Book("id2", "week27", "", LocalDate.of(2014, 7, 2), "")
-  private val book2 get() = Book("id5", "week52", "", LocalDate.of(2017, 12, 31), "")
-  private val book3 get() = Book("id1", "week30", "", LocalDate.of(2018, 7, 23), "")
-  private val book4 get() = Book("id3", "week27", "", LocalDate.of(2018, 7, 3), "")
-  private val book5 get() = Book("id4", "week27", "", LocalDate.of(2019, 7, 3), "")
-  private val book6 get() = Book("id5", "week27", "", LocalDate.of(2019, 7, 4), "")
+    assertThat(books[Year(2019)]?.get(Title("27"))).hasSize(2)
+    assertThat(books[Year(2019)]?.get(Title("27"))).isEqualTo(listOf(book5, book6))
+  }
+
+  private val fakeBooks get() = listOf(book1, book2, book3, book4, book6, book5)
+
+  private val book1 get() = Book("id1", "week27", "", LocalDate.of(2014, 7, 2), "")
+  private val book2 get() = Book("id2", "week52", "", LocalDate.of(2017, 12, 31), "")
+  private val book3 get() = Book("id3", "week30", "", LocalDate.of(2018, 7, 23), "")
+  private val book4 get() = Book("id4", "week27", "", LocalDate.of(2018, 7, 3), "")
+  private val book5 get() = Book("id5", "week27", "", LocalDate.of(2019, 7, 3), "")
+  private val book6 get() = Book("id6", "week27", "", LocalDate.of(2019, 7, 4), "")
 
 }

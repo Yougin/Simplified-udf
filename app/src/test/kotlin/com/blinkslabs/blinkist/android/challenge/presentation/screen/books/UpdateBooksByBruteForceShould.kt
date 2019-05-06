@@ -6,9 +6,12 @@ import com.blinkslabs.blinkist.android.challenge.util.BLSchedulers
 import com.nhaarman.mockitokotlin2.verify
 import org.junit.Before
 import org.junit.Test
+import org.junit.runner.RunWith
 import org.mockito.InjectMocks
 import org.mockito.Mock
+import org.mockito.junit.MockitoJUnitRunner
 
+@RunWith(MockitoJUnitRunner::class)
 class UpdateBooksByBruteForceShould {
 
   @Mock private lateinit var booksRepository: BookRepository
