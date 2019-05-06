@@ -13,7 +13,7 @@ data class BookCard(val books: Books)
 
 class BookCardItemDelegate : ItemDelegate<BookCard> {
 
-  override val associatedDataType: Class<BookCard> get() = BookCard::class.java
+  override val associatedDataType: Class<BookCard> = BookCard::class.java
 
   override fun create(layoutInflater: LayoutInflater, parent: ViewGroup?): RecyclerView.ViewHolder =
       ItemDelegate.Holder(layoutInflater.inflate(R.layout.item_book_card, parent, false))

@@ -12,8 +12,7 @@ data class YearTitle(val text: String)
 
 class YearTitleItemDelegate : ItemDelegate<YearTitle> {
 
-  override val associatedDataType: Class<YearTitle>
-    get() = YearTitle::class.java
+  override val associatedDataType: Class<YearTitle> = YearTitle::class.java
 
   override fun create(layoutInflater: LayoutInflater, parent: ViewGroup?): RecyclerView.ViewHolder =
       ItemDelegate.Holder(layoutInflater.inflate(R.layout.item_year_title, parent, false))
