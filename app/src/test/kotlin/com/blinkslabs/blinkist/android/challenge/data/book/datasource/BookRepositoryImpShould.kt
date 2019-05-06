@@ -74,7 +74,6 @@ class BookRepositoryImpShould {
   }
 
   @Test fun `delete all the books before fetching new ones`() {
-    val observer = repository.getAllBooks().test()
     repository.fetchBooks().test()
 
     verify(bookDao).deleteAllBooks()
