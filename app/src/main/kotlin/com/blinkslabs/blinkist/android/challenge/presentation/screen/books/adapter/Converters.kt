@@ -26,7 +26,7 @@ fun convert(groupedBooks: GroupedBooks.ByDate): List<*> {
 
     weeklyGroup.forEach { (title, books) ->
       list += WeekTitle(title.value)
-      list.add(books.map { book -> BookCard(book) })
+      list += BookCard(books)
     }
   }
 
@@ -39,7 +39,7 @@ fun convert(groupedBooks: GroupedBooks.ByAlphabet): List<*> {
   val list = mutableListOf<Any>()
   groupOfBooks.forEach { (title, books) ->
     list += AlphabetTitle(title.value)
-    list.add(books.map { book -> BookCard(book) })
+    list += BookCard(books)
   }
 
   return list

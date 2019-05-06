@@ -17,37 +17,37 @@ class ConvertFunctionsShould {
 
     assertThat(result[0]).isEqualTo(YearTitle("2014"))
     assertThat(result[1]).isEqualTo(WeekTitle("27"))
-    assertThat(result[2]).isEqualTo(listOf(BookCard(book1)))
+    assertThat(result[2]).isEqualTo(BookCard(listOf(book1)))
 
     assertThat(result[3]).isEqualTo(YearTitle("2017"))
     assertThat(result[4]).isEqualTo(WeekTitle("52"))
-    assertThat(result[5]).isEqualTo(listOf(BookCard(book2)))
+    assertThat(result[5]).isEqualTo(BookCard(listOf(book2)))
 
     assertThat(result[6]).isEqualTo(YearTitle("2018"))
     assertThat(result[7]).isEqualTo(WeekTitle("27"))
-    assertThat(result[8]).isEqualTo(listOf(BookCard(book4)))
+    assertThat(result[8]).isEqualTo(BookCard(listOf(book4)))
     assertThat(result[9]).isEqualTo(WeekTitle("30"))
-    assertThat(result[10]).isEqualTo(listOf(BookCard(book3)))
+    assertThat(result[10]).isEqualTo(BookCard(listOf(book3)))
 
     assertThat(result[11]).isEqualTo(YearTitle("2019"))
     assertThat(result[12]).isEqualTo(WeekTitle("27"))
-    assertThat(result[13]).isEqualTo(listOf(BookCard(book5), BookCard(book6)))
+    assertThat(result[13]).isEqualTo(BookCard(listOf(book5, book6)))
   }
 
   @Test fun `return list of adapter data grouped alphabetically`() {
     val result = convertToAdapterData(fakeBooks, GroupByWeeklyFeature.Off)
 
     assertThat(result[0]).isEqualTo(AlphabetTitle("A"))
-    assertThat(result[1]).isEqualTo(listOf(BookCard(book1), BookCard(book2)))
+    assertThat(result[1]).isEqualTo(BookCard(listOf(book1, book2)))
 
     assertThat(result[2]).isEqualTo(AlphabetTitle("B"))
-    assertThat(result[3]).isEqualTo(listOf(BookCard(book3)))
+    assertThat(result[3]).isEqualTo(BookCard(listOf(book3)))
 
     assertThat(result[4]).isEqualTo(AlphabetTitle("C"))
-    assertThat(result[5]).isEqualTo(listOf(BookCard(book4)))
+    assertThat(result[5]).isEqualTo(BookCard(listOf(book4)))
 
     assertThat(result[6]).isEqualTo(AlphabetTitle("D"))
-    assertThat(result[7]).isEqualTo(listOf(BookCard(book5), BookCard(book6)))
+    assertThat(result[7]).isEqualTo(BookCard(listOf(book5, book6)))
   }
 }
 
