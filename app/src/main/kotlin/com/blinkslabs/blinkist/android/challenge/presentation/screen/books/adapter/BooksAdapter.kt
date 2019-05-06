@@ -29,18 +29,11 @@ class BooksAdapterImpl @Inject constructor( // List Item Delegates in here
 
 fun convertToAdapterData(
     books: Books, weeklyFeature: GroupByWeeklyFeature
-): List<*> {
-
-  val groupedBooks = when (weeklyFeature) {
-    GroupByWeeklyFeature.On -> groupByDate(books)
-    GroupByWeeklyFeature.Off -> groupByAlphabet(books)
-  }
-
-  return when (groupedBooks) {
-    is GroupedBooks.ByDate -> convert(groupedBooks)
-    is GroupedBooks.ByAlphabet -> convert(groupedBooks)
-  }
-}
+): List<*> =
+    when (weeklyFeature) {
+      GroupByWeeklyFeature.On -> convert(groupByDate(books))
+      GroupByWeeklyFeature.Off -> convert(groupByAlphabet(books))
+    }
 
 private fun convert(groupedBooks: GroupedBooks.ByDate): List<*> {
   val groupOfBooks: YearlyGroup = groupedBooks.group
