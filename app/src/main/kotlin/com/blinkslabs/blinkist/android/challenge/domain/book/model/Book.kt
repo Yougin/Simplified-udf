@@ -13,8 +13,6 @@ data class Book(
     val coverImageUrl: String
 )
 
-val Book.publishWeek get() = publishDate.publishWeek
-
-val LocalDate.publishWeek get() = get(WeekFields.ISO.weekOfYear()).toString()
-
 val Book.publishYear get() = publishDate.year
+
+val Book.publishWeek get() = publishDate.get(WeekFields.ISO.weekOfYear()).toString()
