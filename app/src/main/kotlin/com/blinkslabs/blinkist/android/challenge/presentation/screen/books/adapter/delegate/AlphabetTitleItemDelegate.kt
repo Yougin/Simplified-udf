@@ -1,4 +1,4 @@
-package com.blinkslabs.blinkist.android.challenge.presentation.screen.books.adapter
+package com.blinkslabs.blinkist.android.challenge.presentation.screen.books.adapter.delegate
 
 import android.view.LayoutInflater
 import android.view.View

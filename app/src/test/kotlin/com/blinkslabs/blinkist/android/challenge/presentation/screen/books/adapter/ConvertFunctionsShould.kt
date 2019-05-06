@@ -2,6 +2,10 @@ package com.blinkslabs.blinkist.android.challenge.presentation.screen.books.adap
 
 import com.blinkslabs.blinkist.android.challenge.domain.book.model.Book
 import com.blinkslabs.blinkist.android.challenge.domain.featurewitch.GroupByWeeklyFeature
+import com.blinkslabs.blinkist.android.challenge.presentation.screen.books.adapter.delegate.AlphabetTitle
+import com.blinkslabs.blinkist.android.challenge.presentation.screen.books.adapter.delegate.BookCard
+import com.blinkslabs.blinkist.android.challenge.presentation.screen.books.adapter.delegate.WeekTitle
+import com.blinkslabs.blinkist.android.challenge.presentation.screen.books.adapter.delegate.YearTitle
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 import org.threeten.bp.LocalDate
