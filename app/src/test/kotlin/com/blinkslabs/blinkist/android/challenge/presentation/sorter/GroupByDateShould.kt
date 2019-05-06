@@ -47,11 +47,11 @@ class GroupByDateShould {
 
   private val fakeBooks get() = listOf(book1, book2, book3, book4, book5, book6).shuffled()
 
-  private val book1 get() = Book("id2", "aName", "", LocalDate.of(2014, 7, 2), "")
-  private val book2 get() = Book("id5", "bName", "", LocalDate.of(2017, 12, 31), "")
-  private val book3 get() = Book("id1", "aName", "", LocalDate.of(2018, 7, 23), "")
-  private val book4 get() = Book("id3", "cName", "", LocalDate.of(2018, 7, 3), "")
-  private val book5 get() = Book("id4", "zName", "", LocalDate.of(2019, 7, 3), "")
-  private val book6 get() = Book("id5", "zName", "", LocalDate.of(2019, 7, 4), "")
+  private val book1 get() = Book("id2", "week27", "", LocalDate.of(2014, 7, 2), "")
+  private val book2 get() = Book("id5", "week52", "", LocalDate.of(2017, 12, 31), "")
+  private val book3 get() = Book("id1", "week30", "", LocalDate.of(2018, 7, 23), "")
+  private val book4 get() = Book("id3", "week27", "", LocalDate.of(2018, 7, 3), "")
+  private val book5 get() = Book("id4", "week27", "", LocalDate.of(2019, 7, 3), "")
+  private val book6 get() = Book("id5", "week27", "", LocalDate.of(2019, 7, 4), "")
 
 }
