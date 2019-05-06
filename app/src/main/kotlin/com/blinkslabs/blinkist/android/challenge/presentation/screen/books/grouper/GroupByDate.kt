@@ -21,4 +21,7 @@ fun groupByDate(books: Books): GroupedBooks.ByDate =
           .let { GroupedBooks.ByDate(this) }
     }
 
-private fun groupByWeek(books: Books): WeeklyGroup = books.groupBy { Title(it.publishWeek) }
+private fun groupByWeek(books: Books): WeeklyGroup =
+    books
+        .sortedBy { it.publishDate }
+        .groupBy { Title(it.publishWeek) }
