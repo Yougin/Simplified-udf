@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blinkslabs.blinkist.android.challenge.R
 import com.blinkslabs.blinkist.android.challenge.app.BlinkistChallengeApplication
-import com.blinkslabs.blinkist.android.challenge.presentation.screen.books.adapter.BooksAdapterImpl
+import com.blinkslabs.blinkist.android.challenge.presentation.screen.books.adapter.BooksAdapter
 import com.blinkslabs.blinkist.android.challenge.presentation.screen.books.rootview.ViewContainer
 import com.blinkslabs.blinkist.android.challenge.util.BLSchedulers
 import com.blinkslabs.blinkist.android.challenge.util.Disposables
@@ -24,13 +24,10 @@ class BooksActivity : AppCompatActivity() {
 
   @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
   @Inject lateinit var viewContainer: ViewContainer
+  @Inject lateinit var adapter: BooksAdapter
   @Inject lateinit var disposables: Disposables
 
   private lateinit var viewModel: BooksViewModel
-
-  // This one should be injected the very same way other dependencies are being injected, I'm
-  // just running out of time
-  private var adapter = BooksAdapterImpl()
 
   private val intents: Observable<BooksIntent>
     get() = merge(
@@ -50,7 +47,7 @@ class BooksActivity : AppCompatActivity() {
 
   private fun setupRecyclerView() {
     recyclerView.layoutManager = LinearLayoutManager(this)
-    recyclerView.adapter = adapter.asRecyclerAdapter()
+    recyclerView.adapter = adapter.asRecyclerViewAdapter()
   }
 
   override fun onResume() {

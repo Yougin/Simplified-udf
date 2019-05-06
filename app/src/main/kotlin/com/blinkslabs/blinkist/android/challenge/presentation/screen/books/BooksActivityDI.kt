@@ -10,6 +10,8 @@ import com.blinkslabs.blinkist.android.challenge.domain.featurewitch.IsGroupByWe
 import com.blinkslabs.blinkist.android.challenge.presentation.di.ScreenScope
 import com.blinkslabs.blinkist.android.challenge.presentation.di.ViewModelKey
 import com.blinkslabs.blinkist.android.challenge.presentation.di.ViewModelModule
+import com.blinkslabs.blinkist.android.challenge.presentation.screen.books.adapter.BooksAdapter
+import com.blinkslabs.blinkist.android.challenge.presentation.screen.books.adapter.BooksAdapterImpl
 import dagger.Binds
 import dagger.Module
 import dagger.Subcomponent
@@ -43,5 +45,9 @@ abstract class BooksActivityModule {
   @Binds
   @ScreenScope
   abstract fun bindBooksForceUpdate(useCase: RefreshBooksByBruteForce): RefreshBooksByForce
+
+  @Binds
+  @ScreenScope
+  abstract fun bindAdapter(adapter: BooksAdapterImpl): BooksAdapter
 
 }
