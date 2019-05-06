@@ -31,7 +31,7 @@ class GetBooksUseCaseShould {
     BLSchedulers.enableTesting()
   }
 
-  @Test fun `emit Books when some are persisted`() {
+  @Test fun `emit Books upon subscription when some Books are persisted`() {
     whenever(bookRepository.getAllBooks()).thenReturn(Observable.just(Option(fakeBooks)))
 
     val observer = getBooks().test()
@@ -40,29 +40,29 @@ class GetBooksUseCaseShould {
   }
 
   @Test fun `force fetch books from api if there are no persisted and emit the result`() {
-    val bookEmitter = PublishSubject.create<Option<Books>>()
-    val fakeBookRepository = FakeBookRepository(bookEmitter, fakeBooks)
+    val fakeDao = PublishSubject.create<Option<Books>>()
+    val fakeBookRepository = FakeBookRepository(fakeDao, fakeBooks)
 
     val useCase = GetBooksUseCase(fakeBookRepository)
     val observer = useCase().test()
 
-    bookEmitter.onNext(Option.empty())
-    bookEmitter.onNext(Option(fakeBooks))
+    fakeDao.onNext(Option.empty())
+    fakeDao.onNext(Option(fakeBooks)) // mimics Room's behavior
     observer.getAllEvents()
 
     assertThat(observer.values()[0]).isEqualTo(fakeBooks)
   }
 
   @Test fun `emits every time force fetch is invoked by the system`() {
-    val bookEmitter = PublishSubject.create<Option<Books>>()
-    val fakeBookRepository = FakeBookRepository(bookEmitter, fakeBooks)
-
+    val fakeDao = PublishSubject.create<Option<Books>>()
+    val fakeBookRepository = FakeBookRepository(fakeDao, fakeBooks)
     val useCase = GetBooksUseCase(fakeBookRepository)
+
     val observer = useCase().test()
 
-    bookEmitter.onNext(Option.empty())
-    bookEmitter.onNext(Option(fakeBooks))
-    fakeBookRepository.fetchBooks() // say, triggered by pull to refresh
+    fakeDao.onNext(Option.empty())
+    fakeDao.onNext(Option(fakeBooks))
+    fakeBookRepository.fetchBooks() // Say, triggered by pull to refresh
     observer.getAllEvents()
 
     assertThat(observer.values().size).isEqualTo(3)
