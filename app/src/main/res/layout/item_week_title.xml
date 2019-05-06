@@ -10,6 +10,7 @@
     android:id="@+id/item_week_title_text_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:textColor="@color/secondaryTextColor"
     tools:text="Week 27" />
 
 </LinearLayout>
