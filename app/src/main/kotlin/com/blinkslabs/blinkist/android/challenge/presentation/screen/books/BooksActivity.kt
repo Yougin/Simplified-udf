@@ -50,11 +50,11 @@ class BooksActivity : AppCompatActivity() {
   override fun onResume() {
     super.onResume()
 
-    announceYourIntentions()
+    announceViewIntentions()
     subscribeToViewStateChanges()
   }
 
-  private fun announceYourIntentions() {
+  private fun announceViewIntentions() {
     disposables += viewModel.intents(intents)
   }
 
