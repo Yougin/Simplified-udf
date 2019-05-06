@@ -30,7 +30,8 @@ class BooksActivity : AppCompatActivity() {
 
   private lateinit var viewModel: BooksViewModel
 
-  // TODO-eugene inject me
+  // This one should be injected the very same way other dependencies are being injected, I'm
+  // just running out of time
   private var adapter = BooksAdapterImpl()
 
   private val intents: Observable<BooksIntent>
