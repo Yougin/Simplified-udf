@@ -1,4 +1,4 @@
-package com.blinkslabs.blinkist.android.challenge.data.fake
+package com.blinkslabs.blinkist.android.challenge.fake
 
 import arrow.core.Option
 import com.blinkslabs.blinkist.android.challenge.data.book.datasource.BookRepository

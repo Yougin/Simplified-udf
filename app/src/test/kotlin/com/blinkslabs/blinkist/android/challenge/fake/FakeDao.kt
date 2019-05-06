@@ -1,4 +1,4 @@
-package com.blinkslabs.blinkist.android.challenge.data.fake
+package com.blinkslabs.blinkist.android.challenge.fake
 
 import com.blinkslabs.blinkist.android.challenge.data.book.datasource.local.BookDao
 import com.blinkslabs.blinkist.android.challenge.data.book.entity.BookEntity

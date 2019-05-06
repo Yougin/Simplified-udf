@@ -1,4 +1,4 @@
-package com.blinkslabs.blinkist.android.challenge.presentation.screen.books
+package com.blinkslabs.blinkist.android.challenge.domain
 
 import com.blinkslabs.blinkist.android.challenge.data.book.datasource.BookRepository
 import com.blinkslabs.blinkist.android.challenge.domain.book.usecase.RefreshBooksByBruteForce

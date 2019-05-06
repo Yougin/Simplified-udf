@@ -5,9 +5,9 @@ import arrow.core.Some
 import com.blinkslabs.blinkist.android.challenge.data.book.datasource.local.BookDao
 import com.blinkslabs.blinkist.android.challenge.data.book.datasource.remote.BooksApi
 import com.blinkslabs.blinkist.android.challenge.data.book.entity.BookEntity
-import com.blinkslabs.blinkist.android.challenge.data.fake.FakeDao
 import com.blinkslabs.blinkist.android.challenge.domain.book.model.Book
 import com.blinkslabs.blinkist.android.challenge.domain.book.model.Books
+import com.blinkslabs.blinkist.android.challenge.fake.FakeDao
 import com.blinkslabs.blinkist.android.challenge.util.BLSchedulers
 import com.google.common.truth.Truth.assertThat
 import com.nhaarman.mockitokotlin2.verify

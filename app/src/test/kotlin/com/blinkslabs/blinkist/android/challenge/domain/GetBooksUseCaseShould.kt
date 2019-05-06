@@ -1,11 +1,11 @@
-package com.blinkslabs.blinkist.android.challenge.data
+package com.blinkslabs.blinkist.android.challenge.domain
 
 import arrow.core.Option
 import com.blinkslabs.blinkist.android.challenge.data.book.datasource.BookRepository
-import com.blinkslabs.blinkist.android.challenge.data.fake.FakeBookRepository
 import com.blinkslabs.blinkist.android.challenge.domain.book.model.Book
 import com.blinkslabs.blinkist.android.challenge.domain.book.model.Books
 import com.blinkslabs.blinkist.android.challenge.domain.book.usecase.GetBooksUseCase
+import com.blinkslabs.blinkist.android.challenge.fake.FakeBookRepository
 import com.blinkslabs.blinkist.android.challenge.util.BLSchedulers
 import com.blinkslabs.blinkist.android.challenge.utils.getAllEvents
 import com.google.common.truth.Truth.assertThat
