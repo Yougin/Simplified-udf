@@ -18,7 +18,7 @@ class WeekTitleItemDelegate : ItemDelegate<WeekTitle> {
       ItemDelegate.Holder(layoutInflater.inflate(R.layout.item_week_title, parent, false))
 
   override fun bind(view: View, data: WeekTitle) {
-    view.item_week_title_text_view.text = "Week ${data.text}" // should go to resources
+    view.item_week_title_text_view.text = "WEEK ${data.text}" // should go to resources
   }
 
 }

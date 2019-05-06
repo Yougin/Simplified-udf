@@ -3,13 +3,14 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
-  android:orientation="vertical"
-  android:padding="@dimen/padding_default">
+  android:orientation="vertical">
 
   <TextView
     android:id="@+id/item_year_title_text_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginStart="24dp"
+    android:textAppearance="@style/TextAppearance.AppCompat.Headline"
     android:textColor="@color/secondaryTextColor"
     tools:text="2019" />
 </LinearLayout>

@@ -22,8 +22,12 @@
     android:id="@+id/title_text_view"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_marginEnd="8dp"
     android:layout_marginStart="8dp"
     android:layout_marginTop="8dp"
+    android:ellipsize="end"
+    android:maxLines="2"
+    android:paddingEnd="16dp"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@+id/cover_image_view"
     tools:text="A very good title" />
