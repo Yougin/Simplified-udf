@@ -45,8 +45,8 @@ class BookListRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
 
   private inner class BookViewHolder(v: View) : RecyclerView.ViewHolder(v) {
 
-    var authorTextView: TextView = v.findViewById(R.id.authorTextView)
-    var titleTextView: TextView = v.findViewById(R.id.titleTextView)
-    var coverImageView: ImageView = v.findViewById(R.id.coverImageView)
+    var authorTextView: TextView = v.findViewById(R.id.author_text_view)
+    var titleTextView: TextView = v.findViewById(R.id.title_text_view)
+    var coverImageView: ImageView = v.findViewById(R.id.cover_image_view)
   }
 }

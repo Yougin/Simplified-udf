@@ -7,7 +7,7 @@
   android:padding="@dimen/padding_default">
 
   <ImageView
-    android:id="@+id/coverImageView"
+    android:id="@+id/cover_image_view"
     android:layout_width="@dimen/book_width"
     android:layout_height="@dimen/book_height"
     android:scaleType="centerCrop" />
@@ -20,13 +20,13 @@
     android:padding="16dp">
 
     <TextView
-      android:id="@+id/titleTextView"
+      android:id="@+id/title_text_view"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       tools:text="A very good title" />
 
     <TextView
-      android:id="@+id/authorTextView"
+      android:id="@+id/author_text_view"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       tools:text="A very good Author" />
