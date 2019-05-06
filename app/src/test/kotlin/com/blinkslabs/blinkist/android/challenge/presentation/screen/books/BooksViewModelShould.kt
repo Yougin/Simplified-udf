@@ -92,7 +92,6 @@ class BooksViewModelShould {
     assertThat(observer.values().size).isEqualTo(4)
   }
 
-  // TODO-eugene should stay alive after conf change
   @Test fun `not react to InitialIntent received after configuration change`() {
     weeklyFeatureSwitchEmits()
     observer.getAllEvents()

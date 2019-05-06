@@ -20,9 +20,8 @@ open class FlexibleAdapterImpl(
 
   override fun asRecyclerAdapter(): RecyclerView.Adapter<RecyclerView.ViewHolder> = this
 
-  // TODO-eugene check nullability
   override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-    holder.itemView?.let { delegationMap.bind(it, items[position]) }
+    holder.itemView.let { delegationMap.bind(it, items[position]) }
   }
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -58,9 +57,7 @@ private class DelegationMap(vararg delegates: ItemDelegate<*>) {
 
   fun <T : Any> viewType(forData: T) = forData::class.hashCode()
 
-  // TODO-eugene we don't need reified here anymore
-  @Suppress("UNCHECKED_CAST")
-  inline fun <reified T> bind(view: View, data: T) =
+  @Suppress("UNCHECKED_CAST") fun <T> bind(view: View, data: T) =
       (this[viewType(data as Any)] as ItemDelegate<T>).bind(view, data)
 
   operator fun get(forViewType: Int) =

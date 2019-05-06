@@ -35,8 +35,7 @@ class BooksCarouselView @JvmOverloads constructor(
     }
 
 
-  // TODO-eugene inner?
-  private inner class CarouselViewHolder(view: View) : ViewHolder(view)
+  private class CarouselViewHolder(view: View) : ViewHolder(view)
 
   private inner class CarouselAdapter(
       val layoutInflater: LayoutInflater,

@@ -25,5 +25,5 @@ class MockBooksApi @Inject constructor() : BooksApi {
           Book("a597717", "Bringing Up Bébé", "Pamela Druckerman", LocalDate.of(2016, 7, 3), "https://images.blinkist.com/images/books/57e6c3f0afd7bf0003b7052d/3_4/640.jpg"),
           Book("99c1c39", "A Book With a Very Long Title, Veeeeeeeeeeeeeeeeery Long, Possibly the Most Long Title For a Book You've Ever Seen In Your Entire Life", "The Blinkist Android Team", LocalDate.of(2014, 1, 1), "https://images.blinkist.com/images/books/5575979e3935610007420000/3_4/640.jpg")
       ))
-      .delay(8, TimeUnit.SECONDS, BLSchedulers.computation())
+      .delay(2, TimeUnit.SECONDS, BLSchedulers.computation())
 }
