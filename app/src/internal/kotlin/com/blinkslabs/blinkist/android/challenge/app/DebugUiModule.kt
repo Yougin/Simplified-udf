@@ -5,7 +5,7 @@ import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
-/** This Module has an alternative one -> [UiModule.kt] */
+/** This Module has an alternative one -> UiModule.kt */
 @Module
 class DebugUiModule {
 

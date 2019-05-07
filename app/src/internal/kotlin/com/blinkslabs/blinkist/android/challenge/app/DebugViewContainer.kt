@@ -24,10 +24,6 @@ class DebugViewContainer : ViewContainer {
   private fun getView(activity: Activity, drawer: DrawerLayout): View =
       LayoutInflater.from(activity).inflate(R.layout.debug_view, drawer, false)
 
-  private fun getLayoutParams(): DrawerLayout.LayoutParams {
-    val params = DrawerLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT)
-    params.gravity = Gravity.END
-    return params
-  }
-
+  private fun getLayoutParams(): DrawerLayout.LayoutParams =
+      DrawerLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT).apply { gravity = Gravity.END }
 }
