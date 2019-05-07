@@ -5,14 +5,12 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.blinkslabs.blinkist.android.challenge.R
 import com.blinkslabs.blinkist.android.challenge.domain.book.model.Books
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.book_list_item.view.*
-import timber.log.Timber
 
 
 class BooksCarouselView @JvmOverloads constructor(
@@ -61,33 +59,8 @@ class BooksCarouselView @JvmOverloads constructor(
         Picasso.get().load(book.coverImageUrl).into(view.cover_image_view)
         view.title_text_view.text = book.name
         view.author_text_view.text = book.author
-
-        view.setOnClickListener {
-          Timber.e("book $book")
-          val bounce = AnimationUtils.loadAnimation(view.context, R.anim.bounce)
-          bounce.interpolator = MyBounceInterpolator(0.2, 20.0)
-          view.startAnimation(bounce);
-        }
+        view.setOnClickListener(bounceAnimation())
       }
     }
-  }
-}
-
-class MyBounceInterpolator(
-    amplitude: Double,
-    frequency: Double
-) : android.view.animation.Interpolator {
-
-  private var mAmplitude = 1.0
-  private var mFrequency = 10.0
-
-  init {
-    mAmplitude = amplitude
-    mFrequency = frequency
-  }
-
-  override fun getInterpolation(time: Float): Float {
-    return (-1.0 * Math.pow(Math.E, -time / mAmplitude) *
-        Math.cos(mFrequency * time) + 1).toFloat()
   }
 }

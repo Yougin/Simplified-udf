@@ -6,6 +6,7 @@
   android:layout_height="256dp"
   android:layout_marginLeft="8dp"
   android:layout_marginRight="8dp"
+  android:foreground="@drawable/ripple_card_background"
   android:background="@drawable/book_item_shape">
 
   <ImageView

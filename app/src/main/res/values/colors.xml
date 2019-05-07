@@ -9,5 +9,6 @@
   <color name="yearTitleBackground">#1B23BA74</color>
   <color name="cardBackgroundColor">#F1F6F4</color>
   <color name="cardStrokeColor">#F0DCDFDE</color>
+  <color name="transparent_grey">#DFDFDF</color>
 
 </resources>
