@@ -41,6 +41,6 @@ class BookRepositoryImpl @Inject constructor(
                 .map { it.toEntity() }
                 .toList()
                 .doOnSuccess { entities -> bookDao.insertAll(entities) }
-                .toCompletable()
+                .ignoreElement()
           }
 }
