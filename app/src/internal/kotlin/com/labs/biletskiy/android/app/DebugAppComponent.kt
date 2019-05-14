@@ -1,7 +1,7 @@
-package com.blinkslabs.blinkist.android.challenge.app
+package com.labs.biletskiy.android.app
 
-import com.blinkslabs.blinkist.android.challenge.data.DataModule
-import com.blinkslabs.blinkist.android.challenge.util.UtilsModule
+import com.labs.biletskiy.android.data.DataModule
+import com.labs.biletskiy.android.util.UtilsModule
 import dagger.Component
 import javax.inject.Singleton
 

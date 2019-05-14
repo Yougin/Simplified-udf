@@ -1,4 +1,4 @@
-package com.blinkslabs.blinkist.android.challenge.app
+package com.labs.biletskiy.android.app
 
 import android.app.Activity
 import android.view.Gravity
@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import androidx.drawerlayout.widget.DrawerLayout
-import com.blinkslabs.blinkist.android.challenge.R
-import com.blinkslabs.blinkist.android.challenge.presentation.screen.books.rootview.ViewContainer
+import com.labs.biletskiy.android.challenge.R
+import com.labs.biletskiy.android.presentation.screen.books.rootview.ViewContainer
 
 
 class DebugViewContainer : ViewContainer {

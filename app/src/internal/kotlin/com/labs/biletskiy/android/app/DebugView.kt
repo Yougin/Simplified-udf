@@ -1,12 +1,12 @@
-package com.blinkslabs.blinkist.android.challenge.app
+package com.labs.biletskiy.android.app
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.blinkslabs.blinkist.android.challenge.data.featureswitch.FeatureRepository
-import com.blinkslabs.blinkist.android.challenge.domain.featurewitch.GroupByWeeklyFeature
 import com.jakewharton.rxbinding3.widget.checkedChanges
+import com.labs.biletskiy.android.data.featureswitch.FeatureRepository
+import com.labs.biletskiy.android.domain.featurewitch.GroupByWeeklyFeature
 import kotlinx.android.synthetic.internal.debug_view.view.*
 
 class DebugView @JvmOverloads constructor(
@@ -19,7 +19,7 @@ class DebugView @JvmOverloads constructor(
   override fun onAttachedToWindow() {
     super.onAttachedToWindow()
 
-    ((context.applicationContext as BlinkistChallengeApplication)
+    ((context.applicationContext as App)
         .component as DebugAppComponent).injectDebugView(this)
 
     feature_switch.checkedChanges().skipInitialValue().subscribe {
