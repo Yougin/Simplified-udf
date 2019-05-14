@@ -36,12 +36,12 @@ android {
     productFlavors {
         internal {
             dimension = 'mobile'
-            applicationId = 'com.blinkslabs.blinkist.android.challenge.internal'
+            applicationId = 'com.labs.biletskiy.android.internal'
         }
 
         production {
             dimension = 'mobile'
-            applicationId 'com.blinkslabs.blinkist.android.challenge'
+            applicationId 'com.labs.biletskiy.android.internal'
         }
 
     }
