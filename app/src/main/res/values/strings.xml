@@ -1,4 +1,4 @@
 <resources>
-  <string name="app_name">Blinkist Code Challenge</string>
+  <string name="app_name">Simplified Unidirectional Data Flow</string>
   <string name="error_generic">Uh-oh. An error has occurred. Please try again.</string>
 </resources>
