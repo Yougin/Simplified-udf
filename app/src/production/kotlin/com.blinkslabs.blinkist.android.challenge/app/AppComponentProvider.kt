@@ -1,3 +1,3 @@
-package com.blinkslabs.blinkist.android.challenge.app
+package com.labs.biletskiy.android.app
 
 fun getAppComponent() = DaggerAppComponent.builder()

@@ -4,7 +4,7 @@
   android:layout_height="wrap_content"
   android:orientation="vertical">
 
-  <com.blinkslabs.blinkist.android.challenge.presentation.screen.books.adapter.view.BooksCarouselView
+  <com.labs.biletskiy.android.presentation.screen.books.adapter.view.BooksCarouselView
     android:id="@+id/books_carousel"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"

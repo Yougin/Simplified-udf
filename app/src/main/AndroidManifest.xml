@@ -1,10 +1,10 @@
-<manifest package="com.blinkslabs.blinkist.android.challenge"
+<manifest package="com.labs.biletskiy.android.challenge"
   xmlns:android="http://schemas.android.com/apk/res/android">
 
   <uses-permission android:name="android.permission.INTERNET" />
 
   <application
-    android:name=".app.App"
+    android:name="com.labs.biletskiy.android.app.App"
     android:allowBackup="true"
     android:icon="@mipmap/ic_launcher"
     android:label="@string/app_name"
@@ -12,7 +12,7 @@
     android:supportsRtl="true"
     android:theme="@style/AppTheme">
 
-    <activity android:name=".presentation.screen.books.BooksActivity">
+    <activity android:name="com.labs.biletskiy.android.presentation.screen.books.BooksActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
