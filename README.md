@@ -13,7 +13,7 @@ called `Intents` (not to confuse with system's Intent).
 but instead of publishing the `Observable` for multicasting it, likewise it's done in a classic `MVI` approach, it
  uses pattern matching for executing different operations based on incoming `Intent`.
 
-It's important to note that `Observable<ViewState>``, which is the only API `ViewModel` exposes, happens
+It's important to note that `Observable<ViewState>, which is the only API `ViewModel` exposes, happens
 under control from a single place. Thanks to `BehaviorSubject`, the last ViewState is emitted and rendered after configuration change.
 
 On one hand, `BooksViewModel` observes `Intent`ions from `View`, on the other hand it listens to
