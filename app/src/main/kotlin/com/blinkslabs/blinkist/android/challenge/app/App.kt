@@ -7,7 +7,7 @@ import io.reactivex.plugins.RxJavaPlugins
 import timber.log.Timber
 
 
-class BlinkistChallengeApplication : Application() {
+class App : Application() {
 
   lateinit var component: AppComponent
 

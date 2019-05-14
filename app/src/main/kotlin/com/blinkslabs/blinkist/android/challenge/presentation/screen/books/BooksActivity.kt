@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blinkslabs.blinkist.android.challenge.R
-import com.blinkslabs.blinkist.android.challenge.app.BlinkistChallengeApplication
+import com.blinkslabs.blinkist.android.challenge.app.App
 import com.blinkslabs.blinkist.android.challenge.presentation.screen.books.adapter.BooksAdapter
 import com.blinkslabs.blinkist.android.challenge.presentation.screen.books.rootview.ViewContainer
 import com.blinkslabs.blinkist.android.challenge.util.BLSchedulers
@@ -99,6 +99,6 @@ class BooksActivity : AppCompatActivity() {
     disposables.clear()
   }
 
-  private fun app() = (application as BlinkistChallengeApplication)
+  private fun app() = (application as App)
   private fun inflater() = LayoutInflater.from(this)
 }

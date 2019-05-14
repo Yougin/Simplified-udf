@@ -11,7 +11,7 @@ import javax.inject.Singleton
 @Component(modules = [DataModule::class, UiModule::class, UtilsModule::class])
 interface AppComponent {
 
-  fun inject(app: BlinkistChallengeApplication)
+  fun inject(app: App)
 
   fun getBooksComponent(): BooksActivityComponent
 }
