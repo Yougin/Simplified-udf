@@ -1,7 +1,5 @@
 # State mutation is inevitable, let's try to embrace it.
-This is a simplified, but fully reactive, version of unidirectional data flow concept.
-
-This is a demo project of a simplified version of Unidirectional Data Flow concept.
+This is a simplified, but fully reactive, version of Unidirectional Data Flow concept.
 
 There's a single faked web endpoint for fetching `Books`. These `Books` are being persisted in db.
 
