@@ -42,4 +42,5 @@ Though you may see a some of pure functions used for data processing - `Converte
  Some other cool tricks are being used in this example, such as a composable adapter, dagger 2 (not
  a pro - still running on Dagger 1), inline classes (to fight with primitives obsession), typealiases for
  better readability, `Arrow` library for an excellent `Option` implementation and much more.
-
+ 
+ P.S. I did this project as a code challenge exercise for a cool company, so I had to use my stage name for commits so that they don't know who's code they are reviewing. Noble people! :)
