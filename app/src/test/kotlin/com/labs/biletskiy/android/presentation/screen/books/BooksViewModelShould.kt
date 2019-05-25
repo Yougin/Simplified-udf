@@ -57,10 +57,9 @@ class BooksViewModelShould {
   @Test fun `receive InFlight state upon subscription`() {
     viewEmits(BooksIntent.InitialIntent)
 
-    val values = observer.values()
     observer.getAllEvents()
 
-    assertThat(values[0]).isEqualTo(BooksViewState.InFlight)
+    observer.assertValues(BooksViewState.InFlight)
   }
 
   @Test fun `emit DataFetched state to View in response to InitialIntent from View`() {
@@ -68,11 +67,10 @@ class BooksViewModelShould {
     val expectedValue = GroupByWeeklyFeature.On
     weeklyFeatureSwitchEmits(expectedValue)
 
-    val values = observer.values()
-    observer.getAllEvents()
-
-    assertThat(values.size).isEqualTo(2)
-    assertThat(values[1]).isEqualTo(BooksViewState.DataFetched(fakeBooks, expectedValue))
+    observer.assertValues(
+            BooksViewState.InFlight,
+            BooksViewState.DataFetched(fakeBooks, expectedValue)
+    )
   }
 
   @Test fun `observe changes from all sources and emit new state to View on each data change`() {
@@ -115,11 +113,7 @@ class BooksViewModelShould {
     viewEmits(BooksIntent.InitialIntent)
     getBooksEmits(withError = true)
 
-    val values = observer.values()
-    observer.getAllEvents()
-
-    assertThat(values.size).isEqualTo(2)
-    assertThat(values[1]).isEqualTo(BooksViewState.Error(TestException))
+    observer.assertValues(BooksViewState.InFlight, BooksViewState.Error(TestException))
   }
 
   @Test fun `interact with updateBooksByForce use case on ForceUpdate intent`() {

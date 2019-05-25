@@ -2,7 +2,6 @@ package com.labs.biletskiy.android.data.book.datasource
 
 import arrow.core.Option
 import arrow.core.Some
-import com.google.common.truth.Truth.assertThat
 import com.labs.biletskiy.android.data.book.datasource.local.BookDao
 import com.labs.biletskiy.android.data.book.datasource.remote.BooksApi
 import com.labs.biletskiy.android.data.book.entity.BookEntity
@@ -47,13 +46,13 @@ class BookRepositoryImpShould {
   @Test fun `emit persisted books upon subscription when there are some`() {
     bookDaoEmitter.onNext(fakeEntities)
 
-    assertThat(observer.values()[0]).isEqualTo(Option(fakeBooks))
+    observer.assertValues(Option(fakeBooks))
   }
 
   @Test fun `emit None if no persisted books`() {
     bookDaoEmitter.onNext(emptyList())
 
-    assertThat(observer.values()[0]).isEqualTo(Option.empty<Books>())
+    observer.assertValues(Option.empty())
   }
 
   @Test fun `emit books fetched from api upon subscription`() {
@@ -63,7 +62,7 @@ class BookRepositoryImpShould {
     val observer = repository.getAllBooks().test()
     repository.fetchBooks().test()
 
-    assertThat(observer.values()[0]).isEqualTo(Some(fakeBooks))
+    observer.assertValues(Some(fakeBooks))
   }
 
   @Test fun `delete all the books before fetching new ones`() {
